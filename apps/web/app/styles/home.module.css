@@ -1,0 +1,277 @@
+
+
+/* ------- Start AddOns Section */
+
+.addons_images {
+  position: relative;
+  max-width: 550px;
+  margin: 0 0 0 auto;
+  height: 415px;
+  transform: translateX(-100px);
+}
+
+.addons_images a {
+  display: block;
+  width: 264px;
+  position: absolute;
+}
+
+.addons_images a img {
+  width: 100%;
+  box-shadow: -15.1797px 16.3473px 22.1857px rgba(78, 106, 255, 0.16);
+  border-radius: 22.1857px;
+}
+
+.addons_images a:nth-child(1) {
+  top: 0;
+  left: 100px;
+  animation: pulse 3s alternate infinite;
+}
+
+.addons_images a:nth-child(2) {
+  top: 167px;
+  left: -120px;
+  animation: heartBeat 6s linear infinite;
+}
+
+.addons_images a:nth-child(3) {
+  top: 141px;
+  left: 300px;
+  animation: shakeX 6s linear infinite;
+}
+
+.addons_images a:nth-child(4) {
+  bottom: 0;
+  animation: tada 6s linear infinite;
+  left: 12px;
+}
+
+.addons_images a:nth-child(5) {
+  bottom: 22px;
+  left: 385px;
+  animation: pulse 3s alternate-reverse infinite;
+}
+
+@media (max-width: 1439px) {
+  .addons_images {
+    margin: 0 0 0 auto;
+    transform: translateX(0);
+  }
+
+  .addons_images a {
+    max-width: 240px;
+  }
+
+  .addons_images a:nth-child(1) {
+    top: 0;
+    left: 120px;
+  }
+
+  .addons_images a:nth-child(2) {
+    top: 137px;
+    left: -20px;
+  }
+
+  .addons_images a:nth-child(3) {
+    top: 120px;
+    left: 300px;
+  }
+
+  .addons_images a:nth-child(4) {
+    bottom: 0;
+    left: 50px;
+  }
+
+  .addons_images a:nth-child(5) {
+    bottom: 22px;
+    left: 335px;
+  }
+}
+
+@media (max-width: 1024px) {
+
+  .addons_images {
+    margin: 0 auto;
+  }
+}
+
+
+@media (max-width: 959px) {
+  .addons_images {
+    height: 355px;
+    margin: 0 auto;
+  }
+}
+
+/* @media (max-width: 767px) {
+  .addons_images {
+    margin-right: auto;
+  }
+} */
+
+@media (max-width: 600px) {
+  .addons_images {
+    height: 310px;
+    max-width: 300px;
+    margin: 0 auto 0 0;
+  }
+}
+
+/* 
+@media (max-width: 450px) {
+  .addons_images {
+    transform: translateX(-30px);
+  }
+}
+
+@media (max-width: 415px) {
+  .addons_images {
+    transform: translateX(-20px);
+  }
+} */
+
+@media (max-width: 500px) {
+  .addons_images {
+    transform: translateX(0);
+    height: 300px;
+    max-width: 283px;
+    margin: 0 auto;
+  }
+
+  .addons_images a {
+    max-width: 135px;
+  }
+
+  .addons_images a:nth-child(1) {
+    top: 0;
+    left: 60px;
+  }
+
+  .addons_images a:nth-child(2) {
+    top: 75px;
+    left: 0;
+  }
+
+  .addons_images a:nth-child(3) {
+    top: 120px;
+    left: 150px;
+  }
+
+  .addons_images a:nth-child(4) {
+    top: 180px;
+    bottom: unset;
+    left: 20px;
+  }
+
+  .addons_images a:nth-child(5) {
+    bottom: 0;
+    left: 130px;
+  }
+}
+
+
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+}
+
+@keyframes tada {
+  0% {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+
+  10%,
+  20% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate(-3deg);
+    transform: scale3d(0.9, 0.9, 0.9) rotate(-3deg);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);
+  }
+
+  40%,
+  60%,
+  80% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);
+  }
+
+  to {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  14% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  42% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes shakeX {
+
+  0%,
+  to {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* ------- End AddOns Section */

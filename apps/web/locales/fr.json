@@ -1,0 +1,522 @@
+{
+  "seo": {
+    "title": "Mailrapido • Gardez simplement votre email personnel en sécurité 🔒",
+    "desc": "Oubliez les courriers indésirables avec Mailrapido 💌 Obtenez un accès gratuit à un nombre illimité d'adresses e-mail temporaires ✔ générées automatiquement ou personnalisables.",
+    "keywords": "email temporaire, courrier temporaire, courrier jetable, e-mail jetable, adresse e-mail, courrier temp, e-mail temporaire",
+    "url": "https://mailrapido.com",
+    "siteName": "Mailrapido",
+    "lang": "fr",
+    "langUrl": "https://mailrapido.com/fr",
+    "icon": "https://mailrapido.com/images/logo512.png"
+  },
+  "common": {
+    "confirmation": {
+      "cancel": "Annuler",
+      "confirm": "Confirmer"
+    },
+    "locales": {},
+    "menu": {
+      "blog": "Blog",
+      "dashboard": "Tableau de bord",
+      "login": "Se connecter",
+      "pricing": "Tarification",
+      "howItWork": "Comment ça marche",
+      "signUp": "S'inscrire"
+    }
+  },
+  "banner": {
+    "title": "Adresse e-mail temporaire prête",
+    "subtitle": "Cette adresse e-mail peut être changée pour une autre. La recherche et le générateur d'adresses e-mail aléatoires sont également disponibles"
+  },
+  "workProcess": {
+    "title": "Section Comment ça marche",
+    "subtitle": "Processus de travail",
+    "description": "Outil fluide et fonctionnel pour gérer le courrier électronique temporaire actuel, supprimer, rafraîchir, créer qui améliore l'expérience utilisateur, vous pouvez être créatif",
+    "step1": "C'est un email aléatoire, ou créez-en un personnalisé",
+    "step2": "Allez sur votre site et inscrivez-vous",
+    "step3": "Vérifiez la boîte de messages, vous y trouverez tous vos emails"
+  },
+  "features": {
+    "title": "Fonctionnalités impressionnantes",
+    "subtitle": "Pourquoi nous choisir",
+    "description": "L'email temporaire jetable protège votre adresse e-mail réelle contre le spam, les envois publicitaires et les logiciels malveillants.",
+    "feature1": {
+      "title": "Simple et gratuit",
+      "desc": "Créez des e-mails temporaires en quelques étapes simples et toujours gratuitement"
+    },
+    "feature2": {
+      "title": "Sécurisé",
+      "desc": "Protégez votre vie privée et évitez le spam"
+    },
+    "feature3": {
+      "title": "À l'échelle mondiale",
+      "desc": "Utilisé par des professionnels du monde entier, essayez-le dès maintenant"
+    }
+  },
+  "addons": {
+    "title": "Générateur d'e-mails temporaires par Générateur d'e-mails temporaires"
+  },
+  "getApp": {
+    "title": "Téléchargez Notre Application Mobile",
+    "desc": "L'e-mail temporaire jetable protège votre adresse e-mail réelle contre le spam, les mailings publicitaires et les logiciels malveillants."
+  },
+  "testimonials": {
+    "title": "Ce Que Disent Nos Clients",
+    "quote1": "Juste une petite note pour dire que j'ai récemment engagé Valkyrie pour réaliser un travail de codage assez complexe pour moi. Il a terminé le travail dans un délai raisonnable et à un niveau de qualité très élevé avec une grande communication tout au long.",
+    "quote2": "Excellent travail sur mon script de scrape Cakephp ! Facile à communiquer et a même effectué quelques tâches supplémentaires qui ne faisaient pas partie du projet et qui ont été grandement appréciées ! Je vais certainement le réengager. ;-)",
+    "quote3": "Enfin, j'ai trouvé un bon programmeur, il vient de terminer un projet web responsive sur wordpress pour moi. Il a fait un travail parfait tout au long du processus pour un prix raisonnable. J'attends avec impatience la suite."
+  },
+  "pricing": {
+    "subtitle": "Tarification",
+    "title": "Le bon prix pour vous, qui que vous soyez",
+    "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos odit doloribus molestiae voluptatum.",
+    "month": "mois",
+    "monthly": "Mensuel",
+    "subscribe": "S'abonner",
+    "year": "an",
+    "yearly": "Annuel",
+    "btnText": "Commencez votre essai",
+
+    "public": {
+      "_1": "Adresses e-mails temporaires illimitées",
+      "_2": "Télécharger une copie locale des e-mails reçus",
+      "_3": "Conserver le même e-mail jusqu'à 5 jours"
+    },
+    "premium": {
+      "_1": "Toutes les fonctionnalités de l'offre publique incluses",
+      "_2": "Conserver les mêmes e-mails jusqu'à 1 an",
+      "_3": "Sauvegarder le contenu des e-mails reçus jusqu'à 1 mois",
+      "_4": "Transférer les e-mails reçus",
+      "_5": "Utiliser plusieurs e-mails en même temps (jusqu'à 30 boîtes aux lettres)"
+    },
+    "private": {
+      "_1": "Toutes les fonctionnalités de l'offre premium incluses",
+      "_2": "Lier votre propre domaine",
+      "_3": "Répondre aux e-mails reçus"
+    }
+  },
+  "faq": {
+    "title": "Questions Fréquemment Posées",
+    "ques1": "Comment recrutons-nous des talents?",
+    "ans1": "Nous travaillons avec notre société partenaire locale qui est leader dans la sélection locale de talents hautement qualifiés en Malaisie. Nous pouvons bénéficier de leurs 8 années d'expérience et de leur langue locale.",
+    "ques2": "Quelles tâches administratives vont survenir?",
+    "ans2": "Nous nous occuperons de toutes les tâches administratives, y compris la paie, les impôts et la sécurité sociale. Vous pouvez vous concentrer sur votre projet et la qualité de votre code.",
+    "ques3": "Comment gérez-vous les paiements des heures supplémentaires?",
+    "ans3": "Nous paierons les heures supplémentaires conformément à la loi locale et à l'accord avec le talent. Nous veillerons également à ce que le talent ne soit pas surchargé et que la qualité du travail soit maintenue.",
+    "ques4": "Pouvons-nous changer la charge de travail d'un talent d'horaires à temps plein?",
+    "ans4": "Oui, vous pouvez modifier la charge de travail d'un talent à tout moment. Nous ajusterons le contrat et le paiement en conséquence.",
+    "ques5": "Quelle est la différence entre Flexible & Engagement?",
+    "ans5": "Flexible est un modèle de paiement à l'usage avec un minimum de 10 heures par mois. Engagement est un abonnement mensuel avec un nombre fixe d'heures par mois.",
+    "ques6": "À quoi ressemble la configuration de l'emploi?",
+    "ans6": "Nous emploierons le talent en votre nom. Le talent travaillera exclusivement pour vous et vous aurez un contrôle total sur le travail et les résultats.",
+    "extraQues": "Vous avez encore des questions?",
+    "extraDesc": "Vous ne trouvez pas la réponse que vous cherchez ? Veuillez discuter avec notre équipe sympathique.",
+    "btnText": "Entrer en contact"
+  },
+
+  "blog": {
+    "subtitle": "Blog",
+    "title": "Notre dernier article",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit numquam eligendi quos odit doloribus molestiae voluptatum."
+  },
+
+  "footer": {
+    "description": "Vous pouvez changer votre adresse e-mail comme vous le souhaitez. Écrivez n'importe quel nom d'utilisateur ou générez-en un nouveau. Vous pouvez également choisir n'importe quel nom de domaine dans la liste déroulante ou utiliser la recherche (exemple : 'email*com' ou '.com')."
+  },
+
+  "contact": {
+    "title": "Nous Contacter",
+    "desc": "Nous sommes là pour vous aider. Si vous rencontrez un problème ou avez une suggestion, envoyez-nous simplement un message en utilisant ce formulaire."
+  },
+
+  "admin": {
+    "menu": {
+      "general": "Général",
+      "users": "Utilisateurs"
+    },
+    "users": {
+      "adminRole": "Administrateur",
+      "delete": "Supprimer",
+      "deleteUser": {
+        "deleted": "L'utilisateur a été supprimé avec succès !",
+        "deleting": "Suppression de l'utilisateur...",
+        "notDeleted": "L'utilisateur n'a pas pu être supprimé. Veuillez réessayer."
+      },
+      "emailVerified": {
+        "verified": "E-mail vérifié",
+        "waiting": "E-mail en attente de vérification"
+      },
+      "impersonate": "Se faire passer pour",
+      "impersonation": {
+        "impersonating": "Se faisant passer pour {name}...",
+        "unimpersonating": "Fin de l'usurpation..."
+      },
+      "loading": "Chargement des utilisateurs...",
+      "search": "Rechercher par nom ou e-mail...",
+      "title": "Gérer les utilisateurs"
+    }
+  },
+  "auth": {
+    "confirmation": {
+      "close": "Fermer cette fenêtre",
+      "message": "Vous pouvez fermer cette fenêtre et continuer dans la fenêtre d'où vous venez.",
+      "title": "Vous êtes connecté !"
+    },
+    "continueWithProvider": "Continuer avec {provider}",
+    "forgotPassword": {
+      "backToSignin": "Retour à la connexion",
+      "email": "E-mail",
+      "hints": {
+        "linkNotSent": {
+          "message": "Nous sommes désolés, mais nous n'avons pas pu vous envoyer de lien pour réinitialiser votre mot de passe. Veuillez réessayer plus tard.",
+          "title": "Lien non envoyé"
+        },
+        "linkSent": {
+          "message": "Nous vous avons envoyé un lien pour continuer. Veuillez vérifier votre boîte de réception.",
+          "title": "Lien envoyé"
+        }
+      },
+      "message": "Veuillez entrer votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+      "submit": "Envoyer le lien",
+      "title": "Mot de passe oublié ?"
+    },
+    "invalidToken": {
+      "message": "Le lien est soit invalide soit expiré. Veuillez essayer de vous connecter à nouveau.",
+      "title": "Jeton invalide"
+    },
+    "login": {
+      "modes": {
+        "magicLink": "Lien magique",
+        "password": "Mot de passe"
+      },
+      "createAnAccount": "Créer un compte",
+      "dontHaveAnAccount": "Vous n'avez pas encore de compte ?",
+      "email": "E-mail",
+      "forgotPassword": "Mot de passe oublié ?",
+      "hints": {
+        "emailNotVerified": {
+          "message": "Veuillez vérifier votre e-mail avant de vous connecter. Vérifiez votre boîte de réception pour le mail de vérification.",
+          "title": "E-mail non vérifié"
+        },
+        "invalidCredentials": {
+          "message": "Nous sommes désolés, mais les informations d'identification que vous avez saisies sont invalides. Veuillez réessayer.",
+          "title": "Informations d'identification invalides"
+        },
+        "linkNotSent": {
+          "message": "Nous sommes désolés, mais nous n'avons pas pu vous envoyer de lien magique. Veuillez réessayer plus tard.",
+          "title": "Lien non envoyé"
+        },
+        "linkSent": {
+          "message": "Nous vous avons envoyé un lien pour continuer. Veuillez vérifier votre boîte de réception.",
+          "title": "Lien envoyé"
+        }
+      },
+      "password": "Mot de passe",
+      "sendMagicLink": "Envoyer le lien magique",
+      "submit": "Se connecter",
+      "subtitle": "Veuillez entrer vos informations d'identification pour vous connecter.",
+      "title": "Connectez-vous à votre compte"
+    },
+    "setup": {},
+    "signup": {
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "email": "E-mail",
+      "hints": {
+        "signupFailed": {
+          "message": "Nous sommes désolés, mais nous n'avons pas pu créer votre compte. Veuillez réessayer plus tard.",
+          "title": "Impossible de créer un compte"
+        },
+        "verifyEmail": {
+          "message": "Nous vous avons envoyé un lien pour vérifier votre e-mail. Veuillez vérifier votre boîte de réception.",
+          "title": "Vérifiez votre e-mail"
+        }
+      },
+      "message": "Nous sommes heureux que vous souhaitiez nous rejoindre. Veuillez remplir le formulaire ci-dessous pour créer votre compte.",
+      "name": "Nom",
+      "password": "Mot de passe",
+      "passwordHint": "Veuillez saisir au moins 8 caractères.",
+      "signIn": "Se connecter",
+      "submit": "Créer un compte",
+      "title": "Créer un nouveau compte"
+    },
+    "teamInvitation": {
+      "description": "Vous avez été invité à rejoindre une équipe. En vous connectant ou en vous inscrivant, vous accepterez automatiquement l'invitation et rejoindrez l'équipe.",
+      "title": "Accepter l'invitation à rejoindre une équipe"
+    },
+    "verifyOtp": {
+      "errors": {
+        "otpTooShort": "Le mot de passe à usage unique est trop court."
+      },
+      "hints": {
+        "verificationFailed": {
+          "message": "Nous sommes désolés, le mot de passe que vous avez saisi est invalide. Veuillez réessayer.",
+          "title": "Mot de passe à usage unique invalide"
+        }
+      },
+      "message": "Vous avez du courrier ! Veuillez vérifier votre boîte de réception pour le mot de passe à usage unique que nous vous avons envoyé. Vous pouvez également cliquer sur le lien dans l'e-mail et cette page vous redirigera automatiquement.",
+      "otp": "Mot de passe à usage unique",
+      "submit": "Continuer",
+      "title": "Vérifiez votre e-mail"
+    }
+  },
+  "createTeam": {
+    "name": "Nom de l'équipe",
+    "notifications": {
+      "error": "Nous sommes désolés, mais nous n'avons pas pu créer votre équipe. Veuillez réessayer plus tard.",
+      "success": "Votre équipe a été créée. Vous pouvez maintenant inviter des membres."
+    },
+    "submit": "Créer une équipe",
+    "title": "Créer une équipe"
+  },
+  "dashboard": {
+    "menu": {
+      "admin": "Administrateur",
+      "aiDemo": "Démo IA",
+      "dashboard": "Tableau de bord",
+      "settings": "Paramètres"
+    },
+    "sidebar": {
+      "createTeam": "Créer une nouvelle équipe"
+    },
+    "subtitle": "Consultez les dernières statistiques de votre entreprise géniale.",
+    "userMenu": {
+      "accountSettings": "Paramètres du compte",
+      "colorMode": "Mode couleur",
+      "documentation": "Documentation",
+      "language": "Langue",
+      "logout": "Déconnexion",
+      "unimpersonate": "Annuler l'usurpation"
+    },
+    "welcome": "Bienvenue {name} !"
+  },
+  "newsletter": {
+    "email": "E-mail",
+    "hints": {
+      "success": {
+        "message": "Merci de vous être abonné à notre newsletter. Nous vous tiendrons informé.",
+        "title": "Abonné"
+      }
+    },
+    "submit": "S'abonner",
+    "subtitle": "Soyez parmi les premiers à accéder à supastarter.nextjs.",
+    "title": "Obtenez un accès anticipé"
+  },
+
+  "settings": {
+    "account": {
+      "avatar": {
+        "description": "Pour changer votre avatar, cliquez sur l'image sur le côté droit de ce bloc et sélectionnez un fichier depuis votre ordinateur pour le télécharger.",
+        "title": "Votre avatar"
+      },
+      "changeEmail": {
+        "description": "Entrez un nouvel e-mail et cliquez sur Enregistrer pour le mettre à jour.",
+        "note": "Vous devrez vérifier votre nouvelle adresse e-mail avant de pouvoir vous connecter à nouveau.",
+        "title": "Votre e-mail"
+      },
+      "changeName": {
+        "title": "Votre nom"
+      },
+      "changePassword": {
+        "description": "Pour changer votre mot de passe, saisissez le nouveau ci-dessous et cliquez sur Enregistrer.",
+        "note": "Veuillez saisir au moins 8 caractères.",
+        "title": "Votre mot de passe"
+      },
+      "deleteAccount": {
+        "confirmation": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+        "description": "Supprimer définitivement votre compte. Une fois votre compte supprimé, il n'y a pas de retour en arrière possible. Soyez certain.",
+        "submit": "Supprimer le compte",
+        "title": "Supprimer le compte"
+      },
+      "title": "Compte"
+    },
+    "billing": {
+      "cancelSubscription": {
+        "notifications": {
+          "error": {
+            "title": "Impossible d'annuler l'abonnement"
+          },
+          "success": {
+            "title": "L'abonnement a été annulé"
+          }
+        }
+      },
+      "createCustomerPortal": {
+        "label": "Gérer les détails de facturation",
+        "notifications": {
+          "error": {
+            "title": "Impossible de créer une session de portail client. Veuillez réessayer."
+          }
+        }
+      },
+      "pauseSubscription": {
+        "label": "Suspendre l'abonnement",
+        "notifications": {
+          "error": {
+            "title": "Impossible de suspendre l'abonnement. Veuillez réessayer."
+          },
+          "success": {
+            "title": "L'abonnement a été suspendu."
+          }
+        }
+      },
+      "resumeSubscription": {
+        "notifications": {
+          "error": {
+            "title": "Impossible de reprendre l'abonnement"
+          },
+          "success": {
+            "title": "L'abonnement a été repris"
+          }
+        }
+      },
+      "subscription": {
+        "cancel": "Annuler votre abonnement",
+        "currentPlan": "Votre plan actuel",
+        "currentSubscription": "Votre abonnement actuel",
+        "endsOn": "Votre abonnement se termine le <strong>{nextPaymentDate, date, medium}</strong>",
+        "freePlan": {
+          "title": "Gratuit"
+        },
+        "month": "mois",
+        "monthly": "Mensuel",
+        "nextPayment": "Le prochain paiement aura lieu le <strong>{nextPaymentDate, date, medium}</strong>",
+        "pauseSubscription": "Suspendre votre abonnement",
+        "resume": "Reprendre l'abonnement",
+        "resumeSubscription": "Reprendre votre abonnement",
+        "status": {
+          "active": "Actif",
+          "canceled": "Annulé",
+          "expired": "Expiré",
+          "incomplete": "Incomplet",
+          "past_due": "En retard",
+          "paused": "En pause",
+          "trialing": "Essai",
+          "unpaid": "Impayé"
+        },
+        "subscribe": "S'abonner",
+        "switchToPlan": "Passer à ce plan",
+        "updateBillingDetails": "Mettre à jour les détails de facturation",
+        "upgradePlan": "Mettre à niveau votre plan",
+        "year": "an",
+        "yearly": "Annuel",
+        "yourSubscription": "Vous êtes abonné à <strong>{plan}</strong> ({price}/{interval})"
+      },
+      "title": "Facturation"
+    },
+    "menu": {
+      "account": {
+        "general": "Général",
+        "title": "Compte"
+      },
+      "team": {
+        "billing": "Facturation",
+        "general": "Général",
+        "members": "Membres",
+        "title": "Équipe"
+      }
+    },
+    "notifications": {
+      "accountDeleted": "Votre compte a été supprimé.",
+      "accountNotDeleted": "Nous n'avons pas pu supprimer votre compte. Veuillez réessayer plus tard.",
+      "avatarNotUpdated": "Nous n'avons pas pu mettre à jour votre avatar. Veuillez réessayer.",
+      "avatarUpdated": "Votre avatar a été mis à jour.",
+      "emailUpdated": "Votre e-mail a été mis à jour.",
+      "nameUpdateFailed": "Impossible de mettre à jour votre nom. Veuillez réessayer plus tard.",
+      "nameUpdated": "Votre nom a été mis à jour.",
+      "passwordNotUpdated": "Nous n'avons pas pu mettre à jour votre mot de passe. Veuillez réessayer.",
+      "passwordUpdated": "Votre mot de passe a été mis à jour.",
+      "teamDeleted": "Votre équipe a été supprimée.",
+      "teamNameNotUpdated": "Nous n'avons pas pu mettre à jour le nom de votre équipe. Veuillez réessayer plus tard.",
+      "teamNameUpdated": "Le nom de votre équipe a été mis à jour.",
+      "teamNotDeleted": "Nous n'avons pas pu supprimer votre équipe. Veuillez réessayer plus tard."
+    },
+    "save": "Enregistrer",
+    "sections": {
+      "team": "Équipe"
+    },
+    "subtitle": "Gérez vos paramètres",
+    "team": {
+      "changeName": {
+        "description": "Saisissez un nouveau nom et cliquez sur Enregistrer pour le mettre à jour.",
+        "teamUrl": "Votre URL d'équipe sera <strong>{url}</strong>.",
+        "title": "Nom de l'équipe"
+      },
+      "deleteTeam": {
+        "confirmation": "Êtes-vous sûr de vouloir supprimer votre équipe ?",
+        "description": "Supprimer définitivement votre équipe. Une fois votre équipe supprimée, il n'y a pas de retour en arrière possible. Soyez certain.",
+        "submit": "Supprimer l'équipe",
+        "title": "Supprimer l'équipe"
+      },
+      "members": {
+        "activeMembers": "Membres actifs",
+        "invitations": {
+          "email": "E-mail",
+          "empty": "Vous n'avez encore invité aucun membre.",
+          "revoke": "Révoquer l'invitation"
+        },
+        "invite": "Inviter un nouveau membre",
+        "inviteMember": {
+          "email": "E-mail",
+          "notifications": {
+            "error": {
+              "description": "Nous n'avons pas pu inviter le membre. Veuillez réessayer plus tard.",
+              "title": "Impossible d'inviter le membre"
+            },
+            "success": {
+              "description": "Le membre a été invité.",
+              "title": "Membre invité"
+            }
+          },
+          "role": "Rôle",
+          "submit": "Inviter",
+          "title": "Inviter un nouveau membre"
+        },
+        "notifications": {
+          "removeMember": {
+            "error": {
+              "description": "Impossible de supprimer le membre de votre équipe. Veuillez réessayer."
+            },
+            "loading": {
+              "description": "Suppression du membre de l'équipe..."
+            },
+            "success": {
+              "description": "Le membre a été supprimé avec succès de votre équipe."
+            }
+          },
+          "revokeInvitation": {
+            "error": {
+              "description": "L'invitation n'a pas pu être révoquée. Veuillez réessayer plus tard."
+            },
+            "loading": {
+              "description": "Révocation de l'invitation..."
+            },
+            "success": {
+              "description": "L'invitation a été révoquée."
+            }
+          },
+          "updateMembership": {
+            "error": {
+              "description": "Impossible de mettre à jour l'adhésion à l'équipe. Veuillez réessayer."
+            },
+            "loading": {
+              "description": "Mise à jour de l'adhésion..."
+            },
+            "success": {
+              "description": "L'adhésion a été mise à jour avec succès"
+            }
+          }
+        },
+        "pendingInvitations": "Invitations en attente",
+        "removeMember": "Supprimer le membre",
+        "roles": {
+          "member": "Membre",
+          "owner": "Propriétaire"
+        },
+        "title": "Membres"
+      },
+      "subtitle": "Gérez les paramètres et les membres de votre équipe",
+      "title": "Équipe"
+    },
+    "title": "Paramètres"
+  }
+}

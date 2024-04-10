@@ -1,0 +1,521 @@
+{
+  "seo": {
+    "title": "Mailrapido • Just keep your personal email safe 🔒",
+    "desc": "Forget about junk mail, with Mailrapido 💌 Get Free access to an unlimited number of disposable e-mail addresses ✔ generated automatically or customizable.",
+    "keywords": "temporary email, temporary mail, disposable mail, disposable e-mail, email address, temp mail, temporary e-mail",
+    "url": "https://mailrapido.com",
+    "siteName": "Mailrapido",
+    "lang": "en",
+    "langUrl": "https://mailrapido.com/en",
+    "icon": "https://mailrapido.com/images/logo512.png"
+  },
+  "common": {
+    "confirmation": {
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "locales": {},
+    "menu": {
+      "blog": "Blog",
+      "dashboard": "Dashboard",
+      "login": "Login",
+      "pricing": "Premium",
+      "howItWork": "How It Work",
+      "signUp": "Sign Up"
+    }
+  },
+  "banner": {
+    "title": " temporary email address is ready",
+    "subtitle": "This mail can be changed to another. Also available search and random email generator"
+  },
+  "workProcess": {
+    "title": "How its work section",
+    "subtitle": "Work process",
+    "description": "Smouth and Functional tool to manager the current temp mail, delete, refresh, create That make user experience great, you can be creative",
+    "step1": "Cet a random email, or create a custom one",
+    "step2": "Go to you site and register",
+    "step3": "Check the message box you will got all you emails there."
+  },
+  "features": {
+    "title": "Awesome Features",
+    "subtitle": "Why choose us",
+    "description": "Disposable temporary email protects your real email address from spam, advertising mailings, malwares.",
+    "feature1": {
+      "title": "Simple & Free",
+      "desc": "Create temp emails fast simple steps & always free"
+    },
+    "feature2": {
+      "title": "Secure",
+      "desc": "Protect your privacy and avoid spam"
+    },
+    "feature3": {
+      "title": "Worldwide",
+      "desc": "Used by professionals all around the world , try it now"
+    }
+  },
+  "addons": {
+    "title": "Temporary Email Generator by Temporary Email Generator"
+  },
+  "getApp": {
+    "title": "Download Our Mobile App",
+    "desc": "Disposable temporary email protects your real email address from spam, advertising mailings, malwares."
+  },
+  "testimonials": {
+    "title": "What Our Customer Says",
+    "quote1": "Just a quick note to say that I recently hired Valkyrie to do some quite complex coding work for me. He finished the job within a reasonable timeframe and to a very high standard with great communication throughout.",
+    "quote2": "Great job on my Cakephp scraper script! Easy to communicate with and even did a few additional tasks that were not apart of the project that were greatly appreciated! Will be hiring again for sure. ;-)",
+    "quote3": "Finally I found a good programmer, he just completed a responsive web-project on wordpress for me. He did a perfect job throughout the whole process for a reasonable price. I am looking forward to"
+  },
+  "pricing": {
+    "subtitle": "Pricing",
+    "title": "The right price for you, whoever you are",
+    "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos odit doloribus molestiae voluptatum. ",
+    "month": "month",
+    "monthly": "Monthly",
+    "subscribe": "Subscribe",
+    "year": "year",
+    "yearly": "Yearly",
+    "btnText": "Start your trial",
+
+    "public": {
+      "_1": "Unlimited temporary emails",
+      "_2": "Download local copy of received emails",
+      "_3": "Keep the same email up to 5 days"
+    },
+    "premium": {
+      "_1": "All public offer features included",
+      "_2": "Keep the same emails up to 1 year",
+      "_3": "Save received emails content up to 1 month",
+      "_4": "Forward received emails",
+      "_5": "Use multi emails at once (Up to 30 mailbox)"
+    },
+    "private": {
+      "_1": "All premium offer features included",
+      "_2": "Link your own domain",
+      "_3": "Reply to received emails"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "ques1": "How are we sourcing talents?",
+    "ans1": "We’re working with our local partner company who is leading the local selection of highly educated talents in Malaysia. We can benefit from their 8 years of experience and local language.",
+    "ques2": "What administrative things will come up?",
+    "ans2": "We will take care of all administrative tasks, including payroll, taxes, and social security. You can focus on your project and the quality of your code.",
+    "ques3": "How do you handle overtime payouts?",
+    "ans3": "We will pay overtime according to the local law and the agreement with the talent. We will also ensure that the talent is not overworked and that the quality of the work is maintained.",
+    "ques4": "Can we change a talents workload from hourly based to full-time?",
+    "ans4": "Yes, you can change the workload of a talent at any time. We will adjust the contract and the payment accordingly.",
+    "ques5": "What's the difference between Flexible & Commitment?",
+    "ans5": "Flexible is a pay-as-you-go model with a minimum of 10 hours per month. Commitment is a monthly subscription with a fixed amount of hours per month.",
+    "ques6": "How does the employment setup looks like?",
+    "ans6": "We will employ the talent on your behalf. The talent will work exclusively for you and you will have full control over the work and the results.",
+
+    "extraQues": "Still Have Questions?",
+    "extraDesc": "Can’t find the answer you’re looking for? Please chat to our friendly team.",
+    "btnText": "Get in touch"
+  },
+  "blog": {
+    "subtitle": "Blog",
+    "title": "Our Latest Article",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit numquam eligendi quos odit doloribus molestiae voluptatum."
+  },
+  "footer": {
+    "description": "You can change your email address as you like. Write any username or generate a new one. You can also choose any domain name from the drop-down list or use the search (example: 'email*com' or '.com')."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "desc": "We are here to help, if you are faced any issue or having a suggesting just send to you a message using this form"
+  },
+
+  "admin": {
+    "menu": {
+      "general": "General",
+      "users": "Users"
+    },
+    "users": {
+      "adminRole": "Admin",
+      "delete": "Delete",
+      "deleteUser": {
+        "deleted": "User has been deleted successfully!",
+        "deleting": "Deleting user...",
+        "notDeleted": "User could not be deleted. Please try again."
+      },
+      "emailVerified": {
+        "verified": "Email verified",
+        "waiting": "Email waiting for verification"
+      },
+      "impersonate": "Impersonate",
+      "impersonation": {
+        "impersonating": "Impersonating as {name}...",
+        "unimpersonating": "Unimpersonating..."
+      },
+      "loading": "Loading users...",
+      "search": "Search for name or email...",
+      "title": "Manage users"
+    }
+  },
+  "auth": {
+    "confirmation": {
+      "close": "Close this window",
+      "message": "You can close this window and continue in the window you came from.",
+      "title": "You have been logged in!"
+    },
+    "continueWithProvider": "Continue with {provider}",
+    "forgotPassword": {
+      "backToSignin": "Back to signin",
+      "email": "Email",
+      "hints": {
+        "linkNotSent": {
+          "message": "We are sorry, but we were unable to send you a link to reset your password. Please try again later.",
+          "title": "Link not sent"
+        },
+        "linkSent": {
+          "message": "We have sent you a link to continue. Please check your inbox.",
+          "title": "Link sent"
+        }
+      },
+      "message": "Please enter your email address and we will send you a link to reset your password.",
+      "submit": "Send link",
+      "title": "Forgot your password?"
+    },
+    "invalidToken": {
+      "message": "The link is either invalid or expired. Please try to log in again.",
+      "title": "Invalid token"
+    },
+    "login": {
+      "modes": {
+        "magicLink": "Magic link",
+        "password": "Password"
+      },
+      "createAnAccount": "Create an account",
+      "dontHaveAnAccount": "Don't have an account yet?",
+      "email": "Email",
+      "forgotPassword": "Forgot password?",
+      "hints": {
+        "emailNotVerified": {
+          "message": "Please verify your email before signing in. Check your inbox for the verification mail.",
+          "title": "Email not verified"
+        },
+        "invalidCredentials": {
+          "message": "We are sorry, but the credentials you entered are invalid. Please try again.",
+          "title": "Invalid credentials"
+        },
+        "linkNotSent": {
+          "message": "We are sorry, but we were unable to send you a magic link. Please try again later.",
+          "title": "Link not sent"
+        },
+        "linkSent": {
+          "message": "We have sent you a link to continue. Please check your inbox.",
+          "title": "Link sent"
+        }
+      },
+      "password": "Password",
+      "sendMagicLink": "Send magic link",
+      "submit": "Sign in",
+      "subtitle": "Please enter your credentials to sign in.",
+      "title": "Login to your account"
+    },
+    "setup": {},
+    "signup": {
+      "alreadyHaveAccount": "Already have an account?",
+      "email": "Email",
+      "hints": {
+        "signupFailed": {
+          "message": "We are sorry, but we were unable to create your account. Please try again later.",
+          "title": "Could not create account"
+        },
+        "verifyEmail": {
+          "message": "We have sent you a link to verify your email. Please check your inbox.",
+          "title": "Verify your email"
+        }
+      },
+      "message": "We are happy that you want to join us. Please fill in the form below to create your account.",
+      "name": "Name",
+      "password": "Password",
+      "passwordHint": "Please enter at least 8 characters.",
+      "signIn": "Sign in",
+      "submit": "Create account",
+      "title": "Create a new account"
+    },
+    "teamInvitation": {
+      "description": "You have been invited to join a team. By logging in or signing up you will automatically accept the invitation and join the team.",
+      "title": "Accept team invitation"
+    },
+    "verifyOtp": {
+      "errors": {
+        "otpTooShort": "The one time password is too short."
+      },
+      "hints": {
+        "verificationFailed": {
+          "message": "We are sorry, the password you entered is invalid. Please try again.",
+          "title": "Invalid one time password"
+        }
+      },
+      "message": "You have mail! Please check your inbox for the one time password we sent you. You can also click the link in the email and this page will redirect you automatically.",
+      "otp": "One time password",
+      "submit": "Continue",
+      "title": "Verify your email"
+    }
+  },
+
+  "createTeam": {
+    "name": "Team name",
+    "notifications": {
+      "error": "We are sorry, but we were unable to create your team. Please try again later.",
+      "success": "Your team has been created. You can now invite members."
+    },
+    "submit": "Create team",
+    "title": "Create a team"
+  },
+  "dashboard": {
+    "menu": {
+      "admin": "Admin",
+      "aiDemo": "AI Demo",
+      "dashboard": "Dashboard",
+      "settings": "Settings"
+    },
+    "sidebar": {
+      "createTeam": "Create a new team"
+    },
+    "subtitle": "See the latest stats of your awesome business.",
+    "userMenu": {
+      "accountSettings": "Account settings",
+      "colorMode": "Color mode",
+      "documentation": "Documentation",
+      "language": "Language",
+      "logout": "Logout",
+      "unimpersonate": "Unimpersonate"
+    },
+    "welcome": "Welcome {name}!"
+  },
+  "newsletter": {
+    "email": "Email",
+    "hints": {
+      "success": {
+        "message": "Thank you for subscribing to our newsletter. We will keep you posted.",
+        "title": "Subscribed"
+      }
+    },
+    "submit": "Subscribe",
+    "subtitle": "Be among the first to get access to supastarter.nextjs.",
+    "title": "Get early access"
+  },
+
+  "settings": {
+    "account": {
+      "avatar": {
+        "description": "To change your avatar click the picture on the right side of this block and select a file from your computer to upload.",
+        "title": "Your avatar"
+      },
+      "changeEmail": {
+        "description": "Enter a new email and click save to update it.",
+        "note": "You will need to verify your new email address before you can sign in again.",
+        "title": "Your email"
+      },
+      "changeName": {
+        "title": "Your name"
+      },
+      "changePassword": {
+        "description": "To change your password, enter the new one below and click save.",
+        "note": "Please enter at least 8 characters.",
+        "title": "Your password"
+      },
+      "deleteAccount": {
+        "confirmation": "Are you sure you want to delete your account?",
+        "description": "Permanently delete your account. Once you delete your account, there is no going back. Please be certain.",
+        "submit": "Delete account",
+        "title": "Delete account"
+      },
+      "title": "Account"
+    },
+    "billing": {
+      "cancelSubscription": {
+        "notifications": {
+          "error": {
+            "title": "Could not cancel subscription"
+          },
+          "success": {
+            "title": "Subscription was canceled"
+          }
+        }
+      },
+      "createCustomerPortal": {
+        "label": "Manage billing details",
+        "notifications": {
+          "error": {
+            "title": "Could not create a customer portal session. Please try again."
+          }
+        }
+      },
+      "pauseSubscription": {
+        "label": "Pause subscription",
+        "notifications": {
+          "error": {
+            "title": "Could not pause the subscription. Please try again."
+          },
+          "success": {
+            "title": "The subscription was paused."
+          }
+        }
+      },
+      "resumeSubscription": {
+        "notifications": {
+          "error": {
+            "title": "Could not resume subscription"
+          },
+          "success": {
+            "title": "Subscription was resumed"
+          }
+        }
+      },
+      "subscription": {
+        "cancel": "Cancel your subscription",
+        "currentPlan": "Your current plan",
+        "currentSubscription": "Your current subscription",
+        "endsOn": "Your subscription ends on <strong>{nextPaymentDate, date, medium}</strong>",
+        "freePlan": {
+          "title": "Free"
+        },
+        "month": "month",
+        "monthly": "Monthly",
+        "nextPayment": "The next payment will be on <strong>{nextPaymentDate, date, medium}</strong>",
+        "pauseSubscription": "Pause your subscription",
+        "resume": "Resume subscription",
+        "resumeSubscription": "Resume your subscription",
+        "status": {
+          "active": "Active",
+          "canceled": "Canceled",
+          "expired": "Expired",
+          "incomplete": "Incomplete",
+          "past_due": "Past due",
+          "paused": "Paused",
+          "trialing": "Trialing",
+          "unpaid": "Unpaid"
+        },
+        "subscribe": "Subscribe",
+        "switchToPlan": "Switch to this plan",
+        "updateBillingDetails": "Update billing details",
+        "upgradePlan": "Upgrade your plan",
+        "year": "year",
+        "yearly": "Yearly",
+        "yourSubscription": "Your are subscribed to <strong>{plan}</strong> ({price}/{interval})"
+      },
+      "title": "Billing"
+    },
+    "menu": {
+      "account": {
+        "general": "General",
+        "title": "Account"
+      },
+      "team": {
+        "billing": "Billing",
+        "general": "General",
+        "members": "Members",
+        "title": "Team"
+      }
+    },
+    "notifications": {
+      "accountDeleted": "Your account has been deleted.",
+      "accountNotDeleted": "We were unable to delete your account. Please try again later.",
+      "avatarNotUpdated": "We were unable to update your avatar. Please try again.",
+      "avatarUpdated": "Your avatar has been updated.",
+      "emailUpdated": "Your email has been updated.",
+      "nameUpdateFailed": "Could not update your name. Please try again later.",
+      "nameUpdated": "Your name has been updated.",
+      "passwordNotUpdated": "We were unable to update your password. Please try again.",
+      "passwordUpdated": "Your password has been updated.",
+      "teamDeleted": "Your team has been deleted.",
+      "teamNameNotUpdated": "We were unable to update your team name. Please try again later.",
+      "teamNameUpdated": "Your team name has been updated.",
+      "teamNotDeleted": "We were unable to delete your team. Please try again later."
+    },
+    "save": "Save",
+    "sections": {
+      "team": "Team"
+    },
+    "subtitle": "Manage your settings",
+    "team": {
+      "changeName": {
+        "description": "Enter a new name and click save to update it.",
+        "teamUrl": "Your team url will be <strong>{url}</strong>.",
+        "title": "Team name"
+      },
+      "deleteTeam": {
+        "confirmation": "Are you sure you want to delete your team?",
+        "description": "Permanently delete your team. Once you delete your team, there is no going back. Please be certain.",
+        "submit": "Delete team",
+        "title": "Delete team"
+      },
+      "members": {
+        "activeMembers": "Active members",
+        "invitations": {
+          "email": "Email",
+          "empty": "You have not invited any members yet.",
+          "revoke": "Revoke invitation"
+        },
+        "invite": "Invite a new member",
+        "inviteMember": {
+          "email": "Email",
+          "notifications": {
+            "error": {
+              "description": "We were unable to invite the member. Please try again later.",
+              "title": "Could not invite member"
+            },
+            "success": {
+              "description": "The member has been invited.",
+              "title": "Member invited"
+            }
+          },
+          "role": "Role",
+          "submit": "Invite",
+          "title": "Invite new member"
+        },
+        "notifications": {
+          "removeMember": {
+            "error": {
+              "description": "Could not remove the member from your team. Please try again."
+            },
+            "loading": {
+              "description": "Removing member from team..."
+            },
+            "success": {
+              "description": "The member has been successfully removed from your team."
+            }
+          },
+          "revokeInvitation": {
+            "error": {
+              "description": "The invitation could not be revoked. Please try again later."
+            },
+            "loading": {
+              "description": "Revoking invitation..."
+            },
+            "success": {
+              "description": "The invitation has been revoked."
+            }
+          },
+          "updateMembership": {
+            "error": {
+              "description": "Could not update team membership. Please try again."
+            },
+            "loading": {
+              "description": "Updating membership..."
+            },
+            "success": {
+              "description": "Membership was updated successfully"
+            }
+          }
+        },
+        "pendingInvitations": "Pending invitations",
+        "removeMember": "Remove member",
+        "roles": {
+          "member": "Member",
+          "owner": "Owner"
+        },
+        "title": "Members"
+      },
+      "subtitle": "Manage your team settings and members",
+      "title": "Team"
+    },
+    "title": "Settings"
+  }
+}
