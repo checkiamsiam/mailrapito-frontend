@@ -60,7 +60,7 @@ const Features = () => {
 
           <div>
             <Image
-              src={"/images/feature/feature.png"}
+              src={"/images/feature/feature.svg"}
               className="rounded-3xl"
               alt="Feature Image"
               width={574}
