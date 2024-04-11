@@ -50,9 +50,9 @@ const FAQ = () => {
     },
   ];
   return (
-    <section id="faq" className="relative overflow-hidden py-12">
+    <section id="faq" className="relative overflow-hidden py-16">
       <div className="container relative z-10">
-        <SectionHeading title="Frequently Asked Questions" />
+        <SectionHeading title={t("faq.title")} />
 
         <div className="mt-12" data-aos="fade-up">
           <Accordion

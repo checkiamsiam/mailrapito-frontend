@@ -25,7 +25,7 @@
     }
   },
   "banner": {
-    "title": "Voted #1 by Users:",
+    "title": "Voted #1 by Users",
     "subtitle": "Experience the Ultimate in Temporary Email Services, We Are Your Premier Choice"
   },
   "workProcess": {
@@ -87,7 +87,8 @@
       "_2": "Keep the same emails up to 1 year",
       "_3": "Save received emails content up to 1 month",
       "_4": "Forward received emails",
-      "_5": "Use multi emails at once (Up to 30 mailbox)"
+      "_5": "Use multi emails at once (Up to 30 mailbox)",
+      "_6": "Use multi emails at once (Up to 30 mailbox)"
     },
     "private": {
       "_1": "All premium offer features included",

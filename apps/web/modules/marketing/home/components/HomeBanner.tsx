@@ -251,7 +251,7 @@ export default function HomeBanner() {
               />
             </div>
             {/* Email Top */}
-            <div className="relative flex flex-col items-center py-6">
+            <div className="relative flex flex-col items-center pb-6 pt-10">
               <div className="bg-blue-600 rounded-md mb-4">
                 <p className="text-xs	py-1 text-center text-white">{"Your Temporary Email Address"}</p>
                 <div className="bg-primary-dark flex items-center gap-2 rounded-md p-2 text-white">

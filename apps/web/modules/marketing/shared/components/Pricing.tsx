@@ -31,6 +31,7 @@ const Pricing = () => {
         t("pricing.premium._3"),
         t("pricing.premium._4"),
         t("pricing.premium._5"),
+        t("pricing.premium._6"),
       ],
       label: "Most Popular",
     },
@@ -69,7 +70,7 @@ const Pricing = () => {
             {data.map((item, i) => (
               <div
                 key={item.id}
-                className={`relative inline-block rounded-2xl ${item?.label ? "border-primary-dark w-full border-2  sm:w-[505px]" : "w-full sm:w-[505px] lg:w-[335px] lg:translate-y-10"}`}
+                className={`bg-gray-50 shadow-xl ${i === 0 ? "lg:min-h-[572px]" : data?.length === i + 1 ? "lg:min-h-[572px]" : "lg:min-h-[672px]"} relative inline-block rounded-2xl ${item?.label ? "border-primary-dark w-full border-2  sm:w-[505px]" : "w-full sm:w-[505px] lg:w-[335px] lg:translate-y-10"} ${i === 0 ? "lg:rounded-br-none" : data?.length === i + 1 ? "lg:rounded-bl-none" : ""}`}
               >
                 {/* Badge */}
                 {item?.label && (
@@ -93,7 +94,7 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <div className="rounded-b-2xl bg-gray-50 p-5 shadow-xl sm:p-10">
+                <div className={`lg:rounded-tr-none ${i === 0 ? "lg:rounded-br-none" : data?.length === i + 1 ? "lg:rounded-bl-none" : ""} rounded-b-2xl bg-gray-50 p-5 sm:p-10`}>
                   <ul className="flex flex-col gap-4">
                     {item.features.map((feature, index) => (
                       <li
@@ -107,10 +108,12 @@ const Pricing = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6 text-center">
+                </div>
+
+                <div className="m-6 text-center flex flex-col items-center">
                     {item?.label ? (
                       <PrimaryButton
-                        className="w-full py-6"
+                        className="w-full py-8"
                         onClick={() =>
                           router.push("/app/settings/team/billing")
                         }
@@ -119,7 +122,7 @@ const Pricing = () => {
                       </PrimaryButton>
                     ) : (
                       <Button
-                        className="text-primary hover:bg-primary w-full bg-white py-6 shadow-xl hover:text-white"
+                        className="w-full py-8 bottom-2 text-primary-dark hover:bg-primary-dark bg-white shadow-xl hover:text-white"
                         onClick={() =>
                           router.push("/app/settings/team/billing")
                         }
@@ -128,7 +131,6 @@ const Pricing = () => {
                       </Button>
                     )}
                   </div>
-                </div>
               </div>
             ))}
           </div>
