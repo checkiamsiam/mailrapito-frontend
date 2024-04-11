@@ -1,6 +1,5 @@
 import AuthContainer from "@marketing/auth/AuthContainer";
 import SignUpForm from "@marketing/auth/SignUpForm";
-import PageBanner from "@marketing/shared/components/PageBanner";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -15,7 +14,7 @@ export async function generateMetadata() {
 const SignUpPage = () => {
   return (
     <>
-      <PageBanner title="Sign Up" />
+      {/* <PageBanner title="Sign Up" /> */}
       <AuthContainer>
         <SignUpForm />
       </AuthContainer>
