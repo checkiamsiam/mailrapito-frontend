@@ -36,7 +36,7 @@ export function Logo({
 
       {withLabel && (
         <span className="text-grayText ml-3 text-sm font-bold md:text-xl">
-          TEMPORARY - EMAIL
+          MAILRAPIDO
         </span>
       )}
     </span>

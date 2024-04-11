@@ -143,7 +143,7 @@ export function NavBar() {
 
             {isClient && userLoaded && (
               <>
-                <PrimaryButton className="hidden rounded-lg py-6 text-base md:flex">
+                <PrimaryButton className="hidden rounded-lg py-6 text-base md:flex px-8">
                   {user ? (
                     <Link href="/app">{t("common.menu.dashboard")}</Link>
                   ) : (

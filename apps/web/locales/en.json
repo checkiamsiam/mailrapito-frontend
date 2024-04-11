@@ -25,8 +25,8 @@
     }
   },
   "banner": {
-    "title": " temporary email address is ready",
-    "subtitle": "This mail can be changed to another. Also available search and random email generator"
+    "title": "Voted #1 by Users:",
+    "subtitle": "Experience the Ultimate in Temporary Email Services, We Are Your Premier Choice"
   },
   "workProcess": {
     "title": "How its work section",
@@ -120,7 +120,8 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit numquam eligendi quos odit doloribus molestiae voluptatum."
   },
   "footer": {
-    "description": "You can change your email address as you like. Write any username or generate a new one. You can also choose any domain name from the drop-down list or use the search (example: 'email*com' or '.com')."
+    "description": "You can change your email address as you like. Write any username or generate a new one. You can also choose any domain name from the drop-down list or use the search (example: 'email*com' or '.com').",
+    "aboutus": "MailRapido, crafted by the OBISTAR Agency, harnesses cutting-edge technologies. Our paid plans encompass server maintenance and ongoing service development, ensuring an ever more robust platform."
   },
   "contact": {
     "title": "Contact Us",

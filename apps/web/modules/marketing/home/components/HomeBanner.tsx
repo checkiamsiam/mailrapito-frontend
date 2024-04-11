@@ -252,27 +252,27 @@ export default function HomeBanner() {
             </div>
             {/* Email Top */}
             <div className="relative flex flex-col items-center py-6">
-              <h4 className="text-title text-xl font-bold">
-                {"Your Temporary Email Address"}
-              </h4>
-              <div className="bg-primary-dark my-6 flex items-center gap-2 rounded-md p-2 text-white">
-                <p className="md:text- w-full px-2 text-sm font-semibold md:w-80 md:px-4 md:text-base">
-                  {messageLoading ? "Loading..." : messages?.data?.mailbox}
-                </p>
+              <div className="bg-blue-600 rounded-md mb-4">
+                <p className="text-xs	py-1 text-center text-white">{"Your Temporary Email Address"}</p>
+                <div className="bg-primary-dark flex items-center gap-2 rounded-md p-2 text-white">
+                  <p className="md:text- w-full px-2 text-sm font-semibold md:w-80 md:px-4 md:text-base">
+                    {messageLoading ? "Loading..." : messages?.data?.mailbox}
+                  </p>
 
-                <button
-                  type="button"
-                  className="bg-secondary flex items-center justify-center gap-2 rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
-                  onClick={handleCopy}
-                >
-                  {!copy ? (
-                    <>
-                      {"Copy"} <Icon.copy size={20} />
-                    </>
-                  ) : (
-                    `Copied`
-                  )}
-                </button>
+                  <button
+                    type="button"
+                    className="bg-secondary flex items-center justify-center gap-2 rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
+                    onClick={handleCopy}
+                  >
+                    {!copy ? (
+                      <>
+                        {"Copy"} <Icon.copy size={20} />
+                      </>
+                    ) : (
+                      `Copied`
+                    )}
+                  </button>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <SecondaryButton

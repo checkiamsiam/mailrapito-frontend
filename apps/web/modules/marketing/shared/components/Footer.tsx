@@ -155,30 +155,18 @@ const Footer = () => {
           {/* 3rd Column */}
           <div className="col-span-6 md:col-span-3">
             <div>
-              <h5 className="mb-4 text-2xl font-semibold">Contact us</h5>
-              <a
-                href="mailto:info@temporary-email.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm md:text-xl"
-              >
-                info@temporary-email.org
-              </a>
-            </div>
-            <div className="mt-8">
               <h5 className="mb-4 text-2xl font-semibold">About Us:</h5>
               <p className="max-w-xs text-sm md:text-xl">
-                We are bla bla temporary email service provider based on europe
-                lot of words here will be edited.
+                {t("footer.aboutus")}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="border-t border-white py-8 text-center md:py-16">
+      <div className="border-t border-neutral-300 py-8 text-center md:py-16">
         <div className="container">
           <p className="text-sm md:text-lg">
-            Copyright &copy;2022 - Temporary Email
+            Copyright &copy;{new Date().getFullYear()} - Mailrapido
           </p>
         </div>
       </div>
