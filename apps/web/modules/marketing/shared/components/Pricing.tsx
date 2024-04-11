@@ -51,9 +51,9 @@ const Pricing = () => {
 
   return (
     <>
-      <section className="relative pb-20 pt-12 md:pb-40 md:pt-20" id="pricing">
+      <section className="bg-primary-gradient relative pb-20 pt-12 md:pb-40 md:pt-20" id="pricing">
         <div
-          className="bg-primary-gradient absolute left-0 top-0 z-0 h-screen w-full md:h-[100%]" //md:h-[792px]
+          className="absolute left-0 top-0 z-0 w-full md:h-[100%]" //md:h-[792px]
         ></div>
         <div className="container relative mt-5">
           <SectionHeading
