@@ -53,10 +53,7 @@ const Pricing = () => {
     <>
       <section className="relative pb-20 pt-12 md:pb-40 md:pt-20" id="pricing">
         <div
-          className="absolute left-0 top-0 z-0 h-screen w-full md:h-[792px]"
-          style={{
-            background: `url(${"/images/pricing-plan/pricing-bg.png"}) no-repeat top center / cover`,
-          }}
+          className="bg-primary-gradient absolute left-0 top-0 z-0 h-screen w-full md:h-[100%]" //md:h-[792px]
         ></div>
         <div className="container relative mt-5">
           <SectionHeading
