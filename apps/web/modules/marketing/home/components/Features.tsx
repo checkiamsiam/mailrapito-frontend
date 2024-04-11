@@ -40,7 +40,8 @@ const Features = () => {
             {featureItems.map((feature, index) => (
               <div
                 key={index}
-                className="flex items-center justify-center gap-9"
+                className="flex items-center gap-9 rounded-3xl p-4 w-full"
+                style={{ boxShadow: "0px 4px 40px 0px #2B2E4A33" }}
               >
                 <Image
                   src={feature.icon}
@@ -65,7 +66,7 @@ const Features = () => {
               alt="Feature Image"
               width={574}
               height={385}
-              style={{ boxShadow: "0px 4px 40px 0px #2B2E4A33" }}
+              // style={{ boxShadow: "0px 4px 40px 0px #2B2E4A33" }}
             />
           </div>
         </div>
