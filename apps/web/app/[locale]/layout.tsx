@@ -15,7 +15,32 @@ import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
-const oblong = localFont({ src: '../../public/fonts/oblong.ttf', display: 'swap' })
+const oblong = localFont({ src: '../../public/fonts/VECTOR_REGULAR_TTF.ttf', display: 'swap' })
+
+const vector = localFont({
+  src: [
+    {
+      path: '../../public/fonts/VECTOR_REGULAR_TTF.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/VECTOR_ITALIC_TTF.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/VECTOR_BOLD_TTF.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/VECTOR_BOLD_ITALIC_TTF.ttf',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -66,7 +91,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
-          oblong.className,
+          vector.className,
         )}
       >
         <NextTopLoader color={"var(--colors-primary)"} />
