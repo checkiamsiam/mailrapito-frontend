@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const sansFont = oblong({
+const sansFont = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
