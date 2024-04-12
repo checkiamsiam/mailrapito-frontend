@@ -2,7 +2,7 @@ import { AnalyticsScript } from "@analytics";
 import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 // import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
@@ -157,7 +157,7 @@ export async function generateMetadata(): Promise<Metadata> {
 //   variable: "--font-poppins",
 // });
 
-const montserrat = Inter({
+const montserrat = Montserrat({
   subsets: ["latin"],
   display: 'swap',
   variable: "--font-montserrat",
