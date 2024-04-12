@@ -2,7 +2,7 @@ import { AnalyticsScript } from "@analytics";
 import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { getMessagesForLocale } from "../../i18n";
@@ -38,8 +38,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const sansFont = Inter({
+const sansFont = Roboto({
   subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
   variable: "--font-sans",
 });
 
