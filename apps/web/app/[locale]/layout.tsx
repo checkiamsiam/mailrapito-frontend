@@ -3,6 +3,7 @@ import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { getMessagesForLocale } from "../../i18n";
@@ -13,6 +14,8 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+
+const oblong = localFont({ src: '../../public/fonts/oblong.ttf' })
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -38,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const sansFont = Inter({
+const sansFont = oblong({
   subsets: ["latin"],
   variable: "--font-sans",
 });
