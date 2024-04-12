@@ -92,7 +92,40 @@ const attack = localFont({
   ],
 })
 
-
+const archi = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Archi-Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/Archi-Italic.woff',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/Archi-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/Archi-Reguler.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Archi-Reguler.woff',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Archi-Reguler.woff2',
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -118,9 +151,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const sansFont = Inter({
+const poppins = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-poppins",
 });
 
 
@@ -145,7 +178,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
-          vector.className,
+          poppins.className,
         )}
       >
         <NextTopLoader color={"var(--colors-primary)"} />
