@@ -222,13 +222,13 @@ export default function HomeBanner() {
         <TsParticles />
 
         <div
-          className="container relative py-[92px] text-center text-white"
+          className="container relative md:py-[82px] py-[42px] text-center text-white"
           data-aos="fade-up"
         >
-          <h2 className="text-3xl font-bold capitalize md:text-5xl">
+          <h2 className="text-xl font-bold capitalize md:text-5xl">
             {t("banner.title")}
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg font-medium md:text-xl">
+          <p className="text-md mx-auto mt-6 max-w-2xl font-medium md:text-xl">
             {t("banner.subtitle")}
           </p>
         </div>
@@ -253,7 +253,7 @@ export default function HomeBanner() {
             {/* Email Top */}
             <div className="relative flex flex-col items-center pb-6 pt-10">
               <div className="bg-blue-600 rounded-md mb-4 text-center">
-                <p className="text-xs	py-1 text-center text-white min-w-[23rem]" onClick={handleCopy} aria-hidden="true">
+                <p className="text-xs	py-1 text-center text-white min-w-[18rem] md:w-[23rem]" onClick={handleCopy} aria-hidden="true">
                   <span className="pl-6">{"Your Temporary Email Address"}</span>
                   <span className="pr-2 pl-0 px-4" style={{float: 'right'}} >
                     {!copy ? (
@@ -266,7 +266,7 @@ export default function HomeBanner() {
                   </span>
                 </p>
                 <div className="bg-primary-dark flex items-center gap-2 rounded-md p-2 text-white">
-                  <p className="md:text- w-full px-2 text-sm font-semibold md:w-80 md:px-4 md:text-base">
+                  <p className="p-2 w-full text-sm font-semibold md:w-80 md:text-base">
                     {messageLoading ? "Loading..." : messages?.data?.mailbox}
                   </p>
 
