@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const sansFont = Inter({
+const sansFont = oblong({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -67,7 +67,6 @@ export default async function RootLayout({
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
           sansFont.variable,
-          oblong.className
         )}
       >
         <NextTopLoader color={"var(--colors-primary)"} />
