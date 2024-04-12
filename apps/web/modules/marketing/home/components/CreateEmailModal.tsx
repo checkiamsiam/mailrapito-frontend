@@ -70,6 +70,7 @@ const CreateEmailModal = ({ refetchMessages }) => {
               type="text"
               className="border-primary block w-full rounded-md border px-2 py-3 outline-none"
               placeholder="Enter an email prefix"
+              autoComplete="off"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })

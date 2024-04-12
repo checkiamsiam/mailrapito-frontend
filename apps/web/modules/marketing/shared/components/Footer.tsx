@@ -85,11 +85,11 @@ const data = [
 
 const quickLinks = [
   {
-    title: "Privacy",
+    title: "Privacy Policy",
     link: "/privacy",
   },
   {
-    title: "Terms",
+    title: "Terms of service",
     link: "/",
   },
   {

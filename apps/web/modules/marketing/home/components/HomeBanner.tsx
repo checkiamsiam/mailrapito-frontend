@@ -252,14 +252,25 @@ export default function HomeBanner() {
             </div>
             {/* Email Top */}
             <div className="relative flex flex-col items-center pb-6 pt-10">
-              <div className="bg-blue-600 rounded-md mb-4">
-                <p className="text-xs	py-1 text-center text-white">{"Your Temporary Email Address"}</p>
+              <div className="bg-blue-600 rounded-md mb-4 text-center">
+                <p className="text-xs	py-1 text-center text-white min-w-[23rem]" onClick={handleCopy} aria-hidden="true">
+                  <span className="pl-6">{"Your Temporary Email Address"}</span>
+                  <span className="pr-2 pl-0 px-4" style={{float: 'right'}} >
+                    {!copy ? (
+                      <>
+                        <Icon.copy size={16} />
+                      </>
+                    ) : (
+                      `Copied`
+                    )}
+                  </span>
+                </p>
                 <div className="bg-primary-dark flex items-center gap-2 rounded-md p-2 text-white">
                   <p className="md:text- w-full px-2 text-sm font-semibold md:w-80 md:px-4 md:text-base">
                     {messageLoading ? "Loading..." : messages?.data?.mailbox}
                   </p>
 
-                  <button
+                  {/* <button
                     type="button"
                     className="bg-secondary flex items-center justify-center gap-2 rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
                     onClick={handleCopy}
@@ -271,7 +282,7 @@ export default function HomeBanner() {
                     ) : (
                       `Copied`
                     )}
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div className="flex items-center gap-2">
