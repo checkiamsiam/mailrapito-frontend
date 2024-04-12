@@ -15,7 +15,7 @@ import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
-const oblong = localFont({ src: '../../public/fonts/oblong.ttf' })
+const oblong = localFont({ src: '../../public/fonts/oblong.ttf', display: 'swap' })
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -66,7 +66,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
-          sansFont.variable,
+          oblong.className,
         )}
       >
         <NextTopLoader color={"var(--colors-primary)"} />
