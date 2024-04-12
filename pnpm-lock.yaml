@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@next/font':
+        specifier: ^14.2.0
+        version: 14.2.0(next@14.1.4)
       '@tsparticles/engine':
         specifier: ^3.3.0
         version: 3.3.0
@@ -2280,6 +2283,14 @@ packages:
     resolution: {integrity: sha512-n4zYNLSyCo0Ln5b7qxqQeQ34OZKXwgbdcx6kmkQbywr+0k6M3Vinft0T72R6CDAcDrne2IAgSud4uWCzFgc5HA==}
     dependencies:
       glob: 10.3.10
+
+  /@next/font@14.2.0(next@14.1.4):
+    resolution: {integrity: sha512-LAjhUW81S0tZzBWycoimE88CpnLZixsOHD/CWVArOdtQhMEjYWyHfkNg098nTyQvjVbFcoymhImywa60scksDg==}
+    peerDependencies:
+      next: '*'
+    dependencies:
+      next: 14.1.4(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /@next/swc-darwin-arm64@14.1.0:
     resolution: {integrity: sha512-nUDn7TOGcIeyQni6lZHfzNoo9S0euXnu0jhsbMOmMJUBfgsnESdjN97kM7cBqQxZa8L/bM9om/S5/1dzCrW6wQ==}

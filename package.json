@@ -26,6 +26,7 @@
     "typescript": "5.4.3"
   },
   "dependencies": {
+    "@next/font": "^14.2.0",
     "@tsparticles/engine": "^3.3.0",
     "@tsparticles/react": "^3.0.0",
     "tsparticles": "^3.3.0"
