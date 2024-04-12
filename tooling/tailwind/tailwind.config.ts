@@ -90,7 +90,7 @@ export default {
         sm: "calc(0.75rem - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-montserrat)","sans-serif"],
+        sans: ["var(--font-sans)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
