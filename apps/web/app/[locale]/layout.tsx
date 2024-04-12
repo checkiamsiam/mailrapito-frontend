@@ -15,32 +15,84 @@ import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
-const oblong = localFont({ src: '../../public/fonts/VECTOR_REGULAR_TTF.ttf', display: 'swap' })
+//const preospe = localFont({ src: '../../public/fonts/Preospe.otf', display: 'swap' })
 
 const vector = localFont({
   src: [
     {
-      path: '../../public/fonts/VECTOR_REGULAR_TTF.ttf',
+      path: '../../public/fonts/vector_regular_otf-webfont.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/VECTOR_ITALIC_TTF.ttf',
+      path: '../../public/fonts/vector_italic_ttf-webfont.woff2',
       weight: '400',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/VECTOR_BOLD_TTF.ttf',
+      path: '../../public/fonts/vector_bold_ttf-webfont.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/VECTOR_BOLD_ITALIC_TTF.ttf',
+      path: '../../public/fonts/vector_bold_italic_ttf-webfont.woff2',
       weight: '700',
       style: 'italic',
     },
   ],
 })
+
+const francy = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Francy.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Francy.woff2',
+      weight: '400',
+      style: 'normal',
+    }
+  ],
+})
+
+const braked = localFont({
+  src: [
+    {
+      path: '../../public/fonts/BRAKED-Bold.woff',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/BRAKED-Semibold.woff',
+      weight: '550',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/BRAKED.woff',
+      weight: '400',
+      style: 'normal',
+    }
+  ],
+})
+
+const attack = localFont({
+  src: [
+    {
+      path: '../../public/fonts/ATTACK-Regular.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/ATTACK-Bold.woff',
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+})
+
+
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -70,6 +122,8 @@ const sansFont = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+
+
 
 export default async function RootLayout({
   children,
