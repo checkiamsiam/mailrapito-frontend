@@ -56,14 +56,10 @@ const CreateEmailModal = ({ refetchMessages }) => {
         <DialogHeader>
           <DialogTitle className="text-xl">Create Email</DialogTitle>
         </DialogHeader>
-        <div className="mt-6">
+        <div className="mt-1">
           <p className="text-sm">
-            <strong>Temporary Email</strong> provides the ability to change your
-            temporary email address on this page.
-          </p>
-          <p className="mt-4 text-sm">
             To change or recover the email address, please enter the desired
-            E-mail address and choose domain.
+            E-mail address prefix and choose a domain from the list bellow.
           </p>
 
           <div className="mt-4">
@@ -73,7 +69,7 @@ const CreateEmailModal = ({ refetchMessages }) => {
             <input
               type="text"
               className="border-primary block w-full rounded-md border px-2 py-3 outline-none"
-              placeholder="Enter a name"
+              placeholder="Enter an email prefix"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -84,7 +80,7 @@ const CreateEmailModal = ({ refetchMessages }) => {
             <label htmlFor="name" className="font-semibold">
               Domain
             </label>
-            <select
+            <select multiple
               className="border-primary block w-full rounded-md border px-2 py-3 outline-none"
               value={formData.domain}
               onChange={(e) =>
