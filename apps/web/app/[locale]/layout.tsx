@@ -33,8 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: t("seo.url"),
       images: [t("seo.icon")],
     },
-    appleWebApp: true,
-    viewport: "width=device-width, initial-scale=1",
+    appleWebApp: true
   };
 }
 
