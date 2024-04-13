@@ -94,7 +94,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "e2e": "dotenv -c -e ../../.env -- start-server-and-test dev https://mailrapido.com \"cypress open --e2e\"",
+    "e2e": "dotenv -c -e ../../.env -- start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
     "lint": "next lint",
     "shadcn-ui": "pnpm dlx shadcn-ui@latest",
     "start": "next start"
