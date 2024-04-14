@@ -253,8 +253,8 @@ export default function HomeBanner() {
             {/* Email Top */}
             <div className="relative flex flex-col items-center pb-6 pt-10">
               <div className="bg-blue-600 rounded-md mb-4 text-center">
-                <p className="text-xs	py-1 text-center text-white min-w-[18rem] md:w-[23rem]" onClick={handleCopy} aria-hidden="true">
-                  <span className="pl-6">{"Your Temporary Email Address"}</span>
+                <p className="text-xs	py-1 text-center text-white min-w-[18rem] md:w-[23rem] p-2" onClick={handleCopy} aria-hidden="true">
+                  <span className="pl-6 uppercase">{"Your Temporary Email Address"}</span>
                   <span className="pr-2 pl-0 px-4" style={{float: 'right'}} >
                     {!copy ? (
                       <>
