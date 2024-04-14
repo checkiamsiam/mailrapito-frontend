@@ -4,6 +4,7 @@
 # supastarter – next.js
 
 Supastarter is the ultimate starter kit for production-ready, scalable SaaS applications.
+
 Mailrapido.com choosed to use supastarter kit for AUTH, Billing, Setting, Admin Panel...
 
 ## Helpful links
