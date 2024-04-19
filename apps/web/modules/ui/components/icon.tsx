@@ -33,6 +33,7 @@ import {
   Moon,
   MoreVertical,
   MousePointer,
+  Newspaper,
   Paperclip,
   Pause,
   Phone,
@@ -118,6 +119,7 @@ export const Icon = {
   copy: Copy,
   square: Square,
   squareCheck: SquareCheck,
+  newspaper: Newspaper,
 
   // social icons
   google: ({ ...props }: IconProps) => (

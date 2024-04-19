@@ -132,7 +132,9 @@
   "admin": {
     "menu": {
       "general": "General",
-      "users": "Users"
+      "users": "Users",
+      "allBlogs": "All Blogs",
+      "createBlog": "Create Blog"
     },
     "users": {
       "adminRole": "Admin",
@@ -274,7 +276,8 @@
       "admin": "Admin",
       "aiDemo": "AI Demo",
       "dashboard": "Dashboard",
-      "settings": "Settings"
+      "settings": "Settings",
+      "blogs": "Blogs"
     },
     "sidebar": {
       "createTeam": "Create a new team"

@@ -12,6 +12,8 @@ import type { Prisma } from '@prisma/client';
 
 export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','createdAt','hashedPassword']);
 
+export const BlogScalarFieldEnumSchema = z.enum(['id','title','author','slug','description','keywords','category','content','thumbnail','language','status','publishedDate','createdDate','views']);
+
 export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
 
 export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
@@ -68,6 +70,29 @@ export const UserSchema = z.object({
 })
 
 export type User = z.infer<typeof UserSchema>
+
+/////////////////////////////////////////
+// BLOG SCHEMA
+/////////////////////////////////////////
+
+export const BlogSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string(),
+  author: z.string(),
+  slug: z.string(),
+  description: z.string(),
+  keywords: z.string(),
+  category: z.string().nullable(),
+  content: z.string().nullable(),
+  thumbnail: z.string().nullable(),
+  language: z.string().nullable(),
+  status: z.string().nullable(),
+  publishedDate: z.coerce.date(),
+  createdDate: z.coerce.date(),
+  views: z.number().int().nullable(),
+})
+
+export type Blog = z.infer<typeof BlogSchema>
 
 /////////////////////////////////////////
 // USER SESSION SCHEMA

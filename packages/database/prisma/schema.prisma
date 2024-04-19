@@ -38,6 +38,25 @@ model User {
   oneTimePasswords   UserOneTimePassword[]
 }
 
+
+model Blog {
+  id              String    @id @default(uuid()) @map("_id")
+  title           String
+  author          String
+  slug            String
+  description     String
+  keywords        String
+  category        String?
+  content         String?   
+  thumbnail       String?
+  language        String?
+  status          String?    
+  publishedDate   DateTime  
+  createdDate     DateTime  
+  views           Int?       @default(0)
+}
+
+
 model UserSession {
   id             String   @id @map("_id")
   userId         String

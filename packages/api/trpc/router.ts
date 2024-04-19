@@ -4,6 +4,7 @@ import * as adminProcedures from "../modules/admin/procedures";
 import * as aiProcedures from "../modules/ai/procedures";
 import * as authProcedures from "../modules/auth/procedures";
 import * as billingProcedures from "../modules/billing/procedures";
+import * as blogsProcedures from "../modules/blogs/procedures";
 import * as newsletterProcedures from "../modules/newsletter/procedures";
 import * as teamProcedures from "../modules/team/procedures";
 import * as uploadsProcedures from "../modules/uploads/procedures";
@@ -17,6 +18,7 @@ export const apiRouter = router({
   ai: router(aiProcedures),
   uploads: router(uploadsProcedures),
   admin: router(adminProcedures),
+  blogs: router(blogsProcedures),
 });
 
 export type ApiRouter = typeof apiRouter;
