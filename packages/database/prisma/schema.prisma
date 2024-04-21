@@ -51,9 +51,9 @@ model Blog {
   thumbnail       String?
   language        String?
   status          String?    
-  publishedDate   DateTime  
-  createdDate     DateTime  
   views           Int?       @default(0)
+  createdAt          DateTime                @default(now())
+  published       Boolean    @default(true)
 }
 
 

@@ -58,13 +58,12 @@ const quillFormats = [
 ];
 
 const formSchema = z.object({
-  title: z.string().min(1, { message: 'Required' }),
-  slug: z.string().min(1, { message: 'Required' }),
-  author: z.string().min(1, { message: 'Required' }),
-  keywords: z.string().min(1, { message: 'Required' }),
-  description: z.string().min(1, { message: 'Required' }),
+  title: z.string().min(1, { message: "Required" }),
+  author: z.string().min(1, { message: "Required" }),
+  slug: z.string().min(1, { message: "Required" }),
+  description: z.string().min(1, { message: "Required" }),
+  keywords: z.string().min(1, { message: "Required" }),
   category: z.enum(["", "MEMBER", "OWNER"]),
-  content: z.string().min(100, { message: 'Required' }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -72,8 +71,7 @@ type FormValues = z.infer<typeof formSchema>;
 export default function PublishBlog() {
   const t = useTranslations();
   const [content, setContent] = useState("");
-  const createPostMutation = apiClient.blogs.createPost.useMutation();
-
+  const createPostMutation = apiClient.posts.createPost.useMutation();
 
   const handleEditorChange = (newContent) => {
     setContent(newContent);
@@ -90,6 +88,24 @@ export default function PublishBlog() {
     },
   ];
 
+  const languageOptions = [
+    {
+      label: "English",
+      value: "en",
+    },
+    {
+      label: "French",
+      value: "fr",
+    },
+    {
+      label: "Spanish",
+      value: "es",
+    },
+    {
+      label: "Arabic",
+      value: "ar",
+    },
+  ];
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -100,41 +116,39 @@ export default function PublishBlog() {
       keywords: "",
       category: "",
       description: "",
-      content: content,
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async ({
-    title,
-    author,
-    slug,
-    description,
-    keywords,
-    category,
-    content,
-  }) => {
+  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+    console.log("onSubmit: SubmitHandler called");
+
+    if (values.category === "") {
+      alert("Please select a category");
+      return;
+    }
+
+    if (!content) {
+      alert("Content is required");
+      return;
+    }
     try {
       await createPostMutation.mutateAsync({
-        title,
-        author,
-        slug,
-        description,
-        keywords,
-        category,
+        ...values,
         content,
       });
       form.reset();
+      setContent("");
 
-      console.log("success")
+      console.log("success");
     } catch {
-      console.log("error")
+      console.log("error");
     }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Post blog</CardTitle>
+        <CardTitle>Publish Post</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -162,7 +176,7 @@ export default function PublishBlog() {
                     <FormItem>
                       <FormLabel>Slug</FormLabel>
                       <FormControl>
-                        <Input type="slug"  {...field} />
+                        <Input type="slug" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -176,7 +190,7 @@ export default function PublishBlog() {
                     <FormItem>
                       <FormLabel>Author</FormLabel>
                       <FormControl>
-                        <Input type="author"  {...field} />
+                        <Input type="author" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -256,11 +270,9 @@ export default function PublishBlog() {
               </div>
             </div>
 
-
-
-            <div className="mt-6 flex justify-end border-t pt-3">
+            <div className="mt-10 flex justify-end border-t pt-3">
               <Button type="submit" loading={form.formState.isSubmitting}>
-                Post
+                Publish Post
               </Button>
             </div>
           </form>

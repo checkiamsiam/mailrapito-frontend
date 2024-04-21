@@ -7,9 +7,8 @@ export const publishedPosts = publicProcedure
   .query(async () => {
     const posts = await db.blog.findMany({
       where: {
-        title: true,
+        published: true || false,
       },
     });
-
     return posts;
   });

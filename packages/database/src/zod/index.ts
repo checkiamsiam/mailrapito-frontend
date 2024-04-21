@@ -12,7 +12,7 @@ import type { Prisma } from '@prisma/client';
 
 export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','createdAt','hashedPassword']);
 
-export const BlogScalarFieldEnumSchema = z.enum(['id','title','author','slug','description','keywords','category','content','thumbnail','language','status','publishedDate','createdDate','views']);
+export const BlogScalarFieldEnumSchema = z.enum(['id','title','author','slug','description','keywords','category','content','thumbnail','language','status','views','createdAt','published']);
 
 export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
 
@@ -87,9 +87,9 @@ export const BlogSchema = z.object({
   thumbnail: z.string().nullable(),
   language: z.string().nullable(),
   status: z.string().nullable(),
-  publishedDate: z.coerce.date(),
-  createdDate: z.coerce.date(),
   views: z.number().int().nullable(),
+  createdAt: z.coerce.date(),
+  published: z.boolean(),
 })
 
 export type Blog = z.infer<typeof BlogSchema>

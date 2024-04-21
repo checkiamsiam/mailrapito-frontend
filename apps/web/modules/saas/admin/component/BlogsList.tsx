@@ -2,7 +2,6 @@
 
 import { Pagination } from "@saas/shared/components/Pagination";
 import { apiClient } from "@shared/lib/api-client";
-import { keepPreviousData } from "@tanstack/react-query";
 import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 import {
   createColumnHelper,
@@ -14,47 +13,32 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Icon } from "@ui/components/icon";
-import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
-import { useDebounceValue } from "usehooks-ts";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 import type { IBlog } from "../../../../interface/commonInterface";
 
 export function BlogsList() {
   const t = useTranslations();
-  const { toast } = useToast();
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useDebounceValue("", 200);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const router = useRouter();
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
+  const { data, isLoading } = apiClient.posts.publishedPosts.useQuery();
 
-  const { data, isLoading } = apiClient.blogs.allBlogs.useQuery(
-    {
-      limit: itemsPerPage,
-      offset: (currentPage - 1) * itemsPerPage,
-      searchTerm,
-    },
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-      placeholderData: keepPreviousData,
-    },
-  );
-
-  console.log(data);
+  console.log(data, isLoading);
 
   const columnHelper = createColumnHelper<IBlog>();
 
   const columns = [
     columnHelper.accessor("title", {
       header: "Title",
+    }),
+    columnHelper.accessor("category", {
+      header: "Category",
     }),
     columnHelper.accessor("views", {
       header: "Views",
@@ -81,22 +65,14 @@ export function BlogsList() {
 
   return (
     <div className="bg-card rounded-lg p-6 shadow-sm ">
-      <h2 className="mb-4 text-2xl font-semibold">{t("admin.users.title")}</h2>
-      <Input
-        type="search"
-        placeholder={t("admin.users.search")}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4"
-      />
-
+      <h2 className="mb-4 text-2xl font-semibold">Published Posts</h2>
       <div className="rounded-md border">
         <Table>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th key={header.id} className="pl-4 pt-2 text-left">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -115,6 +91,11 @@ export function BlogsList() {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className="group"
+                  onClick={() => {
+                    console.log(row.original);
+                    const id = row.original.id;
+                    router.push(`/app/blogs/${id}`);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -153,7 +134,7 @@ export function BlogsList() {
       {blogs.length > 0 && (
         <Pagination
           className="mt-4"
-          totalItems={data?.allBlogs?.length ?? 0}
+          totalItems={data?.length ?? 0}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onChangeCurrentPage={setCurrentPage}

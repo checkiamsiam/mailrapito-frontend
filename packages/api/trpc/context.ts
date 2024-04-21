@@ -40,12 +40,15 @@ export async function createContext(
       )
     : null;
 
+  const blogsContent = user ? await db.blog.findMany() : null;
+
   const abilities = defineAbilitiesFor({
     user,
     teamMemberships,
   });
 
   return {
+    blogsContent,
     user,
     teamMemberships,
     abilities,

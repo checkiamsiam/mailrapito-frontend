@@ -22,12 +22,12 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
             menuItems={[
               {
                 title: t("admin.menu.allBlogs"),
-                href: `all-blogs`,
+                href: `published-posts`,
                 icon: "newspaper",
               },
               {
-                title: t("admin.menu.createBlog"),
-                href: `publish-blog`,
+                title: "Publish Blog",
+                href: `create-post`,
                 icon: "newspaper",
               },
             ]}
