@@ -16,8 +16,6 @@ export const singlePost = publicProcedure
       },
     });
 
-    console.log("post", post);
-
     if (!post) {
       throw new Error("Post not found");
     }

@@ -57,7 +57,7 @@ export function NavBar() {
     {
       label: t("common.menu.pricing"),
       href: `/#pricing`,
-    }
+    },
   ];
 
   return (
@@ -90,6 +90,50 @@ export function NavBar() {
                 {menuItem.label}
               </Link>
             ))}
+            <div></div>
+            <div>
+              <form
+                action="https://www.coinpayments.net/index.php"
+                method="post"
+              >
+                <input type="hidden" name="cmd" value="_pay_simple" />
+                <input type="hidden" name="reset" value="0" />
+                <input
+                  type="hidden"
+                  name="merchant"
+                  value="5429f80c5b82ba211691c5ed2183cb4b"
+                />
+                <input
+                  type="hidden"
+                  name="item_name"
+                  value="1 year subscription"
+                />
+                <input type="hidden" name="currency" value="USD" />
+                <input type="hidden" name="amountf" value="40" />
+                <input type="hidden" name="email" value="ksher1995@gmail.com" />
+                <input
+                  type="hidden"
+                  name="success_url"
+                  value="https://www.mailrapido.net/success"
+                />
+                <input
+                  type="hidden"
+                  name="cancel_url"
+                  value="http://localhost:3000"
+                />
+                <input
+                  type="hidden"
+                  name="custom"
+                  value={JSON.stringify({ order_id: "1asdasdasdasdasd3" })}
+                />
+                <Button
+                  className="rounded-lg bg-red-500 px-8 py-6 text-base"
+                  variant="default"
+                >
+                  Test Payment
+                </Button>
+              </form>
+            </div>
           </div>
 
           <div className="flex items-center justify-end gap-3">
@@ -143,13 +187,11 @@ export function NavBar() {
 
             {isClient && userLoaded && (
               <>
-                <PrimaryButton className="hidden rounded-lg py-6 text-base md:flex px-8">
+                <PrimaryButton className="hidden rounded-lg px-8 py-6 text-base md:flex">
                   {user ? (
                     <Link href="/app">{t("common.menu.dashboard")}</Link>
                   ) : (
-                    <Link href="/auth/login">
-                      {t("common.menu.login")}
-                    </Link>
+                    <Link href="/auth/login">{t("common.menu.login")}</Link>
                   )}
                 </PrimaryButton>
               </>

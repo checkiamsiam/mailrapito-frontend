@@ -325,6 +325,9 @@ importers:
       auth:
         specifier: workspace:*
         version: link:../auth
+      coinpayments:
+        specifier: ^2.2.0
+        version: 2.2.0
       database:
         specifier: workspace:*
         version: link:../database
@@ -7139,6 +7142,10 @@ packages:
   /code-block-writer@12.0.0:
     resolution: {integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==}
     dev: true
+
+  /coinpayments@2.2.0:
+    resolution: {integrity: sha512-TJ8nAW1nPTBHBmYy4w78k9iH4gVgksdv1aiS/Oq3IsYiZAGn9QgyC+RcXZfjJrjDL9HZwc7kgyc3Gi3DMUiljw==}
+    dev: false
 
   /collapse-white-space@2.1.0:
     resolution: {integrity: sha512-loKTxY1zCOuG4j9f6EPnuyyYkf58RnhhWTvRoZEokgB+WbdXehfjFviyOVYkqzEWz1Q5kRiZdBYS5SwxbQYwzw==}
