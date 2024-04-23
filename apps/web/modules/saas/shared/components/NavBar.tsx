@@ -48,7 +48,7 @@ export function NavBar({
           },
           {
             label: t("dashboard.menu.blogs"),
-            href: `/app/blogs/all-blogs`,
+            href: `/app/blogs/published-posts`,
             icon: Icon.newspaper,
           },
         ]
