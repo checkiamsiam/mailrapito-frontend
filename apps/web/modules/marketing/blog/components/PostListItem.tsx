@@ -63,7 +63,7 @@ export function PostListItem({ post }: { post: Post }) {
 
         <div className="ml-auto mr-0">
           <p className="text-sm opacity-30">
-            {Intl.DateTimeFormat("en-US").format(new Date(date))}
+            {Intl.DateTimeFormat("en-US").format(new Date(date as string))}
           </p>
         </div>
       </div>

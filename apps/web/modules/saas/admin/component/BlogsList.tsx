@@ -2,7 +2,11 @@
 
 import { Pagination } from "@saas/shared/components/Pagination";
 import { apiClient } from "@shared/lib/api-client";
-import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+} from "@tanstack/react-table";
 import {
   createColumnHelper,
   flexRender,
@@ -17,7 +21,20 @@ import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import type { IBlog } from "../../../../interface/commonInterface";
+// import type { IBlog } from "../../../../interface/commonInterface";
+
+interface Blog {
+  id: string;
+  title: string;
+  keywords: string;
+  description: string;
+  language: string | null;
+  status: string | null;
+  author: string;
+  slug: string;
+  category: string | null;
+  views: number;
+}
 
 export function BlogsList() {
   const t = useTranslations();
@@ -31,9 +48,9 @@ export function BlogsList() {
 
   console.log(data, isLoading);
 
-  const columnHelper = createColumnHelper<IBlog>();
+  const columnHelper = createColumnHelper<Blog>();
 
-  const columns = [
+  const columns: ColumnDef<any>[] = [
     columnHelper.accessor("title", {
       header: "Title",
     }),

@@ -70,10 +70,10 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function PublishBlog() {
   const t = useTranslations();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string>("");
   const createPostMutation = apiClient.posts.createPost.useMutation();
 
-  const handleEditorChange = (newContent) => {
+  const handleEditorChange = (newContent: string) => {
     setContent(newContent);
   };
 

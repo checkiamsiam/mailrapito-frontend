@@ -75,6 +75,7 @@ export default function EditBlog() {
   const params = new URLSearchParams(searchParams.toString());
   const id = params.get("id") as string;
   const [content, setContent] = useState<any>("");
+  const editPostMutation = apiClient.posts.updatePost.useMutation();
 
   const { data, isLoading } = apiClient.posts.singlePost.useQuery({
     id,
@@ -139,9 +140,15 @@ export default function EditBlog() {
       return;
     }
     try {
-      await createPostMutation.mutateAsync({
-        ...values,
+      await editPostMutation.mutateAsync({
         content,
+        id,
+        slug: values.slug,
+        title: values.title,
+        description: values.description,
+        keywords: values.keywords,
+        author: values.author,
+        category: values.category,
       });
       form.reset();
       setContent("");
