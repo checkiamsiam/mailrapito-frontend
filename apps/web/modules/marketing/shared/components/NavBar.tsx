@@ -124,7 +124,11 @@ export function NavBar() {
                 <input
                   type="hidden"
                   name="custom"
-                  value={JSON.stringify({ order_id: "1asdasdasdasdasd3" })}
+                  value={JSON.stringify({
+                    orderId: "1asdasdasdasdasd3",
+                    status: "CREATED",
+                    email: "",
+                  })}
                 />
                 <Button
                   className="rounded-lg bg-red-500 px-8 py-6 text-base"

@@ -30,6 +30,10 @@ export const TeamInvitationScalarFieldEnumSchema = z.enum(['id','teamId','email'
 
 export const SubscriptionScalarFieldEnumSchema = z.enum(['id','teamId','customerId','status','planId','variantId','nextPaymentDate']);
 
+export const OrderScalarFieldEnumSchema = z.enum(['id','orderId','email','status','createdAt']);
+
+export const UserSubscriptionScalarFieldEnumSchema = z.enum(['id','orderId','txnId','itemAmount','receivedAmount','receivedConfirms','email','status','currency1','currency2','amount1','amount2']);
+
 export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const QueryModeSchema = z.enum(['default','insensitive']);
@@ -49,6 +53,10 @@ export type TeamMemberRoleType = `${z.infer<typeof TeamMemberRoleSchema>}`
 export const SubscriptionStatusSchema = z.enum(['TRIALING','ACTIVE','PAUSED','CANCELED','PAST_DUE','UNPAID','INCOMPLETE','EXPIRED']);
 
 export type SubscriptionStatusType = `${z.infer<typeof SubscriptionStatusSchema>}`
+
+export const OrderStatusSchema = z.enum(['CREATED','PENDING','PAID']);
+
+export type OrderStatusType = `${z.infer<typeof OrderStatusSchema>}`
 
 /////////////////////////////////////////
 // MODELS
@@ -204,6 +212,41 @@ export const SubscriptionSchema = z.object({
 })
 
 export type Subscription = z.infer<typeof SubscriptionSchema>
+
+/////////////////////////////////////////
+// ORDER SCHEMA
+/////////////////////////////////////////
+
+export const OrderSchema = z.object({
+  status: OrderStatusSchema,
+  id: z.string().uuid(),
+  orderId: z.string(),
+  email: z.string(),
+  createdAt: z.coerce.date(),
+})
+
+export type Order = z.infer<typeof OrderSchema>
+
+/////////////////////////////////////////
+// USER SUBSCRIPTION SCHEMA
+/////////////////////////////////////////
+
+export const UserSubscriptionSchema = z.object({
+  status: OrderStatusSchema,
+  id: z.string().uuid(),
+  orderId: z.string(),
+  txnId: z.string(),
+  itemAmount: z.string(),
+  receivedAmount: z.string(),
+  receivedConfirms: z.string(),
+  email: z.string().nullable(),
+  currency1: z.string(),
+  currency2: z.string(),
+  amount1: z.string(),
+  amount2: z.string(),
+})
+
+export type UserSubscription = z.infer<typeof UserSubscriptionSchema>
 
 /////////////////////////////////////////
 // MONGODB TYPES

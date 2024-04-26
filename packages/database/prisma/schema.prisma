@@ -164,3 +164,32 @@ model Subscription {
   variantId       String
   nextPaymentDate DateTime?
 }
+
+enum OrderStatus {
+  CREATED
+  PENDING
+  PAID
+}
+
+model Order {
+  id              String              @id @default(uuid()) @map("_id")
+  orderId         String              @unique
+  email           String
+  status          OrderStatus         @default(CREATED)
+  createdAt       DateTime            @default(now())
+}
+
+model UserSubscription {
+  id                String    @id @default(uuid()) @map("_id")
+  orderId           String    @unique
+  txnId             String
+  itemAmount        String
+  receivedAmount    String
+  receivedConfirms  String
+  email             String?
+  status            OrderStatus
+  currency1         String
+  currency2         String
+  amount1           String
+  amount2           String
+}
