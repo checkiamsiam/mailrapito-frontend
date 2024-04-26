@@ -5,6 +5,7 @@ import { useUser } from "@saas/auth/hooks/use-user";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
+import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
@@ -16,6 +17,9 @@ import { useDebounceCallback, useIsClient } from "usehooks-ts";
 // ----------- Un Used -----------
 // import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 
+const uniqueId = Date.now();
+const email = "ksher1995@gmail.com";
+
 export function NavBar() {
   const t = useTranslations();
   const { user, loaded: userLoaded } = useUser();
@@ -23,6 +27,8 @@ export function NavBar() {
   const pathname = usePathname();
   const isClient = useIsClient();
   const [isTop, setIsTop] = useState(true);
+
+  const createOrderMutation = apiClient.payments.createOrder.useMutation();
 
   const debouncedScrollHandler = useDebounceCallback(
     () => {
@@ -33,6 +39,20 @@ export function NavBar() {
       maxWait: 150,
     },
   );
+
+  const handleOrder = async () => {
+    try {
+      await createOrderMutation.mutateAsync({
+        orderId: String(uniqueId),
+        email: email,
+        status: "CREATED",
+      });
+
+      console.log("success");
+    } catch {
+      console.log("error");
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", debouncedScrollHandler);
@@ -109,12 +129,12 @@ export function NavBar() {
                   value="1 year subscription"
                 />
                 <input type="hidden" name="currency" value="USD" />
-                <input type="hidden" name="amountf" value="40" />
-                <input type="hidden" name="email" value="ksher1995@gmail.com" />
+                <input type="hidden" name="amountf" value="1" />
+                <input type="hidden" name="email" value={email} />
                 <input
                   type="hidden"
                   name="success_url"
-                  value="https://www.mailrapido.net/success"
+                  value="http://localhost:3000"
                 />
                 <input
                   type="hidden"
@@ -125,14 +145,15 @@ export function NavBar() {
                   type="hidden"
                   name="custom"
                   value={JSON.stringify({
-                    orderId: "1asdasdasdasdasd3",
+                    orderId: uniqueId,
                     status: "CREATED",
-                    email: "",
+                    email: email,
                   })}
                 />
                 <Button
                   className="rounded-lg bg-red-500 px-8 py-6 text-base"
                   variant="default"
+                  onClick={handleOrder}
                 >
                   Test Payment
                 </Button>

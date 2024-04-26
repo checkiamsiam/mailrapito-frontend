@@ -1,34 +1,29 @@
 import { createApiCaller } from "api/trpc/caller";
-import { createHmac, timingSafeEqual } from "crypto";
-import { headers } from "next/headers";
+import { parse } from "querystring";
 
 export async function POST(req: Request) {
   try {
     const text = await req.text();
-    console.log("🚀 ~ POST ~ text:", text);
-    const hmac = createHmac("sha256", process.env.COINPAYMENT_API_SECRET!);
-    const signatureHeader = headers().get("HTTP_HMAC")!;
-    console.log("🚀 ~ POST ~ signatureHeader:", signatureHeader);
-    const signatureParts = signatureHeader
-      .split(",")
-      .map((part) => part.split("="));
-    const signatureKey =
-      signatureParts.find((part) => part[0] === "v1")?.[1] ?? "";
-    const signatureTimestamp =
-      signatureParts.find((part) => part[0] === "t")?.[1] ?? "";
-    const digest = Buffer.from(
-      hmac.update(`${signatureTimestamp}.${text}`).digest("hex"),
-      "utf8",
-    );
-    const signature = Buffer.from(signatureKey, "utf8");
+    const parsedData = parse(text);
+    const jsonData = JSON.parse(Object.keys(parsedData)[0]);
 
-    if (!timingSafeEqual(digest, signature)) {
-      return new Response("Invalid signature.", {
-        status: 400,
-      });
-    }
+    //TODO: Implement HMAC signature verification
 
-    const payload = JSON.parse(text) as {
+    // const secret = "4S$eJ#8dLpM3aD*G4KbFhE1iR$cC9mN7wX";
+    // const signatureHeader = req.headers.get("Hmac");
+    // const hmac = createHmac("sha512", secret);
+    // const digest = Buffer.from(
+    //   hmac.update(await clonedReq.text()).digest("hex"),
+    //   "utf8",
+    // );
+    // const signature = Buffer.from(req.headers.get("Hmac") ?? "", "utf8");
+    // if (!timingSafeEqual(digest, signature)) {
+    //   return new Response("Invalid signature.", {
+    //     status: 400,
+    //   });
+    // }
+
+    const payload = jsonData as {
       ipn_type: string;
       ipn_mode: string;
       merchant: string;
@@ -44,21 +39,22 @@ export async function POST(req: Request) {
       tax: number;
       fee: number;
       net: number;
-      item_amount: string | number;
+      item_amount: number;
       item_name: string;
       item_desc?: string;
-      item_number?: string | number;
+      item_number?: string;
       invoice?: string;
       custom: {
-        order_id: string;
+        orderId: string;
+        email: string;
       };
       on1?: string;
       ov1?: string;
       on2?: string;
       ov2?: string;
       send_tx?: string;
-      received_amount?: string | number;
-      received_confirms?: string | number;
+      received_amount: number;
+      received_confirms: number;
     } | null;
 
     const type = payload?.ipn_type ?? null;
@@ -79,7 +75,7 @@ export async function POST(req: Request) {
 
     const data = payload;
 
-    if (!data?.custom.order_id) {
+    if (!data?.custom.orderId) {
       throw new Error("Invalid payload.");
     }
 
@@ -93,21 +89,18 @@ export async function POST(req: Request) {
       if (data?.status >= 100 || data?.status === 2) {
         await apiCaller.payments.createSubscription({
           id: String(data.txn_id),
-          orderId: data.custom.order_id,
+          orderId: data.custom.orderId,
           txnId: data.txn_id,
-          itemAmount: data.item_amount.toString(),
-          receivedAmount: data.received_amount
-            ? data.received_amount.toString()
-            : "",
-          receivedConfirms: data.received_confirms
-            ? data.received_confirms.toString()
-            : "",
+          itemAmount: data.item_amount,
+          receivedAmount: data.received_amount,
+          receivedConfirms: data.received_confirms,
           status: "PAID",
-          currency1: data.currency1,
-          currency2: data.currency2,
-          amount1: data.amount1.toString(),
-          amount2: data.amount2.toString(),
-          email: "",
+          firstCurrency: data.currency1,
+          secondCurrency: data.currency2,
+          firstAmount: data.amount1,
+          secondAmount: data.amount2,
+          email: data.custom.email,
+          paidAt: new Date(),
         });
       } else if (data?.status < 0) {
         return new Response("Cancelled / Timed Out.", {
@@ -128,7 +121,7 @@ export async function POST(req: Request) {
     );
   }
 
-  return new Response(null, {
+  return new Response(`Payment success`, {
     status: 204,
   });
 }

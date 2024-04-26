@@ -28,7 +28,6 @@ export const createSubscription = publicProcedure
         await db.userSubscription.create({
           data: {
             ...subscription,
-            email: orderIdExist?.email,
             status: "PAID",
           },
         });
@@ -41,6 +40,7 @@ export const createSubscription = publicProcedure
       console.error(e);
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
+        message: "Order id does not exist.",
       });
     }
   });

@@ -340,6 +340,9 @@ importers:
       openai:
         specifier: ^4.29.2
         version: 4.29.2(encoding@0.1.13)
+      querystring:
+        specifier: ^0.2.1
+        version: 0.2.1
       storage:
         specifier: workspace:*
         version: link:../storage
@@ -10944,6 +10947,12 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.6
+    dev: false
+
+  /querystring@0.2.1:
+    resolution: {integrity: sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==}
+    engines: {node: '>=0.4.x'}
+    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
     dev: false
 
   /querystringify@2.2.0:

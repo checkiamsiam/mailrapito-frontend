@@ -21,7 +21,6 @@ import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-// import type { IBlog } from "../../../../interface/commonInterface";
 
 interface Blog {
   id: string;
@@ -45,8 +44,6 @@ export function BlogsList() {
   const router = useRouter();
 
   const { data, isLoading } = apiClient.posts.publishedPosts.useQuery();
-
-  console.log(data, isLoading);
 
   const columnHelper = createColumnHelper<Blog>();
 

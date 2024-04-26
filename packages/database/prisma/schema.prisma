@@ -172,7 +172,7 @@ enum OrderStatus {
 }
 
 model Order {
-  id              String              @id @default(uuid()) @map("_id")
+  id              String              @id @default(cuid()) @map("_id")
   orderId         String              @unique
   email           String
   status          OrderStatus         @default(CREATED)
@@ -180,16 +180,17 @@ model Order {
 }
 
 model UserSubscription {
-  id                String    @id @default(uuid()) @map("_id")
-  orderId           String    @unique
-  txnId             String
-  itemAmount        String
-  receivedAmount    String
-  receivedConfirms  String
-  email             String?
-  status            OrderStatus
-  currency1         String
-  currency2         String
-  amount1           String
-  amount2           String
+  id                      String             @id @map("_id")
+  orderId                 String              @unique
+  txnId                   String
+  itemAmount              Int?
+  receivedAmount          Float?
+  receivedConfirms        Int?
+  email                   String
+  status                  OrderStatus
+  firstCurrency           String
+  secondCurrency          String
+  firstAmount             Int?
+  secondAmount            Float?
+  paidAt                  DateTime            @default(now())
 }
