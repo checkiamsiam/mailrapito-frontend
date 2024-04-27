@@ -1,5 +1,6 @@
 import Coinpayments from "coinpayments";
 // import type { CreateTransaction } from "../type";
+import type { GetPaymentInfo } from "../type";
 
 interface CoinpaymentsCredentials {
   key: string;
@@ -20,6 +21,16 @@ export function getCoinClient(): Coinpayments {
 export const getBasicInfo = async () => {
   const client = getCoinClient();
   const info = await client.getBasicInfo();
+  return info;
+};
+
+export const getPaymentInfo: GetPaymentInfo = async function (params: {
+  txid: string;
+  full: number; // Set to 1 to also include the raw checkout and shipping data for the payment if available.
+}) {
+  const { txid, full } = params;
+  const client = getCoinClient();
+  const info = await client.getTx({ txid, full });
   return info;
 };
 

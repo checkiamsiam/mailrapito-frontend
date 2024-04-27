@@ -1,7 +1,8 @@
-// import type {
-//   CoinpaymentsCreateTransactionResponse,
-//   CoinpaymentsGetCallbackAddressResponse,
-// } from "coinpayments/dist/types/response";
+import type {
+  //   CoinpaymentsCreateTransactionResponse,
+  //   CoinpaymentsGetCallbackAddressResponse,
+  CoinpaymentsGetTxResponse,
+} from "coinpayments/dist/types/response";
 
 export type GetBasicInfo = (params: object) => Promise<string | null>;
 
@@ -27,3 +28,8 @@ export type GetBasicInfo = (params: object) => Promise<string | null>;
 //   label?: string;
 //   eip55?: number;
 // }) => Promise<CoinpaymentsGetCallbackAddressResponse>;
+
+export type GetPaymentInfo = (params: {
+  txid: string;
+  full: number;
+}) => Promise<CoinpaymentsGetTxResponse>;

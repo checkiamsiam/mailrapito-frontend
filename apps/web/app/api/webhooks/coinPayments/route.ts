@@ -87,21 +87,32 @@ export async function POST(req: Request) {
 
     if (data?.status) {
       if (data?.status >= 100 || data?.status === 2) {
-        await apiCaller.payments.createSubscription({
-          id: String(data.txn_id),
-          orderId: data.custom.orderId,
-          txnId: data.txn_id,
-          itemAmount: data.item_amount,
-          receivedAmount: data.received_amount,
-          receivedConfirms: data.received_confirms,
-          status: "PAID",
-          firstCurrency: data.currency1,
-          secondCurrency: data.currency2,
-          firstAmount: data.amount1,
-          secondAmount: data.amount2,
-          email: data.custom.email,
-          paidAt: new Date(),
+        const isPaymentReceived = await apiCaller.payments.getPaymentInfo({
+          txid: data.txn_id,
+          full: 0,
         });
+
+        if (isPaymentReceived.status === 0) {
+          return new Response("Payment not received.", {
+            status: 400,
+          });
+        } else if (isPaymentReceived.status === 1) {
+          await apiCaller.payments.createSubscription({
+            id: String(data.txn_id),
+            orderId: data.custom.orderId,
+            txnId: data.txn_id,
+            itemAmount: data.item_amount,
+            receivedAmount: data.received_amount,
+            receivedConfirms: data.received_confirms,
+            status: "PAID",
+            firstCurrency: data.currency1,
+            secondCurrency: data.currency2,
+            firstAmount: data.amount1,
+            secondAmount: data.amount2,
+            email: data.custom.email,
+            paidAt: new Date(),
+          });
+        }
       } else if (data?.status < 0) {
         return new Response("Cancelled / Timed Out.", {
           status: 400,
