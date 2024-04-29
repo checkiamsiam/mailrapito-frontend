@@ -38,6 +38,7 @@ import {
   Pause,
   Phone,
   Plus,
+  QrCode,
   Send,
   Settings,
   Square,
@@ -120,6 +121,7 @@ export const Icon = {
   square: Square,
   squareCheck: SquareCheck,
   newspaper: Newspaper,
+  qrCode: QrCode,
 
   // social icons
   google: ({ ...props }: IconProps) => (

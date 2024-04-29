@@ -344,7 +344,9 @@ export default function HomeBanner() {
                           generatedEmails.length > 0 &&
                           generatedEmails.length - 1}
                       </div>
-                      <div className="w-[300px] rounded-bl-sm bg-[#323FD4]">
+                      <div
+                        className={`w-[300px] ${isHover ? "rounded-none" : "rounded-bl-sm"}  bg-[#323FD4]`}
+                      >
                         <input
                           value={selectedEmail}
                           type="email"
@@ -358,17 +360,25 @@ export default function HomeBanner() {
                     </div>
                   </div>
                   <div className="flex items-center">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="h-full">
+                          <Button
+                            variant="secondary"
+                            className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
+                          >
+                            <Icon.clock className="h-6 w-6" color="white" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Open Emails history</TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
                     <Button
                       variant="secondary"
-                      className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
+                      className={`ml-[1px] h-full rounded-none ${isHover ? "rounded-none rounded-tr-sm" : "rounded-e-sm"} bg-[#323FD4] px-4`}
                     >
-                      <Icon.clock className="h-6 w-6" color="white" />
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      className="ml-[1px] h-full rounded-none rounded-e-sm bg-[#323FD4] px-4"
-                    >
-                      <Icon.cloud className="h-6 w-6" color="white" />
+                      <Icon.qrCode className="h-6 w-6" color="white" />
                     </Button>
                   </div>
                 </div>
@@ -385,7 +395,7 @@ export default function HomeBanner() {
                           return (
                             <button
                               key={email.email}
-                              className={`flex w-[100%] items-center justify-between border-t-[1px] border-black ${selectedEmail === email.email ? "bg-[#4652D8]" : "bg-[#323FD4]"} px-2 py-3 text-sm text-white hover:bg-[#4652D8] hover:text-white`}
+                              className={`flex w-[100%] items-center justify-between border-t-[1px] border-white ${selectedEmail === email.email ? "bg-[#4652D8]" : "bg-[#323FD4]"} px-2 py-3 text-sm text-white hover:bg-[#4652D8] hover:text-white`}
                               onClick={() => {
                                 activeThisEmail(email);
                               }}
@@ -412,7 +422,7 @@ export default function HomeBanner() {
                                   <TooltipProvider>
                                     <Tooltip data-side="right">
                                       <TooltipTrigger>
-                                        <button>
+                                        <button title={email.email}>
                                           <Icon.copy size={14} />
                                         </button>
                                       </TooltipTrigger>
@@ -430,7 +440,7 @@ export default function HomeBanner() {
                           );
                         })}
                     </div>
-                    <div className="flex items-center justify-center rounded-b-sm border-t-[1px] border-black bg-[#323FD4] py-3 text-sm text-white">
+                    <div className="flex items-center justify-center rounded-b-sm border-t-[1px] border-white bg-[#323FD4] py-3 text-sm text-white">
                       <div>
                         Email count:{" "}
                         {generatedEmails &&
@@ -446,7 +456,10 @@ export default function HomeBanner() {
                                 ?
                               </button>
                             </TooltipTrigger>
-                            <TooltipContent>Tooltip text</TooltipContent>
+                            <TooltipContent>
+                              Maximum email count upto 5 emails new email will
+                              replace old one
+                            </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
                       </div>
