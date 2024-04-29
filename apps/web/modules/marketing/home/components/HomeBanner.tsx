@@ -8,7 +8,14 @@ import DeleteIcon from "@shared/icons/DeleteIcon";
 import LoadingIcon from "@shared/icons/LoadingIcon";
 import RefreshIcon from "@shared/icons/RefreshIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@ui/components/tooltip";
 import { getCookie } from "cookies-next";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -18,8 +25,17 @@ import io from "socket.io-client";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
 import type { IMessage } from "../../../../interface/commonInterface";
 import { deleteEmail } from "../../../../services/services";
+import { persistObj } from "../../../../utils/cookie-config";
+import { getLSEmails } from "../../../../utils/localStorage-config";
 import BannerTable2 from "./BannerTable2";
 import CreateEmailModal from "./CreateEmailModal";
+
+interface Email {
+  email: string;
+  date: number;
+  active: boolean;
+  token: string;
+}
 
 export default function HomeBanner() {
   const t = useTranslations();
@@ -27,11 +43,15 @@ export default function HomeBanner() {
   const [copy, setCopy] = useState(false);
   const router = useRouter();
   const email = getCookie("email") ?? "";
+  const [generatedEmails, setGeneratedEmails] = useState<Email[]>([]);
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [isHover, setHover] = useState(false);
 
   // ----------- Data Fetching ----------
   const { data: emailToken, refetch: refetchEmailToken } = useEmailToken({
     enabled: email ? false : true,
   });
+
   const {
     data: messages,
     isFetching: messageLoading,
@@ -43,6 +63,9 @@ export default function HomeBanner() {
     mutationFn: deleteEmail,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["messages"] });
+      setTimeout(() => {
+        handleLocalStorageEmail();
+      }, 1000);
     },
   });
 
@@ -54,6 +77,54 @@ export default function HomeBanner() {
       setCopy(false);
     }, 1500);
   };
+
+  const activeThisEmail = (e) => {
+    console.log("generateEmail", generatedEmails);
+    let emails = getLSEmails();
+    if (e.email === "All Emails") {
+      emails.forEach((obj) => {
+        obj.active = false;
+      });
+      setSelectedEmail("All Emails");
+    } else {
+      emails.forEach((obj) => {
+        if (obj.email === e.email) {
+          persistObj("email", e.token);
+          obj.active = true;
+        } else {
+          obj.active = false;
+        }
+      });
+    }
+    localStorage.setItem("emails", JSON.stringify(emails));
+    handleLocalStorageEmail();
+  };
+
+  const handleLocalStorageEmail = () => {
+    const emails = getLSEmails();
+    console.log("handleLocalStorageEmail", emails);
+    const isActive = emails?.find((email) => email.active);
+    console.log("isActive", isActive);
+    let newObj = {
+      email: "All Emails",
+      token: "0",
+      date: Date.now(),
+      active: false,
+    };
+    if (isActive) {
+      newObj.active = false;
+      setSelectedEmail(isActive.email);
+    } else {
+      newObj.active = true;
+      setSelectedEmail(newObj.email);
+    }
+    const allEmails = [newObj, ...emails];
+    setGeneratedEmails(allEmails);
+  };
+
+  // useEffect(() => {
+  //   handleLocalStorageEmail();
+  // }, []);
 
   // -------------- Socket IO ------------
   useEffect(() => {
@@ -74,7 +145,9 @@ export default function HomeBanner() {
 
     function joinSocketRoom(room) {
       const message = { room: room };
+      // console.log("joinRoom", message);
       socket.emit("joinRoom", message);
+      handleLocalStorageEmail();
     }
 
     function leaveSocketRoom(room) {
@@ -109,8 +182,10 @@ export default function HomeBanner() {
       is_favorite: false,
       from: "John Doe",
       from_email: "john@example.com",
-      subject: "Meeting Reminder dasff adsf asdf asdf asdf asdf asdf asdfasd fasdf asdf df asdf df adf dsf d adf asdf asdf sadf asdfsad fasdf ",
-      content: "Don't forget about the meeting tomorrow at 10 AM. asdf asdf asdf sadf ",
+      subject:
+        "Meeting Reminder dasff adsf asdf asdf asdf asdf asdf asdfasd fasdf asdf df asdf df adf dsf d adf asdf asdf sadf asdfsad fasdf ",
+      content:
+        "Don't forget about the meeting tomorrow at 10 AM. asdf asdf asdf sadf ",
       receivedAt: new Date(),
       attachments: [],
     },
@@ -222,7 +297,7 @@ export default function HomeBanner() {
         <TsParticles />
 
         <div
-          className="container relative md:py-[82px] py-[42px] text-center text-white"
+          className="container relative py-[42px] text-center text-white md:py-[82px]"
           data-aos="fade-up"
         >
           <h2 className="text-xl font-bold capitalize md:text-5xl">
@@ -252,10 +327,148 @@ export default function HomeBanner() {
             </div>
             {/* Email Top */}
             <div className="relative flex flex-col items-center pb-6 pt-10">
-              <div className="bg-blue-600 rounded-md mb-4 text-center">
-                <p className="text-xs	py-1 text-center text-white min-w-[18rem] md:w-[23rem] p-2" onClick={handleCopy} aria-hidden="true">
-                  <span className="pl-6 uppercase">{"Your Temporary Email Address"}</span>
-                  <span className="pr-2 pl-0 px-4" style={{float: 'right'}} >
+              {/* new email container */}
+              <div className="relative mb-2 flex flex-col">
+                <div className="flex">
+                  <div className="w-full">
+                    <div className="rounded-tl-sm bg-[#4652D8] py-1 text-center text-xs font-light text-white">
+                      Your temporary email
+                    </div>
+                    <div
+                      className="relative flex flex-col justify-center"
+                      onMouseEnter={() => setHover(true)}
+                      onMouseLeave={() => setHover(false)}
+                    >
+                      <div className="absolute left-2 rounded-[5px] bg-[hsla(0,0%,100%,.2)] px-[5px] text-sm text-white">
+                        {generatedEmails &&
+                          generatedEmails.length > 0 &&
+                          generatedEmails.length - 1}
+                      </div>
+                      <div className="w-[300px] rounded-bl-sm bg-[#323FD4]">
+                        <input
+                          value={selectedEmail}
+                          type="email"
+                          disabled
+                          className="text-md w-full appearance-none border-0 bg-transparent text-center text-white"
+                        />
+                      </div>
+                      <div className="absolute right-0 rounded-[5px] px-1 text-sm text-white">
+                        <Icon.chevronDown className="h-5 w-5" color="white" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Button
+                      variant="secondary"
+                      className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
+                    >
+                      <Icon.clock className="h-6 w-6" color="white" />
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      className="ml-[1px] h-full rounded-none rounded-e-sm bg-[#323FD4] px-4"
+                    >
+                      <Icon.cloud className="h-6 w-6" color="white" />
+                    </Button>
+                  </div>
+                </div>
+                {isHover && (
+                  <div
+                    className="absolute top-[100%] z-10 w-full"
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                  >
+                    <div className="">
+                      {generatedEmails &&
+                        generatedEmails.length > 0 &&
+                        generatedEmails.map((email) => {
+                          return (
+                            <button
+                              key={email.email}
+                              className={`flex w-[100%] items-center justify-between border-t-[1px] border-black ${selectedEmail === email.email ? "bg-[#4652D8]" : "bg-[#323FD4]"} px-2 py-3 text-sm text-white hover:bg-[#4652D8] hover:text-white`}
+                              onClick={() => {
+                                activeThisEmail(email);
+                              }}
+                            >
+                              <div className="">
+                                <input
+                                  type="radio"
+                                  id={email.email}
+                                  name="email"
+                                  value="30"
+                                  checked={selectedEmail === email.email}
+                                  disabled
+                                  className="rounded-full border-0 bg-[rgb(0,0,0,.5)] checked:rounded-full checked:bg-[rgb(0,0,0,.5)] checked:shadow-inner checked:ring-black checked:ring-offset-black checked:hover:bg-[rgb(0,0,0,.5)]"
+                                />
+                                <label
+                                  className="text-md pl-2"
+                                  htmlFor={email.email}
+                                >
+                                  {email.email}
+                                </label>
+                              </div>
+                              <div className="flex items-center justify-center">
+                                <div className="hidden px-3 hover:block">
+                                  <TooltipProvider>
+                                    <Tooltip data-side="right">
+                                      <TooltipTrigger>
+                                        <button>
+                                          <Icon.copy size={14} />
+                                        </button>
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        Copy Email
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                </div>
+                                <div className="rounded-[5px] bg-[hsla(0,0%,100%,.2)] px-[5px] py-[2px] text-xs text-white">
+                                  {0}
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                    </div>
+                    <div className="flex items-center justify-center rounded-b-sm border-t-[1px] border-black bg-[#323FD4] py-3 text-sm text-white">
+                      <div>
+                        Email count:{" "}
+                        {generatedEmails &&
+                          generatedEmails.length > 0 &&
+                          generatedEmails.length - 1}{" "}
+                        / 5
+                      </div>
+                      <div className="px-3">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <button className="flex h-4 w-4 items-center justify-center rounded-full bg-[rgb(0,0,0,.5)] text-xs">
+                                ?
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>Tooltip text</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+
+                      <button className="rounded-[3px] bg-white px-1.5 py-[2px] text-xs text-black">
+                        Upgrade
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* <div className="mb-4 rounded-md bg-blue-600 text-center">
+                <p
+                  className="min-w-[18rem]	p-2 py-1 text-center text-xs text-white md:w-[23rem]"
+                  onClick={handleCopy}
+                  aria-hidden="true"
+                >
+                  <span className="pl-6 uppercase">
+                    {"Your Temporary Email Address"}
+                  </span>
+                  <span className="px-4 pl-0 pr-2" style={{ float: "right" }}>
                     {!copy ? (
                       <>
                         <Icon.copy size={16} />
@@ -265,12 +478,45 @@ export default function HomeBanner() {
                     )}
                   </span>
                 </p>
-                <div className="bg-primary-dark flex items-center gap-2 rounded-md p-2 text-white">
-                  <p className="p-2 w-full text-sm font-semibold md:w-80 md:text-base">
+                <div className="bg-primary-dark flex w-full items-center gap-2 rounded-md p-2 text-white"> */}
+              {/* <p className="w-full p-2 text-sm font-semibold md:w-80 md:text-base">
                     {messageLoading ? "Loading..." : messages?.data?.mailbox}
-                  </p>
+                  </p> */}
+              {/* <div className="flex w-full flex-row items-center justify-center rounded-sm bg-[#DA5786]">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="w-full">
+                        <button
+                          type="button"
+                          className=" flex w-full items-center justify-between  rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
+                        >
+                          <div className="rounded-[3px] bg-[#8E4CA9] px-1 text-xs">
+                            {generatedEmails &&
+                              generatedEmails.length > 0 &&
+                              generatedEmails.length}
+                          </div>
+                          {selectedEmail && selectedEmail}
+                          <Icon.chevronDown size={20} />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuRadioGroup
+                          value={selectedEmail}
+                          onValueChange={(value) => setSelectedEmail(value)}
+                        >
+                          {generatedEmails.map((email) => (
+                            <DropdownMenuRadioItem
+                              key={email.email}
+                              value={email.email}
+                            >
+                              {email.email}
+                            </DropdownMenuRadioItem>
+                          ))}
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div> */}
 
-                  {/* <button
+              {/* <button
                     type="button"
                     className="bg-secondary flex items-center justify-center gap-2 rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
                     onClick={handleCopy}
@@ -283,12 +529,13 @@ export default function HomeBanner() {
                       `Copied`
                     )}
                   </button> */}
-                </div>
-              </div>
+              {/* </div>
+              </div> */}
               <div className="flex items-center gap-2">
                 <SecondaryButton
                   className="px-2 md:px-6"
                   onClick={() => deleteAPI()}
+                  disabled={selectedEmail === "All Emails"}
                 >
                   {messageLoading || deleteLoading ? (
                     <LoadingIcon />
