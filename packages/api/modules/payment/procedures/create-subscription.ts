@@ -1,11 +1,18 @@
 import { TRPCError } from "@trpc/server";
+import type { OrderStatusType } from "database";
 import { UserSubscriptionSchema, db } from "database";
 import { publicProcedure } from "../../../trpc/base";
 
 export const createSubscription = publicProcedure
   .input(UserSubscriptionSchema)
   .mutation(async ({ input: subscription }) => {
-    let orderIdExist = null;
+    let orderIdExist: {
+      id?: string;
+      orderId: string;
+      email?: string;
+      status?: OrderStatusType;
+      createdAt?: Date;
+    } | null = null;
 
     if (subscription?.orderId) {
       orderIdExist = await db.order.findFirst({

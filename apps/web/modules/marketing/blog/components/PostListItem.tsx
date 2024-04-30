@@ -1,8 +1,19 @@
 "use client";
 
-import type { Post } from "content-collections";
+// import type { Post } from "content-collections";
 import Image from "next/image";
 import Link from "next/link";
+
+interface Post {
+  title: string;
+  excerpt: string;
+  authorName: string;
+  image: string;
+  date: string | number | Date;
+  slug: string;
+  authorImage: string;
+  tags: string[];
+}
 
 export function PostListItem({ post }: { post: Post }) {
   const { title, excerpt, authorName, image, date, slug, authorImage, tags } =
@@ -63,7 +74,7 @@ export function PostListItem({ post }: { post: Post }) {
 
         <div className="ml-auto mr-0">
           <p className="text-sm opacity-30">
-            {Intl.DateTimeFormat("en-US").format(new Date(date as Date))}
+            {Intl.DateTimeFormat("en-US").format(new Date(date))}
           </p>
         </div>
       </div>

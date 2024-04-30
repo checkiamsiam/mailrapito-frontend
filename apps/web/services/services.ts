@@ -8,7 +8,11 @@ import type {
   IFetchMessages,
 } from "../interface/servicesInterface";
 import { loadObj, persistObj } from "../utils/cookie-config";
-import { getLSEmails, persistLSEmails } from "../utils/localStorage-config";
+import {
+  getLSEmails,
+  getLSEmailsHistory,
+  persistLSEmails,
+} from "../utils/localStorage-config";
 
 export const API_KEY = "nMpKDjd1baWWIBl7p357s1ac7RCbwWp1F8aLDB5n" ?? "";
 const API = appConfig.api;
@@ -32,22 +36,30 @@ export const fetchMessages = async () => {
   console.log("cookie", cookie);
   persistLSEmails(String(data.data.mailbox), String(cookie));
   console.log("fetchMessages", data);
-  setTimeout(() => {
-    return data;
-  }, 1000);
+  return data;
+  // setTimeout(() => {}, 1000);
 };
 
 export const deleteEmail = async () => {
+  const allEmails = getLSEmails();
+  const deletedEmail = allEmails.find((obj) => obj.token === loadObj("email"));
+  console.log("deletedEmail", deletedEmail);
+  const history = getLSEmailsHistory();
+  if (deletedEmail) {
+    deletedEmail.inHistory = true;
+    history.unshift(deletedEmail);
+  }
+  localStorage.setItem("emailsHistory", JSON.stringify(history));
   const { data } = await axios.post<IEmailToken>(
     `${API}/email/delete/${loadObj("email")}/${API_KEY}`,
   );
-  console.log("deleteEmail", data);
-  const allEmails = getLSEmails();
+  // console.log("deleteEmail", data);
   const index = allEmails.findIndex((obj) => obj.token === loadObj("email"));
   if (index !== -1) {
     allEmails.splice(index, 1);
     localStorage.setItem("emails", JSON.stringify(allEmails));
   }
+
   persistObj("email", data?.data?.email_token);
   return data;
 };

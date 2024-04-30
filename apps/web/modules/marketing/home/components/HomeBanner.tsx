@@ -9,6 +9,13 @@ import LoadingIcon from "@shared/icons/LoadingIcon";
 import RefreshIcon from "@shared/icons/RefreshIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@ui/components/dialog";
 import { Icon } from "@ui/components/icon";
 import {
   Tooltip,
@@ -23,18 +30,142 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
-import type { IMessage } from "../../../../interface/commonInterface";
 import { deleteEmail } from "../../../../services/services";
 import { persistObj } from "../../../../utils/cookie-config";
-import { getLSEmails } from "../../../../utils/localStorage-config";
+import {
+  getLSEmails,
+  getLSEmailsHistory,
+} from "../../../../utils/localStorage-config";
 import BannerTable2 from "./BannerTable2";
 import CreateEmailModal from "./CreateEmailModal";
+
+// -------------- Fake Data ------------
+// const fakeMessages: IMessage[] = [
+//   {
+//     _id: "1asdfasd",
+//     is_seen: true,
+//     is_favorite: false,
+//     from: "John Doe",
+//     from_email: "john@example.com",
+//     subject:
+//       "Meeting Reminder dasff adsf asdf asdf asdf asdf asdf asdfasd fasdf asdf df asdf df adf dsf d adf asdf asdf sadf asdfsad fasdf ",
+//     content:
+//       "Don't forget about the meeting tomorrow at 10 AM. asdf asdf asdf sadf ",
+//     receivedAt: new Date(),
+//     attachments: [],
+//   },
+//   {
+//     _id: "2asdfasd",
+//     is_seen: false,
+//     is_favorite: true,
+//     from: "Alice Smith",
+//     from_email: "alice@example.com",
+//     subject: "Project Update",
+//     content: "Attached is the latest progress report.",
+//     receivedAt: new Date(),
+//     attachments: [{ filename: "progress_report.pdf", size: "1.5MB" }],
+//   },
+//   // Add more messages as needed
+//   {
+//     _id: "3klklkllkk",
+//     is_seen: true,
+//     is_favorite: true,
+//     from: "Bob Johnson",
+//     from_email: "bob@example.com",
+//     subject: "Important Announcement",
+//     content: "Please review the attached document.",
+//     receivedAt: new Date(),
+//     attachments: [{ filename: "announcement.docx", size: "800KB" }],
+//   },
+//   {
+//     _id: "4aghgsdf",
+//     is_seen: false,
+//     is_favorite: false,
+//     from: "Sarah Lee",
+//     from_email: "sarah@example.com",
+//     subject: "Weekly Newsletter",
+//     content: "Check out the latest news and updates.",
+//     receivedAt: new Date(),
+//     attachments: [],
+//   },
+//   {
+//     _id: "5hgdgsdd",
+//     is_seen: true,
+//     is_favorite: false,
+//     from: "Michael Brown",
+//     from_email: "michael@example.com",
+//     subject: "Upcoming Event",
+//     content: "Join us for the event this weekend.",
+//     receivedAt: new Date(),
+//     attachments: [{ filename: "event_details.pdf", size: "2MB" }],
+//   },
+//   {
+//     _id: "6asdeerer",
+//     is_seen: true,
+//     is_favorite: true,
+//     from: "Emily Wang",
+//     from_email: "emily@example.com",
+//     subject: "Vacation Request",
+//     content: "Please approve my vacation request for next month.",
+//     receivedAt: new Date(),
+//     attachments: [],
+//   },
+//   {
+//     _id: "7eterere",
+//     is_seen: false,
+//     is_favorite: false,
+//     from: "David Kim",
+//     from_email: "david@example.com",
+//     subject: "Meeting Agenda",
+//     content: "Here's the agenda for tomorrow's meeting.",
+//     receivedAt: new Date(),
+//     attachments: [],
+//   },
+//   {
+//     _id: "8nfghdger",
+//     is_seen: true,
+//     is_favorite: false,
+//     from: "Jennifer Lopez",
+//     from_email: "jennifer@example.com",
+//     subject: "Task Assignment",
+//     content: "Assigning tasks for the upcoming project.",
+//     receivedAt: new Date(),
+//     attachments: [{ filename: "task_list.xlsx", size: "500KB" }],
+//   },
+//   {
+//     _id: "9adaeregsaer",
+//     is_seen: false,
+//     is_favorite: true,
+//     from: "Kevin Garcia",
+//     from_email: "kevin@example.com",
+//     subject: "Feedback Request",
+//     content: "Please provide feedback on the latest proposal.",
+//     receivedAt: new Date(),
+//     attachments: [],
+//   },
+//   {
+//     _id: "10aeterasdfadsfwera",
+//     is_seen: true,
+//     is_favorite: true,
+//     from: "Emma Thompson",
+//     from_email: "emma@example.com",
+//     subject: "Holiday Greetings",
+//     content: "Wishing you a happy holiday season!",
+//     receivedAt: new Date(),
+//     attachments: [],
+//   },
+// ];
 
 interface Email {
   email: string;
   date: number;
   active: boolean;
   token: string;
+}
+
+interface EmailGroup {
+  date: string;
+  emails: Email[];
 }
 
 export default function HomeBanner() {
@@ -46,6 +177,109 @@ export default function HomeBanner() {
   const [generatedEmails, setGeneratedEmails] = useState<Email[]>([]);
   const [selectedEmail, setSelectedEmail] = useState("");
   const [isHover, setHover] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState(new Set());
+  const [searchText, setSearchText] = useState<string>("");
+  const [emailsHistory, setEmailsHistory] = useState<EmailGroup[]>([]);
+  const [displayedEmails, setDisplayedEmails] = useState<EmailGroup[]>([]);
+
+  // const handleDateCheckboxChange = (date) => {
+  //   console.log("date", date);
+  //   console.log("emailsHistory", emailsHistory);
+  //   const newSelectedEmails = new Set(selectedEmails);
+  //   console.log(
+  //     "🚀 ~ handleDateCheckboxChange ~ newSelectedEmails:",
+  //     newSelectedEmails.has("kvqbtjp350@mailrapido.com"),
+  //   );
+  //   const foundDate = emailsHistory.find((d) => d.date === date);
+  //   console.log("🚀 ~ handleDateCheckboxChange ~ foundDate:", foundDate);
+  //   if (!foundDate) {
+  //     return;
+  //   } else {
+  //     emailsHistory.forEach((day) => {
+  //       if (day.date === date) {
+  //         day.emailsHistory.forEach((email) => {
+  //           if (newSelectedEmails.has(email.email)) {
+  //             newSelectedEmails.delete(email.email);
+  //           } else {
+  //             newSelectedEmails.add(email.email);
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+  //   if (newSelectedEmails.has(date)) {
+  //     newSelectedEmails.delete(date);
+  //     emailsHistory
+  //       .find((d) => d.date === date)
+  //       .emailsHistory.forEach((email) =>
+  //         newSelectedEmails.delete(email.email),
+  //       );
+  //   } else {
+  //     newSelectedEmails.add(date);
+  //     emailsHistory
+  //       .find((d) => d.date === date)
+  //       .emailsHistory.forEach((email) => newSelectedEmails.add(email.email));
+  //   }
+  //   setSelectedEmails(newSelectedEmails);
+  // };
+
+  // const handleEmailCheckboxChange = (email) => {
+  //   const newSelectedEmails = new Set(selectedEmails);
+  //   if (newSelectedEmails.has(email)) {
+  //     newSelectedEmails.delete(email);
+  //   } else {
+  //     newSelectedEmails.add(email);
+  //   }
+  //   setSelectedEmails(newSelectedEmails);
+  // };
+
+  // const isSelectedDate = (date) => selectedEmails.has(date);
+  // const isSelectedEmail = (email) => selectedEmails.has(email);
+
+  // const filterEmails = (searchText: string) => {
+  //   console.log("searchText", searchText);
+  //   if (!searchText) {
+  //     return emailsHistory;
+  //   }
+
+  //   let filteredEmails = emailsHistory.map((day) => {
+  //     const filteredDay = { ...day };
+  //     filteredDay.emails = day.emails.filter((email) =>
+  //       email.email.toLowerCase().includes(searchText.toLowerCase()),
+  //     );
+  //     return filteredDay;
+  //   });
+
+  //   const matchedEmail = emailsHistory
+  //     .flatMap((day) => day.emails)
+  //     .find((email) => email.email === searchText);
+
+  //   if (matchedEmail) {
+  //     filteredEmails = [
+  //       {
+  //         date: emailsHistory.find((day) =>
+  //           day.emails.some((email) => email.email === searchText),
+  //         ).date,
+  //         emails: [matchedEmail],
+  //       },
+  //     ];
+  //   } else {
+  //     filteredEmails = filteredEmails.filter((day) => day.emails.length > 0);
+  //   }
+
+  //   console.log("filteredEmails", filteredEmails);
+  //   return filteredEmails;
+  // };
+
+  // useEffect(() => {
+  //   filterEmails(searchText);
+  // }, [searchText]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event) {
+      setSearchText(event.target.value);
+    }
+  };
 
   // ----------- Data Fetching ----------
   const { data: emailToken, refetch: refetchEmailToken } = useEmailToken({
@@ -76,6 +310,48 @@ export default function HomeBanner() {
     setTimeout(() => {
       setCopy(false);
     }, 1500);
+  };
+
+  // const initiateFilterEmails = () => {
+  //   const displayedEmails = filterEmails(searchText);
+  //   setDisplayedEmails(displayedEmails);
+  // };
+
+  const getEmailsHistory = () => {
+    const data: Email[] = getLSEmailsHistory();
+    const emails: EmailGroup[] = [];
+
+    data.forEach((item: Email) => {
+      const date: Date = new Date(item.date);
+      const currentDate: Date = new Date();
+      const diffTime: number = Math.abs(currentDate.getTime() - date.getTime());
+      const diffDays: number = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      let dayLabel = "";
+      if (diffDays === 1) {
+        dayLabel = "Today";
+      } else if (diffDays === 2) {
+        dayLabel = "Yesterday";
+      } else {
+        dayLabel = date.toLocaleDateString("en-US", { weekday: "long" });
+      }
+
+      const formattedDate = `${dayLabel} - ${date.toLocaleDateString("en-US", { weekday: "long", month: "numeric", day: "numeric", year: "numeric" })}`;
+
+      // Check if the date already exists in the emails array
+      const existingDate: EmailGroup | undefined = emails.find(
+        (e) => e.date === formattedDate,
+      );
+      if (existingDate) {
+        existingDate.emails.push(item);
+      } else {
+        emails.push({ date: formattedDate, emails: [item] });
+      }
+    });
+
+    // console.log(emails);
+    setEmailsHistory(emails);
+    // initiateFilterEmails();
   };
 
   const activeThisEmail = (e) => {
@@ -158,8 +434,8 @@ export default function HomeBanner() {
     const room = getCookie("email");
 
     joinSocketRoom(room);
-
-    socket.on("check", async function (data) {
+    // removed data from parameter of below function
+    socket.on("check", async function () {
       // console.log(JSON.parse(data));
       // var data = JSON.parse(data);
       // const messagesData = [...messages.messages];
@@ -173,123 +449,6 @@ export default function HomeBanner() {
       socket.off("check");
     };
   }, [messages, refetchMessages]);
-
-  // -------------- Fake Data ------------
-  const fakeMessages: IMessage[] = [
-    {
-      _id: "1asdfasd",
-      is_seen: true,
-      is_favorite: false,
-      from: "John Doe",
-      from_email: "john@example.com",
-      subject:
-        "Meeting Reminder dasff adsf asdf asdf asdf asdf asdf asdfasd fasdf asdf df asdf df adf dsf d adf asdf asdf sadf asdfsad fasdf ",
-      content:
-        "Don't forget about the meeting tomorrow at 10 AM. asdf asdf asdf sadf ",
-      receivedAt: new Date(),
-      attachments: [],
-    },
-    {
-      _id: "2asdfasd",
-      is_seen: false,
-      is_favorite: true,
-      from: "Alice Smith",
-      from_email: "alice@example.com",
-      subject: "Project Update",
-      content: "Attached is the latest progress report.",
-      receivedAt: new Date(),
-      attachments: [{ filename: "progress_report.pdf", size: "1.5MB" }],
-    },
-    // Add more messages as needed
-    {
-      _id: "3klklkllkk",
-      is_seen: true,
-      is_favorite: true,
-      from: "Bob Johnson",
-      from_email: "bob@example.com",
-      subject: "Important Announcement",
-      content: "Please review the attached document.",
-      receivedAt: new Date(),
-      attachments: [{ filename: "announcement.docx", size: "800KB" }],
-    },
-    {
-      _id: "4aghgsdf",
-      is_seen: false,
-      is_favorite: false,
-      from: "Sarah Lee",
-      from_email: "sarah@example.com",
-      subject: "Weekly Newsletter",
-      content: "Check out the latest news and updates.",
-      receivedAt: new Date(),
-      attachments: [],
-    },
-    {
-      _id: "5hgdgsdd",
-      is_seen: true,
-      is_favorite: false,
-      from: "Michael Brown",
-      from_email: "michael@example.com",
-      subject: "Upcoming Event",
-      content: "Join us for the event this weekend.",
-      receivedAt: new Date(),
-      attachments: [{ filename: "event_details.pdf", size: "2MB" }],
-    },
-    {
-      _id: "6asdeerer",
-      is_seen: true,
-      is_favorite: true,
-      from: "Emily Wang",
-      from_email: "emily@example.com",
-      subject: "Vacation Request",
-      content: "Please approve my vacation request for next month.",
-      receivedAt: new Date(),
-      attachments: [],
-    },
-    {
-      _id: "7eterere",
-      is_seen: false,
-      is_favorite: false,
-      from: "David Kim",
-      from_email: "david@example.com",
-      subject: "Meeting Agenda",
-      content: "Here's the agenda for tomorrow's meeting.",
-      receivedAt: new Date(),
-      attachments: [],
-    },
-    {
-      _id: "8nfghdger",
-      is_seen: true,
-      is_favorite: false,
-      from: "Jennifer Lopez",
-      from_email: "jennifer@example.com",
-      subject: "Task Assignment",
-      content: "Assigning tasks for the upcoming project.",
-      receivedAt: new Date(),
-      attachments: [{ filename: "task_list.xlsx", size: "500KB" }],
-    },
-    {
-      _id: "9adaeregsaer",
-      is_seen: false,
-      is_favorite: true,
-      from: "Kevin Garcia",
-      from_email: "kevin@example.com",
-      subject: "Feedback Request",
-      content: "Please provide feedback on the latest proposal.",
-      receivedAt: new Date(),
-      attachments: [],
-    },
-    {
-      _id: "10aeterasdfadsfwera",
-      is_seen: true,
-      is_favorite: true,
-      from: "Emma Thompson",
-      from_email: "emma@example.com",
-      subject: "Holiday Greetings",
-      content: "Wishing you a happy holiday season!",
-      receivedAt: new Date(),
-      attachments: [],
-    },
-  ];
 
   return (
     <div>
@@ -360,19 +519,119 @@ export default function HomeBanner() {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger className="h-full">
-                          <Button
-                            variant="secondary"
-                            className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
-                          >
-                            <Icon.clock className="h-6 w-6" color="white" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>Open Emails history</TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                    <Dialog>
+                      <DialogTrigger className="h-full">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="h-full">
+                              <Button
+                                variant="secondary"
+                                className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
+                                onClick={getEmailsHistory}
+                              >
+                                <Icon.clock className="h-6 w-6" color="white" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Open Emails history</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </DialogTrigger>
+                      <DialogContent className="border-0 bg-[#1220CE] text-white">
+                        <DialogTitle>
+                          <div>Emails history</div>
+                        </DialogTitle>
+                        <DialogDescription>Search in history</DialogDescription>
+                        <input
+                          className="Input bg-[#0E1894]"
+                          id="email"
+                          placeholder="Type email address to search..."
+                          value={searchText}
+                          onChange={handleSearchChange}
+                        />
+                        <div className="email-list flex flex-col gap-4">
+                          <ul className="list-none">
+                            {/* {displayedEmails.map((day) => (
+                              <li key={day.date} className="flex items-center">
+                                <div className="flex w-full flex-col">
+                                  <div className="flex items-center bg-[#323DE4] px-3 py-1 text-xs uppercase">
+                                    <input
+                                      type="checkbox"
+                                      id={day.date}
+                                      checked={isSelectedDate(day.date)}
+                                      onChange={() =>
+                                        handleDateCheckboxChange(day.date)
+                                      }
+                                      className="mr-3 h-3 w-3 rounded focus:ring-1 focus:ring-blue-500"
+                                    />
+                                    <h3>{day.date}</h3>
+                                  </div>
+                                  <ul className=" list-none">
+                                    {day.emails.map((email) => (
+                                      <li
+                                        key={email.email}
+                                        className="flex w-full items-center items-center justify-between space-x-3 border-b-[1px] border-[#323DE4] bg-[#0E1894] px-3 py-3 text-xs text-white hover:opacity-80"
+                                      >
+                                        <div className="">
+                                          <input
+                                            type="checkbox"
+                                            id={email.email}
+                                            checked={isSelectedEmail(
+                                              email.email,
+                                            )}
+                                            onChange={() =>
+                                              handleEmailCheckboxChange(
+                                                email.email,
+                                              )
+                                            }
+                                            className="mr-3 h-3 w-3 rounded focus:ring-1 focus:ring-blue-500"
+                                          />
+                                          <label
+                                            htmlFor={email.email}
+                                            className="text-sm text-white"
+                                          >
+                                            <span className="text-slate-400">
+                                              {email.time}
+                                            </span>
+                                            <span className="pl-3">
+                                              {email.email}
+                                            </span>
+                                            {email.status
+                                              ? `(${email.status})`
+                                              : ""}
+                                          </label>
+                                        </div>
+                                        <div>
+                                          <button
+                                            className="rounded-[5px] bg-[#F35B7B] px-[5px] py-[2px] text-xs text-white"
+                                            title="Unread"
+                                          >
+                                            Use this email
+                                          </button>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </li>
+                            ))} */}
+                          </ul>
+                          <div>
+                            <div className="text-center text-xs text-white">
+                              History size: {generatedEmails.length - 1}/50
+                            </div>
+                            <div className="text-center text-xs">
+                              <Button
+                                variant="link"
+                                className="rounded-md px-1 font-bold text-white"
+                              >
+                                Get Premium
+                              </Button>
+                              to increase history size and get more features
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
 
                     <Button
                       variant="secondary"

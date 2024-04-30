@@ -3,6 +3,7 @@ interface Email {
   token: string;
   date: number;
   active: boolean;
+  inHistory?: boolean;
 }
 
 export const getLSEmails = () => {
@@ -11,7 +12,7 @@ export const getLSEmails = () => {
   } else {
     const found = localStorage.getItem("emails");
     const emails: Email[] = found ? JSON.parse(found) : [];
-    console.log("🚀 ~ getLSEmails ~ emails:", emails);
+    // console.log("🚀 ~ getLSEmails ~ emails:", emails);
     return emails;
   }
 };
@@ -32,6 +33,18 @@ export const persistLSEmails = (email: string, token: string) => {
     if (emails.length > 5) {
       emails.pop();
     }
+    // localStorage.setItem("emailsHistory", JSON.stringify());
     localStorage.setItem("emails", JSON.stringify(emails));
+  }
+};
+
+export const getLSEmailsHistory = () => {
+  if (typeof window === "undefined") {
+    return [];
+  } else {
+    const found = localStorage.getItem("emailsHistory");
+    const emails: Email[] = found ? JSON.parse(found) : [];
+    // console.log("🚀 ~ getLSEmails ~ emails:", emails);
+    return emails;
   }
 };
