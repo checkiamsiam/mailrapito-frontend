@@ -22,8 +22,6 @@ export const fetchEmailToken = async () => {
   const { data } = await axios.post<IEmailToken>(
     `${API}/email/create/${API_KEY}`,
   );
-  const allEmails = getLSEmails();
-  console.log("fetchEmailToken", allEmails);
   persistObj("email", data?.data?.email_token);
   return data;
 };
@@ -33,33 +31,32 @@ export const fetchMessages = async () => {
     `${API}/messages/${loadObj("email")}/${API_KEY}`,
   );
   const cookie = loadObj("email");
-  console.log("cookie", cookie);
   persistLSEmails(String(data.data.mailbox), String(cookie));
-  console.log("fetchMessages", data);
   return data;
-  // setTimeout(() => {}, 1000);
 };
 
 export const deleteEmail = async () => {
   const allEmails = getLSEmails();
   const deletedEmail = allEmails.find((obj) => obj.token === loadObj("email"));
-  console.log("deletedEmail", deletedEmail);
   const history = getLSEmailsHistory();
   if (deletedEmail) {
     deletedEmail.inHistory = true;
+    deletedEmail.active = false;
     history.unshift(deletedEmail);
+  }
+  if (history.length > 50) {
+    history.pop();
   }
   localStorage.setItem("emailsHistory", JSON.stringify(history));
   const { data } = await axios.post<IEmailToken>(
     `${API}/email/delete/${loadObj("email")}/${API_KEY}`,
   );
   // console.log("deleteEmail", data);
-  const index = allEmails.findIndex((obj) => obj.token === loadObj("email"));
-  if (index !== -1) {
-    allEmails.splice(index, 1);
-    localStorage.setItem("emails", JSON.stringify(allEmails));
-  }
-
+  // const index = allEmails.findIndex((obj) => obj.token === loadObj("email"));
+  // if (index !== -1) {
+  //   allEmails.splice(index, 1);
+  //   localStorage.setItem("emails", JSON.stringify(allEmails));
+  // }
   persistObj("email", data?.data?.email_token);
   return data;
 };

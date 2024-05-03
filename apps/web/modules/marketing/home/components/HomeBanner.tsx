@@ -24,10 +24,11 @@ import {
   TooltipTrigger,
 } from "@ui/components/tooltip";
 import { getCookie } from "cookies-next";
+import moment from "moment";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
 import { deleteEmail } from "../../../../services/services";
@@ -161,6 +162,7 @@ interface Email {
   date: number;
   active: boolean;
   token: string;
+  inHistory?: boolean;
 }
 
 interface EmailGroup {
@@ -180,105 +182,63 @@ export default function HomeBanner() {
   const [selectedEmails, setSelectedEmails] = useState(new Set());
   const [searchText, setSearchText] = useState<string>("");
   const [emailsHistory, setEmailsHistory] = useState<EmailGroup[]>([]);
-  const [displayedEmails, setDisplayedEmails] = useState<EmailGroup[]>([]);
+  const [showUseEmailBtn, setShowUseEmailBtn] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [numbersOfEmailsInHistory, setNumbersOfEmailsInHistory] = useState(0);
+  const [copyEmail, setCopyEmail] = useState("");
 
-  // const handleDateCheckboxChange = (date) => {
-  //   console.log("date", date);
-  //   console.log("emailsHistory", emailsHistory);
-  //   const newSelectedEmails = new Set(selectedEmails);
-  //   console.log(
-  //     "🚀 ~ handleDateCheckboxChange ~ newSelectedEmails:",
-  //     newSelectedEmails.has("kvqbtjp350@mailrapido.com"),
-  //   );
-  //   const foundDate = emailsHistory.find((d) => d.date === date);
-  //   console.log("🚀 ~ handleDateCheckboxChange ~ foundDate:", foundDate);
-  //   if (!foundDate) {
-  //     return;
-  //   } else {
-  //     emailsHistory.forEach((day) => {
-  //       if (day.date === date) {
-  //         day.emailsHistory.forEach((email) => {
-  //           if (newSelectedEmails.has(email.email)) {
-  //             newSelectedEmails.delete(email.email);
-  //           } else {
-  //             newSelectedEmails.add(email.email);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-  //   if (newSelectedEmails.has(date)) {
-  //     newSelectedEmails.delete(date);
-  //     emailsHistory
-  //       .find((d) => d.date === date)
-  //       .emailsHistory.forEach((email) =>
-  //         newSelectedEmails.delete(email.email),
-  //       );
-  //   } else {
-  //     newSelectedEmails.add(date);
-  //     emailsHistory
-  //       .find((d) => d.date === date)
-  //       .emailsHistory.forEach((email) => newSelectedEmails.add(email.email));
-  //   }
-  //   setSelectedEmails(newSelectedEmails);
-  // };
-
-  // const handleEmailCheckboxChange = (email) => {
-  //   const newSelectedEmails = new Set(selectedEmails);
-  //   if (newSelectedEmails.has(email)) {
-  //     newSelectedEmails.delete(email);
-  //   } else {
-  //     newSelectedEmails.add(email);
-  //   }
-  //   setSelectedEmails(newSelectedEmails);
-  // };
-
-  // const isSelectedDate = (date) => selectedEmails.has(date);
-  // const isSelectedEmail = (email) => selectedEmails.has(email);
-
-  // const filterEmails = (searchText: string) => {
-  //   console.log("searchText", searchText);
-  //   if (!searchText) {
-  //     return emailsHistory;
-  //   }
-
-  //   let filteredEmails = emailsHistory.map((day) => {
-  //     const filteredDay = { ...day };
-  //     filteredDay.emails = day.emails.filter((email) =>
-  //       email.email.toLowerCase().includes(searchText.toLowerCase()),
-  //     );
-  //     return filteredDay;
-  //   });
-
-  //   const matchedEmail = emailsHistory
-  //     .flatMap((day) => day.emails)
-  //     .find((email) => email.email === searchText);
-
-  //   if (matchedEmail) {
-  //     filteredEmails = [
-  //       {
-  //         date: emailsHistory.find((day) =>
-  //           day.emails.some((email) => email.email === searchText),
-  //         ).date,
-  //         emails: [matchedEmail],
-  //       },
-  //     ];
-  //   } else {
-  //     filteredEmails = filteredEmails.filter((day) => day.emails.length > 0);
-  //   }
-
-  //   console.log("filteredEmails", filteredEmails);
-  //   return filteredEmails;
-  // };
-
-  // useEffect(() => {
-  //   filterEmails(searchText);
-  // }, [searchText]);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event) {
-      setSearchText(event.target.value);
+  const handleDateCheckboxChange = (date) => {
+    const newSelectedEmails = new Set(selectedEmails);
+    if (newSelectedEmails.has(date)) {
+      newSelectedEmails.delete(date);
+      const selectedDay = emailsHistory.find((d) => d.date === date);
+      if (selectedDay) {
+        selectedDay.emails.forEach((email) =>
+          newSelectedEmails.delete(email.email),
+        );
+      }
+    } else {
+      newSelectedEmails.add(date);
+      const selectedDay = emailsHistory.find((d) => d.date === date);
+      if (selectedDay) {
+        selectedDay.emails.forEach((email) =>
+          newSelectedEmails.add(email.email),
+        );
+      }
     }
+    setSelectedEmails(newSelectedEmails);
+  };
+
+  const handleEmailCheckboxChange = (email, date) => {
+    const newSelectedEmails = new Set(selectedEmails);
+    if (newSelectedEmails.has(email)) {
+      newSelectedEmails.delete(email);
+      newSelectedEmails.delete(date);
+    } else {
+      newSelectedEmails.add(email);
+    }
+    setSelectedEmails(newSelectedEmails);
+  };
+  const isSelectedDate = (date) => selectedEmails.has(date);
+  const isSelectedEmail = (email) => selectedEmails.has(email);
+
+  const filterEmails = (searchText: string) => {
+    if (!searchText) {
+      return emailsHistory;
+    }
+    return emailsHistory.filter(
+      (day) =>
+        day.date.toLowerCase().includes(searchText.toLowerCase()) ||
+        day.emails.some((email) =>
+          email.email.toLowerCase().includes(searchText.toLowerCase()),
+        ),
+    );
+  };
+
+  const displayedEmails = filterEmails(searchText);
+
+  const handleSearchChange = (event: string) => {
+    setSearchText(event);
   };
 
   // ----------- Data Fetching ----------
@@ -312,50 +272,67 @@ export default function HomeBanner() {
     }, 1500);
   };
 
-  // const initiateFilterEmails = () => {
-  //   const displayedEmails = filterEmails(searchText);
-  //   setDisplayedEmails(displayedEmails);
-  // };
-
   const getEmailsHistory = () => {
     const data: Email[] = getLSEmailsHistory();
     const emails: EmailGroup[] = [];
 
     data.forEach((item: Email) => {
       const date: Date = new Date(item.date);
-      const currentDate: Date = new Date();
-      const diffTime: number = Math.abs(currentDate.getTime() - date.getTime());
-      const diffDays: number = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-      let dayLabel = "";
-      if (diffDays === 1) {
-        dayLabel = "Today";
-      } else if (diffDays === 2) {
-        dayLabel = "Yesterday";
-      } else {
-        dayLabel = date.toLocaleDateString("en-US", { weekday: "long" });
-      }
-
-      const formattedDate = `${dayLabel} - ${date.toLocaleDateString("en-US", { weekday: "long", month: "numeric", day: "numeric", year: "numeric" })}`;
-
-      // Check if the date already exists in the emails array
+      const formattedDate = `${date.toLocaleDateString("en-US", { weekday: "long", month: "numeric", day: "numeric", year: "numeric" })}`;
       const existingDate: EmailGroup | undefined = emails.find(
         (e) => e.date === formattedDate,
       );
       if (existingDate) {
-        existingDate.emails.push(item);
+        existingDate.emails.unshift(item);
       } else {
         emails.push({ date: formattedDate, emails: [item] });
       }
     });
-
-    // console.log(emails);
+    const numberOfEmails = calculateNumberOfEmails(emails);
+    setNumbersOfEmailsInHistory(numberOfEmails);
     setEmailsHistory(emails);
-    // initiateFilterEmails();
   };
 
+  const calculateNumberOfEmails = (data) => {
+    let totalEmails = 0;
+    data.forEach((item) => {
+      console.log(item);
+      totalEmails += item.emails.length;
+    });
+
+    return totalEmails;
+  };
+
+  const deleteSelectedEmails = () => {
+    const emails: Email[] = getLSEmailsHistory();
+    let toDeleteEmails: Email[] = [];
+    for (const email of selectedEmails as any) {
+      const filteredEmails = emails.filter((e) => {
+        return e.email === email;
+      });
+      toDeleteEmails.push(...filteredEmails);
+    }
+
+    const a = emails.filter((email) => !toDeleteEmails.includes(email));
+
+    if (a.length > 0) {
+      localStorage.setItem("emailsHistory", JSON.stringify(a));
+      getEmailsHistory();
+      setSelectedEmails(new Set());
+    }
+  };
+
+  const getCount = useMemo(() => {
+    let count = 0;
+    for (const item of selectedEmails as any) {
+      if (/@/.test(item as string)) {
+        count++;
+      }
+    }
+    return count;
+  }, [selectedEmails]);
+
   const activeThisEmail = (e) => {
-    console.log("generateEmail", generatedEmails);
     let emails = getLSEmails();
     if (e.email === "All Emails") {
       emails.forEach((obj) => {
@@ -376,11 +353,18 @@ export default function HomeBanner() {
     handleLocalStorageEmail();
   };
 
+  const activeHistoryEmail = async (email) => {
+    persistObj("email", email.token);
+    setOpen(false);
+    await refetchMessages();
+    setTimeout(() => {
+      handleLocalStorageEmail();
+    }, 1000);
+  };
+
   const handleLocalStorageEmail = () => {
     const emails = getLSEmails();
-    console.log("handleLocalStorageEmail", emails);
     const isActive = emails?.find((email) => email.active);
-    console.log("isActive", isActive);
     let newObj = {
       email: "All Emails",
       token: "0",
@@ -397,10 +381,6 @@ export default function HomeBanner() {
     const allEmails = [newObj, ...emails];
     setGeneratedEmails(allEmails);
   };
-
-  // useEffect(() => {
-  //   handleLocalStorageEmail();
-  // }, []);
 
   // -------------- Socket IO ------------
   useEffect(() => {
@@ -519,7 +499,7 @@ export default function HomeBanner() {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <Dialog>
+                    <Dialog open={open} onOpenChange={setOpen}>
                       <DialogTrigger className="h-full">
                         <TooltipProvider>
                           <Tooltip>
@@ -527,7 +507,10 @@ export default function HomeBanner() {
                               <Button
                                 variant="secondary"
                                 className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
-                                onClick={getEmailsHistory}
+                                onClick={() => {
+                                  getEmailsHistory();
+                                  setOpen(!open);
+                                }}
                               >
                                 <Icon.clock className="h-6 w-6" color="white" />
                               </Button>
@@ -536,88 +519,138 @@ export default function HomeBanner() {
                           </Tooltip>
                         </TooltipProvider>
                       </DialogTrigger>
-                      <DialogContent className="border-0 bg-[#1220CE] text-white">
+                      <DialogContent className="max-w-[600px] border-0 bg-[#1220CE] text-white">
                         <DialogTitle>
                           <div>Emails history</div>
                         </DialogTitle>
                         <DialogDescription>Search in history</DialogDescription>
-                        <input
-                          className="Input bg-[#0E1894]"
-                          id="email"
-                          placeholder="Type email address to search..."
-                          value={searchText}
-                          onChange={handleSearchChange}
-                        />
-                        <div className="email-list flex flex-col gap-4">
-                          <ul className="list-none">
-                            {/* {displayedEmails.map((day) => (
-                              <li key={day.date} className="flex items-center">
-                                <div className="flex w-full flex-col">
-                                  <div className="flex items-center bg-[#323DE4] px-3 py-1 text-xs uppercase">
-                                    <input
-                                      type="checkbox"
-                                      id={day.date}
-                                      checked={isSelectedDate(day.date)}
-                                      onChange={() =>
-                                        handleDateCheckboxChange(day.date)
-                                      }
-                                      className="mr-3 h-3 w-3 rounded focus:ring-1 focus:ring-blue-500"
-                                    />
-                                    <h3>{day.date}</h3>
-                                  </div>
-                                  <ul className=" list-none">
-                                    {day.emails.map((email) => (
-                                      <li
-                                        key={email.email}
-                                        className="flex w-full items-center items-center justify-between space-x-3 border-b-[1px] border-[#323DE4] bg-[#0E1894] px-3 py-3 text-xs text-white hover:opacity-80"
-                                      >
-                                        <div className="">
-                                          <input
-                                            type="checkbox"
-                                            id={email.email}
-                                            checked={isSelectedEmail(
-                                              email.email,
-                                            )}
-                                            onChange={() =>
-                                              handleEmailCheckboxChange(
-                                                email.email,
-                                              )
+                        <div className="flex items-end">
+                          <div className="relative flex w-full">
+                            <input
+                              className="w-full text-ellipsis bg-[#0E1894] pr-[40px]"
+                              id="email"
+                              placeholder="Type email address to search..."
+                              value={searchText}
+                              onChange={(e) =>
+                                handleSearchChange(e.target.value)
+                              }
+                            />
+                            {searchText && (
+                              <button
+                                onClick={() => setSearchText("")}
+                                className="absolute left-auto right-1 h-[calc(100%-2px)] w-[25px]"
+                              >
+                                <Icon.close className="h-5 w-5 text-white" />
+                              </button>
+                            )}
+                          </div>
+                          {selectedEmails.size > 0 && (
+                            <div className="h-full w-80 px-2">
+                              <button
+                                className="h-full w-full rounded-[5px] bg-[#A83939] px-[5px] py-[2px] text-white"
+                                title="Delete"
+                                onClick={deleteSelectedEmails}
+                              >
+                                Delete ({getCount}) emails?
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                        <div className="email-list">
+                          <ul className="scroll scroll-y-auto min-h-auto flex max-h-[400px] list-none flex-col gap-4 overflow-y-auto">
+                            {displayedEmails && displayedEmails.length > 0
+                              ? displayedEmails.map((day) => (
+                                  <li
+                                    key={day.date}
+                                    className="flex items-center"
+                                  >
+                                    <div className="flex w-full flex-col">
+                                      <div className="flex items-center bg-[#323DE4] px-3 py-2 text-xs uppercase">
+                                        <input
+                                          type="checkbox"
+                                          id={day.date}
+                                          checked={isSelectedDate(day.date)}
+                                          onChange={() =>
+                                            handleDateCheckboxChange(day.date)
+                                          }
+                                          className="mr-3 h-3 w-3 rounded focus:ring-1 focus:ring-blue-500"
+                                        />
+                                        <h3>{day.date}</h3>
+                                      </div>
+                                      <ul className=" list-none">
+                                        {day.emails.map((email) => (
+                                          <li
+                                            key={email.email}
+                                            onMouseEnter={() => {
+                                              if (email?.inHistory) {
+                                                setShowUseEmailBtn(email.email);
+                                              }
+                                            }}
+                                            onMouseLeave={() =>
+                                              setShowUseEmailBtn("")
                                             }
-                                            className="mr-3 h-3 w-3 rounded focus:ring-1 focus:ring-blue-500"
-                                          />
-                                          <label
-                                            htmlFor={email.email}
-                                            className="text-sm text-white"
+                                            className="flex w-full items-center justify-between space-x-3 border-b-[1px] border-[#323DE4] bg-[#0E1894] px-3 py-3 text-xs text-white hover:opacity-80"
                                           >
-                                            <span className="text-slate-400">
-                                              {email.time}
-                                            </span>
-                                            <span className="pl-3">
-                                              {email.email}
-                                            </span>
-                                            {email.status
-                                              ? `(${email.status})`
-                                              : ""}
-                                          </label>
-                                        </div>
-                                        <div>
-                                          <button
-                                            className="rounded-[5px] bg-[#F35B7B] px-[5px] py-[2px] text-xs text-white"
-                                            title="Unread"
-                                          >
-                                            Use this email
-                                          </button>
-                                        </div>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              </li>
-                            ))} */}
+                                            <div className="">
+                                              <input
+                                                type="checkbox"
+                                                id={email.email}
+                                                checked={isSelectedEmail(
+                                                  email.email,
+                                                )}
+                                                onChange={() =>
+                                                  handleEmailCheckboxChange(
+                                                    email.email,
+                                                    day.date,
+                                                  )
+                                                }
+                                                className="mr-3 h-3 w-3 rounded focus:ring-1 focus:ring-blue-500"
+                                              />
+                                              <label
+                                                htmlFor={email.email}
+                                                className="text-sm text-white"
+                                              >
+                                                <span className="text-slate-400">
+                                                  {moment(email.date).format(
+                                                    "hh:mm A",
+                                                  )}
+                                                </span>
+                                                <span className="pl-3">
+                                                  {email.email}
+                                                </span>
+                                              </label>
+                                            </div>
+                                            {showUseEmailBtn ===
+                                              email.email && (
+                                              <div className="z-20 rounded-[5px] bg-[#F35B7B]">
+                                                <button
+                                                  className=" px-[5px] py-[2px] text-xs text-white hover:opacity-70"
+                                                  onClick={() =>
+                                                    activeHistoryEmail(email)
+                                                  }
+                                                >
+                                                  Use this email
+                                                </button>
+                                              </div>
+                                            )}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  </li>
+                                ))
+                              : searchText && (
+                                  <div className="flex w-full items-center">
+                                    <div className="flex w-full items-center justify-center bg-[#323DE4] px-3 py-5 text-slate-400">
+                                      No emails found with the search term
+                                      &quot;{searchText}&quot;
+                                    </div>
+                                  </div>
+                                )}
                           </ul>
-                          <div>
+                          <div className="mt-4">
                             <div className="text-center text-xs text-white">
-                              History size: {generatedEmails.length - 1}/50
+                              History size: {numbersOfEmailsInHistory} / 50
                             </div>
                             <div className="text-center text-xs">
                               <Button
@@ -658,6 +691,8 @@ export default function HomeBanner() {
                               onClick={() => {
                                 activeThisEmail(email);
                               }}
+                              onMouseEnter={() => setCopyEmail(email.email)}
+                              onMouseLeave={() => setCopyEmail("")}
                             >
                               <div className="">
                                 <input
@@ -677,20 +712,30 @@ export default function HomeBanner() {
                                 </label>
                               </div>
                               <div className="flex items-center justify-center">
-                                <div className="hidden px-3 hover:block">
-                                  <TooltipProvider>
-                                    <Tooltip data-side="right">
-                                      <TooltipTrigger>
-                                        <button title={email.email}>
-                                          <Icon.copy size={14} />
-                                        </button>
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        Copy Email
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                </div>
+                                {copyEmail === email.email &&
+                                  copyEmail !== "All Emails" && (
+                                    <div className="px-3 hover:block">
+                                      <TooltipProvider>
+                                        <Tooltip data-side="right">
+                                          <TooltipTrigger>
+                                            <button
+                                              title={email.email}
+                                              onClick={() =>
+                                                navigator.clipboard.writeText(
+                                                  email.email,
+                                                )
+                                              }
+                                            >
+                                              <Icon.copy size={14} />
+                                            </button>
+                                          </TooltipTrigger>
+                                          <TooltipContent>
+                                            Copy Email
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </TooltipProvider>
+                                    </div>
+                                  )}
                                 <div className="rounded-[5px] bg-[hsla(0,0%,100%,.2)] px-[5px] py-[2px] text-xs text-white">
                                   {0}
                                 </div>
@@ -730,79 +775,6 @@ export default function HomeBanner() {
                   </div>
                 )}
               </div>
-
-              {/* <div className="mb-4 rounded-md bg-blue-600 text-center">
-                <p
-                  className="min-w-[18rem]	p-2 py-1 text-center text-xs text-white md:w-[23rem]"
-                  onClick={handleCopy}
-                  aria-hidden="true"
-                >
-                  <span className="pl-6 uppercase">
-                    {"Your Temporary Email Address"}
-                  </span>
-                  <span className="px-4 pl-0 pr-2" style={{ float: "right" }}>
-                    {!copy ? (
-                      <>
-                        <Icon.copy size={16} />
-                      </>
-                    ) : (
-                      `Copied`
-                    )}
-                  </span>
-                </p>
-                <div className="bg-primary-dark flex w-full items-center gap-2 rounded-md p-2 text-white"> */}
-              {/* <p className="w-full p-2 text-sm font-semibold md:w-80 md:text-base">
-                    {messageLoading ? "Loading..." : messages?.data?.mailbox}
-                  </p> */}
-              {/* <div className="flex w-full flex-row items-center justify-center rounded-sm bg-[#DA5786]">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="w-full">
-                        <button
-                          type="button"
-                          className=" flex w-full items-center justify-between  rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
-                        >
-                          <div className="rounded-[3px] bg-[#8E4CA9] px-1 text-xs">
-                            {generatedEmails &&
-                              generatedEmails.length > 0 &&
-                              generatedEmails.length}
-                          </div>
-                          {selectedEmail && selectedEmail}
-                          <Icon.chevronDown size={20} />
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuRadioGroup
-                          value={selectedEmail}
-                          onValueChange={(value) => setSelectedEmail(value)}
-                        >
-                          {generatedEmails.map((email) => (
-                            <DropdownMenuRadioItem
-                              key={email.email}
-                              value={email.email}
-                            >
-                              {email.email}
-                            </DropdownMenuRadioItem>
-                          ))}
-                        </DropdownMenuRadioGroup>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div> */}
-
-              {/* <button
-                    type="button"
-                    className="bg-secondary flex items-center justify-center gap-2 rounded-md px-2 py-1 text-sm font-semibold sm:py-2 md:px-4 md:text-base"
-                    onClick={handleCopy}
-                  >
-                    {!copy ? (
-                      <>
-                        {"Copy"} <Icon.copy size={20} />
-                      </>
-                    ) : (
-                      `Copied`
-                    )}
-                  </button> */}
-              {/* </div>
-              </div> */}
               <div className="flex items-center gap-2">
                 <SecondaryButton
                   className="px-2 md:px-6"
