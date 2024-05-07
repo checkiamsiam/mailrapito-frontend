@@ -24,7 +24,7 @@ const MostReadedArticle = ({ data }: IProps) => {
                 title: item.title,
                 description: item?.description,
                 thumbnail: item.thumbnail,
-                date: item.published_date,
+                date: item.createdAt,
                 slug: item.slug,
               }}
             />

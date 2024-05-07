@@ -2,16 +2,19 @@
 
 import SectionHeading from "@shared/components/Section/SectionHeading";
 import LoadingIcon from "@shared/icons/LoadingIcon";
+import { apiClient } from "@shared/lib/api-client";
 import moment from "moment";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useBlogs } from "../../../../hooks/useBlogs";
 
 const LatestBlogs = () => {
   const t = useTranslations();
-  const { data: blogs, isLoading } = useBlogs();
-  const firstBlog = blogs?.allBlogs?.[0];
+  const { data, isLoading } = apiClient.posts.publishedPosts.useQuery({
+    enabled: false,
+  });
+
+  const firstBlog = data?.[0];
 
   return (
     <section
@@ -54,9 +57,7 @@ const LatestBlogs = () => {
                         : firstBlog?.description}
                     </p>
                     <div className="text-xs">
-                      {moment(firstBlog?.published_date).format(
-                        "MMMM DD, YYYY",
-                      )}
+                      {moment(firstBlog?.createdAt).format("MMMM DD, YYYY")}
                     </div>
                   </div>
                 </Link>
@@ -64,13 +65,10 @@ const LatestBlogs = () => {
             ) : null}
             <div className="col-span-12 py-5 lg:col-span-5">
               <div className="flex flex-col gap-8" data-aos="fade-up">
-                {blogs?.allBlogs
+                {data
                   ?.slice(1, 5)
                   ?.map(
-                    (
-                      { thumbnail, title, description, published_date, slug },
-                      i,
-                    ) => (
+                    ({ thumbnail, title, description, createdAt, slug }, i) => (
                       <Link
                         className="mx-auto flex w-full items-center gap-4 sm:w-[80%] md:w-[558px] lg:w-full"
                         href={`/blog/${slug}`}
@@ -78,7 +76,7 @@ const LatestBlogs = () => {
                       >
                         <div className="relative h-[135px] w-full basis-5/12">
                           <Image
-                            src={thumbnail}
+                            src={thumbnail ?? ""}
                             alt="Thumbnail Image"
                             layout="fill"
                             className="rounded-lg object-cover"
@@ -95,9 +93,9 @@ const LatestBlogs = () => {
                               ? description?.slice(0, 70) + "..."
                               : description}
                           </div>
-                          {published_date && (
+                          {createdAt && (
                             <span className="text-[10px] md:text-xs">
-                              {moment(published_date).format("MMMM DD, YYYY")}
+                              {moment(createdAt).format("MMMM DD, YYYY")}
                             </span>
                           )}
                         </div>

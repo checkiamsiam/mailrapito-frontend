@@ -1,11 +1,11 @@
 import type { PropsWithChildren } from "react";
-import { getSingleBlog } from "../../../../../services/services";
+import { fetchSinglePost } from "../../../../../hooks/use-singleBlog-query";
 
 export async function generateMetadata({ params: { slug } }) {
-  const blog = await getSingleBlog(slug as string);
+  const post = await fetchSinglePost(slug as string, false);
   return {
-    title: blog?.singleBlog?.title,
-    description: blog?.singleBlog?.description,
+    title: post?.singlePost?.title,
+    description: post?.singlePost?.description,
   };
 }
 

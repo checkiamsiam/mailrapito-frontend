@@ -25,14 +25,14 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 import { z } from "zod";
 const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
 
 const quillModules = {
   toolbar: [
-    [{ header: [1, 2, 3, false] }],
+    [{ header: [1, 2, 3, false] }, { font: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
     ["link", "image"],
@@ -197,14 +197,24 @@ export default function PublishBlog() {
                 />
               </div>
               <div className="">
-                <FormField
+                <Controller
                   control={form.control}
                   name="slug"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Slug</FormLabel>
                       <FormControl>
-                        <Input type="slug" {...field} />
+                        <Input
+                          type="slug"
+                          {...field}
+                          placeholder="type-title-in-this-format-to-make-it-slug"
+                          onBlur={(e) => {
+                            const alteredSlug = e.target.value
+                              .replace(/\s+/g, "-")
+                              .toLowerCase();
+                            field.onChange(alteredSlug);
+                          }}
+                        />
                       </FormControl>
                     </FormItem>
                   )}

@@ -6,6 +6,7 @@ import { Card } from "@ui/components/card";
 import { toast } from "@ui/hooks/use-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import "react-quill/dist/quill.snow.css";
 
 export default function ClientComponent() {
   const params = useParams();

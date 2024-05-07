@@ -43,7 +43,7 @@ model Blog {
   id              String    @id @default(uuid()) @map("_id")
   title           String
   author          String
-  slug            String
+  slug            String    @unique
   description     String
   keywords        String
   category        String?

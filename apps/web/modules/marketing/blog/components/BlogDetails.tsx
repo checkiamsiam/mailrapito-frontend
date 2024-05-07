@@ -1,14 +1,28 @@
 import moment from "moment";
 import Image from "next/image";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-import type { IBlog } from "../../../../interface/commonInterface";
 
+interface BlogPost {
+  id: string;
+  title: string;
+  author: string;
+  slug: string;
+  description: string;
+  keywords: string;
+  category: string | null;
+  content: string | null;
+  thumbnail: string | null;
+  language: string | null;
+  status: string | null;
+  views: number | null;
+  createdAt: Date;
+  published: boolean;
+}
 interface IProps {
-  data: IBlog;
+  data: BlogPost;
 }
 
 const BlogDetails = ({ data }: IProps) => {
-  const { title, description, content, author, published_date } = data;
+  const { title, description, content, author, createdAt } = data;
   return (
     <div>
       <h2 className="text-primary-dark text-xl font-semibold capitalize md:text-3xl">
@@ -27,7 +41,7 @@ const BlogDetails = ({ data }: IProps) => {
         </div>
 
         <p className="text-grayText text-base">
-          {moment(published_date).format("MMMM DD, YYYY")}
+          {moment(createdAt).format("MMMM DD, YYYY")}
         </p>
       </div>
 
@@ -36,12 +50,14 @@ const BlogDetails = ({ data }: IProps) => {
       {/* Description */}
       <div className="text-title">
         <p>{description}</p>
-        <div
-          className="text"
-          dangerouslySetInnerHTML={{
-            __html: `${new QuillDeltaToHtmlConverter(content.ops).convert()}`,
-          }}
-        ></div>
+        {content && (
+          <div
+            className="text mt-10"
+            dangerouslySetInnerHTML={{
+              __html: content,
+            }}
+          ></div>
+        )}
 
         {/*<div className="my-10 flex gap-4">
           <div className="bg-primary-dark h-20 w-1.5"></div>

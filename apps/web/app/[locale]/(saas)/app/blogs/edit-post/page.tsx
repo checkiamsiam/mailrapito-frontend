@@ -19,12 +19,13 @@ import {
   SelectValue,
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
+import { toast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 import { z } from "zod";
 const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
@@ -131,16 +132,27 @@ export default function EditBlog() {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    console.log("onSubmit: SubmitHandler called", values, id);
-    // return;
-
+    const updatingPost = toast({
+      variant: "loading",
+      title: "Publishing post...",
+    });
     if (values.category === "") {
-      alert("Please select a category");
+      updatingPost.update({
+        id: updatingPost.id,
+        variant: "error",
+        title: "Please select a category",
+        duration: 5000,
+      });
       return;
     }
 
     if (!content) {
-      alert("Content is required");
+      updatingPost.update({
+        id: updatingPost.id,
+        variant: "error",
+        title: "Content is required",
+        duration: 5000,
+      });
       return;
     }
     try {
@@ -174,7 +186,11 @@ export default function EditBlog() {
       form.setValue("slug", data?.slug);
       form.setValue("author", data?.author);
       form.setValue("keywords", data?.keywords);
-      form.setValue("language", data?.language ?? "");
+      if (typeof data?.language === "string") {
+        type Language = "" | "en" | "fr" | "es" | "ar";
+        const a: Language = data?.language as Language;
+        form.setValue("language", a ?? "");
+      }
       if (data?.category === "MEMBER") {
         form.setValue("category", "MEMBER");
       } else if (data?.category === "OWNER") {
@@ -215,14 +231,24 @@ export default function EditBlog() {
                 />
               </div>
               <div className="">
-                <FormField
+                <Controller
                   control={form.control}
                   name="slug"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Slug</FormLabel>
                       <FormControl>
-                        <Input type="slug" {...field} />
+                        <Input
+                          type="slug"
+                          {...field}
+                          placeholder="type-title-in-this-format-to-make-it-slug"
+                          onBlur={(e) => {
+                            const alteredSlug = e.target.value
+                              .replace(/\s+/g, "-")
+                              .toLowerCase();
+                            field.onChange(alteredSlug);
+                          }}
+                        />
                       </FormControl>
                     </FormItem>
                   )}

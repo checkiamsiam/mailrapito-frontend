@@ -28,10 +28,12 @@ export interface IBlog {
   description: string;
   keywords: string[];
   category: string;
-  content: { ops: IContent[] };
+  // content: { ops: IContent[] };
+  content: string;
   thumbnail: string;
   language: string;
   status: Status;
+  createdAt?: Status;
   published_date: Date | string;
   created_Date: Date | string;
   __v: number;
