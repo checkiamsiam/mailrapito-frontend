@@ -12,6 +12,7 @@ export const updatePost = publicProcedure
       keywords: z.string().min(1, { message: "Required" }),
       description: z.string().min(1, { message: "Required" }),
       category: z.enum(["", "MEMBER", "OWNER"]),
+      language: z.enum(["", "en", "fr", "es", "ar"]),
       content: z
         .string()
         .min(100, { message: "Content must be at least 100 characters long" }),
@@ -31,6 +32,7 @@ export const updatePost = publicProcedure
         keywords: input.keywords,
         description: input.description,
         category: input.category,
+        language: input.language,
       },
     });
 

@@ -21,7 +21,7 @@ import {
 import { Textarea } from "@ui/components/textarea";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
@@ -65,6 +65,7 @@ const formSchema = z.object({
   description: z.string().min(1, { message: "Required" }),
   keywords: z.string().min(1, { message: "Required" }),
   category: z.enum(["", "MEMBER", "OWNER"]),
+  language: z.enum(["", "en", "fr", "es", "ar"]),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -76,8 +77,9 @@ export default function EditBlog() {
   const id = params.get("id") as string;
   const [content, setContent] = useState<any>("");
   const editPostMutation = apiClient.posts.updatePost.useMutation();
+  const router = useRouter();
 
-  const { data, isLoading } = apiClient.posts.singlePost.useQuery({
+  const { data, isLoading, refetch } = apiClient.posts.singlePost.useQuery({
     id,
   });
 
@@ -123,12 +125,14 @@ export default function EditBlog() {
       author: "",
       keywords: "",
       category: "",
+      language: "",
       description: "",
     },
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    console.log("onSubmit: SubmitHandler called");
+    console.log("onSubmit: SubmitHandler called", values, id);
+    // return;
 
     if (values.category === "") {
       alert("Please select a category");
@@ -149,9 +153,13 @@ export default function EditBlog() {
         keywords: values.keywords,
         author: values.author,
         category: values.category,
+        language: values.language,
       });
+      await refetch();
       form.reset();
       setContent("");
+      router.refresh();
+      router.push("/app/blogs/published-posts");
 
       console.log("success");
     } catch {
@@ -161,10 +169,12 @@ export default function EditBlog() {
 
   useEffect(() => {
     if (!isLoading && data) {
+      console.log(data);
       form.setValue("title", data?.title);
       form.setValue("slug", data?.slug);
       form.setValue("author", data?.author);
       form.setValue("keywords", data?.keywords);
+      form.setValue("language", data?.language ?? "");
       if (data?.category === "MEMBER") {
         form.setValue("category", "MEMBER");
       } else if (data?.category === "OWNER") {
@@ -264,6 +274,37 @@ export default function EditBlog() {
                           </SelectTrigger>
                           <SelectContent>
                             {categoryOptions.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="language"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Language</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={data?.language ?? ""}
+                        >
+                          <SelectTrigger className="">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {languageOptions.map((option) => (
                               <SelectItem
                                 key={option.value}
                                 value={option.value}

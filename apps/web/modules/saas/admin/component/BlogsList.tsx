@@ -20,7 +20,7 @@ import { Icon } from "@ui/components/icon";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface Blog {
   id: string;
@@ -43,7 +43,9 @@ export function BlogsList() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const router = useRouter();
 
-  const { data, isLoading } = apiClient.posts.publishedPosts.useQuery();
+  const { data, isLoading, refetch } = apiClient.posts.publishedPosts.useQuery({
+    enabled: false,
+  });
 
   const columnHelper = createColumnHelper<Blog>();
 
@@ -77,6 +79,11 @@ export function BlogsList() {
     },
   });
 
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    refetch();
+  }, []);
+
   return (
     <div className="bg-card rounded-lg p-6 shadow-sm ">
       <h2 className="mb-4 text-2xl font-semibold">Published Posts</h2>
@@ -104,9 +111,8 @@ export function BlogsList() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="group"
+                  className="group cursor-pointer transition-colors duration-200 ease-in-out hover:bg-gray-100"
                   onClick={() => {
-                    console.log(row.original);
                     const id = row.original.id;
                     router.push(`/app/blogs/${id}`);
                   }}
@@ -133,7 +139,7 @@ export function BlogsList() {
                   {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                       <Icon.spinner className="text-primary mr-2 h-4 w-4 animate-spin" />
-                      {t("admin.users.loading")}
+                      Loading posts
                     </div>
                   ) : (
                     <p>No results.</p>

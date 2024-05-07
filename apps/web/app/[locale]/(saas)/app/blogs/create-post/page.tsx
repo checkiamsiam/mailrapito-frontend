@@ -19,8 +19,10 @@ import {
   SelectValue,
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
+import { toast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
@@ -64,11 +66,13 @@ const formSchema = z.object({
   description: z.string().min(1, { message: "Required" }),
   keywords: z.string().min(1, { message: "Required" }),
   category: z.enum(["", "MEMBER", "OWNER"]),
+  language: z.enum(["en", "fr", "es", "ar"]),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function PublishBlog() {
+  const router = useRouter();
   const t = useTranslations();
   const [content, setContent] = useState<string>("");
   const createPostMutation = apiClient.posts.createPost.useMutation();
@@ -115,20 +119,45 @@ export default function PublishBlog() {
       author: "",
       keywords: "",
       category: "",
+      language: "en",
       description: "",
     },
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     console.log("onSubmit: SubmitHandler called");
+    const validationToast = toast({
+      variant: "loading",
+      title: "Publishing post...",
+    });
 
     if (values.category === "") {
-      alert("Please select a category");
+      validationToast.update({
+        id: validationToast.id,
+        variant: "error",
+        title: "Please select a category",
+        duration: 5000,
+      });
       return;
     }
 
     if (!content) {
-      alert("Content is required");
+      validationToast.update({
+        id: validationToast.id,
+        variant: "error",
+        title: "Content is required",
+        duration: 5000,
+      });
+      return;
+    }
+
+    if (content.length < 100) {
+      validationToast.update({
+        id: validationToast.id,
+        variant: "error",
+        title: "Content must be at least 100 characters long",
+        duration: 5000,
+      });
       return;
     }
     try {
@@ -138,10 +167,9 @@ export default function PublishBlog() {
       });
       form.reset();
       setContent("");
-
-      console.log("success");
-    } catch {
-      console.log("error");
+      router.push("/app/blogs/published-posts");
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -228,6 +256,37 @@ export default function PublishBlog() {
                           </SelectTrigger>
                           <SelectContent>
                             {categoryOptions.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="language"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Language</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger className="">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {languageOptions.map((option) => (
                               <SelectItem
                                 key={option.value}
                                 value={option.value}
