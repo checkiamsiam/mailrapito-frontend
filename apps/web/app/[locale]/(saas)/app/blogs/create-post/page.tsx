@@ -1,5 +1,7 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import QuillWrapper from "@marketing/home/components/QuillWrapper";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
@@ -21,42 +23,12 @@ import {
 import { Textarea } from "@ui/components/textarea";
 import { toast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
-import type ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { z } from "zod";
-const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
-
-const toolbarOptions = [
-  [{ header: [1, 2, 3, false] }, { font: [] }],
-  ["bold", "italic", "underline", "strike", "blockquote"],
-  [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-  ["link", "image", "video"],
-  [{ align: [] }],
-  [{ color: [] }],
-  ["code-block"],
-  ["clean"],
-];
-
-const quillFormats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "link",
-  "image",
-  "align",
-  "color",
-  "code-block",
-];
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Required" }),
@@ -71,7 +43,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function PublishBlog() {
-  const quillRef = useRef<ReactQuill>(null);
+  const quillRef = useRef(null);
   const router = useRouter();
   const t = useTranslations();
   const [content, setContent] = useState<string>("");
@@ -125,7 +97,6 @@ export default function PublishBlog() {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    console.log("onSubmit: SubmitHandler called");
     const validationToast = toast({
       variant: "loading",
       title: "Publishing post...",
@@ -171,97 +142,6 @@ export default function PublishBlog() {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  // const saveToServer = async (file: File): Promise<string> => {
-  //   const BaseURL = "http://api.mailrapido.com";
-  //   const body = new FormData();
-  //   body.append("image", file as Blob);
-
-  //   try {
-  //     const res = await axios.post(`${BaseURL}/api/v1/image/upload`, body);
-  //     console.log("saveToServer", res);
-  //     if (res.status === 200) {
-  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //       return res.data;
-  //     } else {
-  //       throw new Error(`Request failed with status code ${res.status}`);
-  //     }
-  //   } catch (err) {
-  //     console.error("error", err.response?.data);
-  //     throw err;
-  //   }
-  // };
-
-  // const handleUploadImage = async () => {
-  //   console.log("called handleUploadImage");
-  //   const quill = quillRef?.current?.getEditor();
-  //   console.log("🚀 ~ handleUploadImage ~ quill:", quillRef);
-
-  //   if (quill) {
-  //     const input = document.createElement("input");
-  //     input.setAttribute("type", "file");
-  //     input.click();
-
-  //     input.onchange = async () => {
-  //       const file = input.files?.[0];
-  //       if (file && file.type.startsWith("image/")) {
-  //         const res = await saveToServer(file);
-  //         const range = quill.getSelection(true);
-  //         if (range) {
-  //           quill.insertEmbed(range.index, "image", res.data[0].url);
-  //         } else {
-  //           quill.clipboard.dangerouslyPasteHTML(
-  //             quill.getLength(),
-  //             `<img src="${res.data[0].url}" alt=""/>`,
-  //           );
-  //         }
-  //       }
-  //     };
-  //   }
-  // };
-
-  // const imageHandler = () => {
-  //   const editor = quillRef?.current?.getEditor();
-
-  //   const input = document.createElement("input");
-  //   input.setAttribute("type", "file");
-  //   input.setAttribute("accept", "image/*");
-  //   input.click();
-
-  //   input.onchange = async () => {
-  //     const file = input.files?.[0];
-  //     try {
-  //       const link = await saveToServer(file as File);
-  //       const range = editor?.getSelection(true);
-  //       if (range) {
-  //         editor?.insertEmbed(range.index, "image", link);
-  //       } else {
-  //         editor?.clipboard.dangerouslyPasteHTML(
-  //           editor?.getLength(),
-  //           `<img src="${link}" alt=""/>`,
-  //         );
-  //       }
-  //     } catch (err) {
-  //       console.log("upload err:", err.response?.data);
-  //     }
-  //   };
-  // };
-
-  const handleOnBlur = () => {
-    handleEditorChange(content);
-  };
-
-  const modules = {
-    toolbar: {
-      container: toolbarOptions,
-      // handlers: {
-      //   image: imageHandler,
-      // },
-    },
-    clipboard: {
-      matchVisual: false,
-    },
   };
 
   return (
@@ -419,14 +299,10 @@ export default function PublishBlog() {
               <div className="h-[500px]">
                 <FormLabel>Content</FormLabel>
                 <div className="h-full w-full">
-                  <QuillEditor
-                    ref={quillRef}
-                    value={content}
-                    onChange={handleEditorChange}
-                    modules={modules}
-                    formats={quillFormats}
-                    onBlur={handleOnBlur}
-                    className="mt-4 h-[90%] w-full bg-white"
+                  <QuillWrapper
+                    forwardRef={quillRef}
+                    content={content}
+                    handleEditorChange={handleEditorChange}
                   />
                 </div>
               </div>

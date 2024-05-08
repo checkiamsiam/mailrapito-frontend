@@ -22,7 +22,7 @@ export default function BlogListPage() {
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {data?.allBlogs?.map((blog, i) => (
-              <BlogCard key={blog?._id} data={blog} />
+              <BlogCard key={blog?.slug} data={blog} />
             ))}
           </div>
         )}

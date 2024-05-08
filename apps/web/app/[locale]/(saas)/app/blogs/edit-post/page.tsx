@@ -179,6 +179,53 @@ export default function EditBlog() {
     }
   };
 
+  // const saveToServer = async (file: File): Promise<string> => {
+  //   const BaseURL = "http://api.mailrapido.com";
+  //   const body = new FormData();
+  //   body.append("image", file as Blob);
+
+  //   try {
+  //     const res = await axios.post(`${BaseURL}/api/v1/image/upload`, body);
+  //     console.log("saveToServer", res);
+  //     if (res.status === 200) {
+  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //       return res.data;
+  //     } else {
+  //       throw new Error(`Request failed with status code ${res.status}`);
+  //     }
+  //   } catch (err) {
+  //     console.error("error", err.response?.data);
+  //     throw err;
+  //   }
+  // };
+
+  // const imageHandler = () => {
+  //   const editor = quillRef?.current?.getEditor();
+
+  //   const input = document.createElement("input");
+  //   input.setAttribute("type", "file");
+  //   input.setAttribute("accept", "image/*");
+  //   input.click();
+
+  //   input.onchange = async () => {
+  //     const file = input.files?.[0];
+  //     try {
+  //       const link = await saveToServer(file as File);
+  //       const range = editor?.getSelection(true);
+  //       if (range) {
+  //         editor?.insertEmbed(range.index, "image", link);
+  //       } else {
+  //         editor?.clipboard.dangerouslyPasteHTML(
+  //           editor?.getLength(),
+  //           `<img src="${link}" alt=""/>`,
+  //         );
+  //       }
+  //     } catch (err) {
+  //       console.log("upload err:", err.response?.data);
+  //     }
+  //   };
+  // };
+
   useEffect(() => {
     if (!isLoading && data) {
       console.log(data);
