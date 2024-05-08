@@ -154,7 +154,7 @@ const QuillWrapper = ({
       onChange={handleChange}
       formats={quillFormats}
       placeholder="Write something awesome..."
-      className="mt-4 h-[90%] w-full bg-white"
+      className="mt-4 h-[80%] w-full bg-white"
       onBlur={handleOnBlur}
     />
   );
