@@ -1,5 +1,7 @@
 "use client";
 
+import { apiClient } from "@shared/lib/api-client";
+import { toast } from "@ui/hooks/use-toast";
 import { useMemo } from "react";
 import type ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -28,25 +30,72 @@ const QuillWrapper = ({
   content,
   handleEditorChange,
 }: QuillEditorProps) => {
-  // const saveToServer = async (file: File): Promise<string> => {
-  //   const BaseURL = "http://api.mailrapido.com";
-  //   const body = new FormData();
-  //   body.append("image", file as Blob);
+  const uploadUrlMutation = apiClient.uploads.signedUploadUrl.useMutation();
+  const getURLMutation = apiClient.uploads.getSignedUploadedUrl.useMutation();
 
-  //   try {
-  //     const res = await axios.post(`${BaseURL}/api/v1/image/upload`, body);
-  //     console.log("saveToServer", res);
-  //     if (res.status === 200) {
-  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //       return res.data;
-  //     } else {
-  //       throw new Error(`Request failed with status code ${res.status}`);
-  //     }
-  //   } catch (err) {
-  //     console.error("error", err.response?.data);
-  //     throw err;
-  //   }
-  // };
+  const saveToServer = async (file: File): Promise<string> => {
+    toast({
+      variant: "loading",
+      title: "Image uploading",
+    });
+
+    // const body = new FormData();
+    // body.append("image", file as Blob);
+
+    const path = `${file.name}`;
+
+    try {
+      const uploadUrl = await uploadUrlMutation.mutateAsync({
+        path,
+        bucket: "avatars",
+      });
+
+      const response = await fetch(uploadUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": "image/png",
+        },
+      });
+
+      if (!response.ok) {
+        toast({
+          variant: "error",
+          title: "Failed to upload image",
+        });
+        throw new Error("Failed to upload image");
+      }
+
+      toast({
+        variant: "loading",
+        title: "Fetching image url",
+      });
+
+      const cloudUrl = await getURLMutation.mutateAsync({
+        path,
+        bucket: "avatars",
+      });
+
+      // console.log("cloudUrl");
+
+      if (cloudUrl) {
+        toast({
+          variant: "success",
+          title: "Image uploaded",
+        });
+      } else {
+        toast({
+          variant: "error",
+          title: "Failed to upload image",
+        });
+        throw new Error("Failed to upload image");
+      }
+      return cloudUrl;
+    } catch (err) {
+      console.error("error", err.response?.data);
+      throw err;
+    }
+  };
 
   // const handleUploadImage = async () => {
   //   console.log("called handleUploadImage");
@@ -76,32 +125,32 @@ const QuillWrapper = ({
   //   }
   // };
 
-  // const imageHandler = () => {
-  //   const editor = quillRef?.current?.getEditor();
+  const imageHandler = () => {
+    const editor = forwardRef?.current?.getEditor();
 
-  //   const input = document.createElement("input");
-  //   input.setAttribute("type", "file");
-  //   input.setAttribute("accept", "image/*");
-  //   input.click();
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-  //   input.onchange = async () => {
-  //     const file = input.files?.[0];
-  //     try {
-  //       const link = await saveToServer(file as File);
-  //       const range = editor?.getSelection(true);
-  //       if (range) {
-  //         editor?.insertEmbed(range.index, "image", link);
-  //       } else {
-  //         editor?.clipboard.dangerouslyPasteHTML(
-  //           editor?.getLength(),
-  //           `<img src="${link}" alt=""/>`,
-  //         );
-  //       }
-  //     } catch (err) {
-  //       console.log("upload err:", err.response?.data);
-  //     }
-  //   };
-  // };
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      try {
+        const link = await saveToServer(file as File);
+        const range = editor?.getSelection(true);
+        if (range) {
+          editor?.insertEmbed(range.index, "image", link);
+        } else {
+          editor?.clipboard.dangerouslyPasteHTML(
+            editor?.getLength(),
+            `<img src="${link}" alt=""/>`,
+          );
+        }
+      } catch (err) {
+        console.log("upload err:", err.response?.data);
+      }
+    };
+  };
 
   const handleChange = (html: string) => {
     handleEditorChange(html);
@@ -115,9 +164,9 @@ const QuillWrapper = ({
     () => ({
       toolbar: {
         container: toolbarOptions,
-        // handlers: {
-        //   image: handleUploadImage,
-        // },
+        handlers: {
+          image: imageHandler,
+        },
         clipboard: {
           matchVisual: false,
         },

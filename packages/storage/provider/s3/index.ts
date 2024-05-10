@@ -31,9 +31,14 @@ const getS3Client = () => {
     throw new Error("Missing env variable S3_SECRET_ACCESS_KEY");
   }
 
+  const s3BucketRegion = process.env.S3_BUCKET_REGION!;
+  if (!s3BucketRegion) {
+    throw new Error("Missing env variable S3_BUCKET_REGION");
+  }
+
   s3Client = new S3Client({
-    region: "auto",
-    endpoint: s3Endpoint,
+    region: s3BucketRegion,
+    // endpoint: s3Endpoint,
     credentials: {
       accessKeyId: s3AccessKeyId,
       secretAccessKey: s3SecretAccessKey,
@@ -53,7 +58,7 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
       s3Client,
       new PutObjectCommand({ Bucket: bucket, Key: path }),
       {
-        expiresIn: 60,
+        expiresIn: 3600,
       },
     );
   } catch (e) {

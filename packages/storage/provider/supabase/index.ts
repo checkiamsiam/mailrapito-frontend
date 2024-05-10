@@ -49,7 +49,7 @@ export const getSignedUrl: GetSignedUrlHander = async (
   const supabaseClient = getSupabaseAdminClient();
   const { data, error } = await supabaseClient.storage
     .from(bucket)
-    .createSignedUrl(path, expiresIn ?? 60);
+    .createSignedUrl(path, expiresIn ?? 3600);
 
   if (error) {
     console.error(error);
