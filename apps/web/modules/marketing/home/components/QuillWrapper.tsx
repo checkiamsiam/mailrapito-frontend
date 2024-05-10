@@ -39,9 +39,6 @@ const QuillWrapper = ({
       title: "Image uploading",
     });
 
-    // const body = new FormData();
-    // body.append("image", file as Blob);
-
     const path = `${file.name}`;
 
     try {
@@ -75,8 +72,6 @@ const QuillWrapper = ({
         path,
         bucket: "avatars",
       });
-
-      // console.log("cloudUrl");
 
       if (cloudUrl) {
         toast({
