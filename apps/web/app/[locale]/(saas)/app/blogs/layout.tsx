@@ -30,6 +30,11 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
                 href: `create-post`,
                 icon: "newspaper",
               },
+              {
+                title: "Categories",
+                href: `category`,
+                icon: "newspaper",
+              },
             ]}
           />
         </div>

@@ -52,8 +52,14 @@ model Blog {
   language        String?
   status          String?    
   views           Int?       @default(0)
-  createdAt          DateTime                @default(now())
+  createdAt       DateTime                @default(now())
   published       Boolean    @default(true)
+}
+
+model Category {
+  id            String    @id @default(uuid()) @map("_id")
+  name          String    
+  language      String
 }
 
 

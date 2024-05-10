@@ -14,6 +14,8 @@ export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','r
 
 export const BlogScalarFieldEnumSchema = z.enum(['id','title','author','slug','description','keywords','category','content','thumbnail','language','status','views','createdAt','published']);
 
+export const CategoryScalarFieldEnumSchema = z.enum(['id','name','language']);
+
 export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
 
 export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
@@ -101,6 +103,18 @@ export const BlogSchema = z.object({
 })
 
 export type Blog = z.infer<typeof BlogSchema>
+
+/////////////////////////////////////////
+// CATEGORY SCHEMA
+/////////////////////////////////////////
+
+export const CategorySchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  language: z.string(),
+})
+
+export type Category = z.infer<typeof CategorySchema>
 
 /////////////////////////////////////////
 // USER SESSION SCHEMA
