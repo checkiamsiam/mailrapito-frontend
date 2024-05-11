@@ -38,7 +38,7 @@ const getS3Client = () => {
 
   s3Client = new S3Client({
     region: s3BucketRegion,
-    // endpoint: s3Endpoint, // Don't need this for public S3 buckets accessible over the internet
+    endpoint: s3Endpoint,
     credentials: {
       accessKeyId: s3AccessKeyId,
       secretAccessKey: s3SecretAccessKey,
@@ -82,20 +82,4 @@ export const getSignedUrl: GetSignedUrlHander = async (
     console.error(e);
     throw new Error("Could not get signed url");
   }
-};
-
-export const imageUpload = async (file: File, fileName: string) => {
-  const s3Client = getS3Client();
-  const fileBuffer = file;
-
-  const params = {
-    Bucket: process.env.S3_BUCKET_NAME,
-    Key: `${fileName}`,
-    Body: fileBuffer,
-    ContentType: "image/jpg",
-  };
-
-  const command = new PutObjectCommand(params);
-  await s3Client.send(command);
-  return fileName;
 };

@@ -11,9 +11,6 @@ export const getSignedUploadedUrl = protectedProcedure
     }),
   )
   .mutation(({ input: { bucket, path } }) => {
-    // ATTENTION: be careful with how you give access to write to the storage
-    // always check if the user has the right to write to the desired bucket before giving them a signed url
-
     if (bucket === "avatars") {
       return getPublicUrl(path, { bucket });
     }

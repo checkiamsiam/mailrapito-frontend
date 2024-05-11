@@ -12,13 +12,13 @@ export type GetSignedUploadUrlHandler = (
   },
 ) => Promise<string>;
 
-// export type GetSignedUrlHander = (
-//   path: string,
-//   options: {
-//     bucket: string;
-//     expiresIn?: number;
-//   },
-// ) => Promise<string>;
+export type GetSignedUrlHander = (
+  path: string,
+  options: {
+    bucket: string;
+    expiresIn?: number;
+  },
+) => Promise<string>;
 
 export type GetPublicUrlHandler = (
   path: string,

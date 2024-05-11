@@ -49,6 +49,9 @@ export const getPublicUrl: GetPublicUrlHandler = (path, { bucket }) => {
   return data.publicUrl;
 };
 
+// Below is the original code from the tutorial for reference purposes
+// This code can be used to get signed URLs for uploaded files in S3 which has the expiry time
+
 // export const getSignedUrl: GetSignedUrlHander = async (
 //   path,
 //   { bucket, expiresIn },
