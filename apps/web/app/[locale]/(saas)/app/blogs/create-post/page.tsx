@@ -36,7 +36,7 @@ const formSchema = z.object({
   slug: z.string().min(1, { message: "Required" }),
   description: z.string().min(1, { message: "Required" }),
   keywords: z.string().min(1, { message: "Required" }),
-  category: z.enum(["", "MEMBER", "OWNER"]),
+  category: z.string().min(1, { message: "Required" }),
   language: z.enum(["en", "fr", "es", "ar"]),
 });
 
@@ -52,17 +52,6 @@ export default function PublishBlog() {
   const handleEditorChange = (newContent: string) => {
     setContent(newContent);
   };
-
-  const categoryOptions = [
-    {
-      label: t("settings.team.members.roles.member"),
-      value: "MEMBER",
-    },
-    {
-      label: t("settings.team.members.roles.owner"),
-      value: "OWNER",
-    },
-  ];
 
   const languageOptions = [
     {
@@ -101,6 +90,8 @@ export default function PublishBlog() {
       variant: "loading",
       title: "Publishing post...",
     });
+
+    console.log(values);
 
     if (values.category === "") {
       validationToast.update({
@@ -144,6 +135,18 @@ export default function PublishBlog() {
     }
   };
 
+  const {
+    data: categories,
+    isLoading,
+    refetch,
+  } = apiClient.posts.getCategories.useQuery({
+    enabled: false,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -161,7 +164,11 @@ export default function PublishBlog() {
                     <FormItem>
                       <FormLabel>Title</FormLabel>
                       <FormControl>
-                        <Input type="title" {...field} />
+                        <Input
+                          type="title"
+                          {...field}
+                          placeholder="Enter title"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
@@ -199,7 +206,11 @@ export default function PublishBlog() {
                     <FormItem>
                       <FormLabel>Author</FormLabel>
                       <FormControl>
-                        <Input type="author" {...field} />
+                        <Input
+                          type="author"
+                          {...field}
+                          placeholder="Enter author name"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
@@ -214,43 +225,52 @@ export default function PublishBlog() {
                     <FormItem>
                       <FormLabel>Keywords</FormLabel>
                       <FormControl>
-                        <Input type="keywords" {...field} />
+                        <Input
+                          type="keywords"
+                          {...field}
+                          placeholder="Enter keywords following with space"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
                 />
               </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <SelectTrigger className="">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {categoryOptions.map((option) => (
-                              <SelectItem
-                                key={option.value}
-                                value={option.value}
-                              >
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              {categories && (
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <SelectTrigger className="">
+                              <SelectValue
+                                placeholder="Select a category"
+                                className="text-gray-200"
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {categories.map((option) => (
+                                <SelectItem
+                                  key={option.name}
+                                  value={option.name}
+                                >
+                                  {option.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
               <div>
                 <FormField
                   control={form.control}
@@ -290,7 +310,7 @@ export default function PublishBlog() {
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea {...field} />
+                        <Textarea {...field} placeholder="Enter description" />
                       </FormControl>
                     </FormItem>
                   )}

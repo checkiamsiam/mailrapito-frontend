@@ -43,7 +43,6 @@ import {
 } from "@ui/components/select";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { toast } from "@ui/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
@@ -86,7 +85,6 @@ export function CategoryList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const createCategoryMutation = apiClient.posts.createCategory.useMutation();

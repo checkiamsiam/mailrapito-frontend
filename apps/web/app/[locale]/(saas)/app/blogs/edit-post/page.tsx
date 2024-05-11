@@ -35,7 +35,7 @@ const formSchema = z.object({
   slug: z.string().min(1, { message: "Required" }),
   description: z.string().min(1, { message: "Required" }),
   keywords: z.string().min(1, { message: "Required" }),
-  category: z.enum(["", "MEMBER", "OWNER"]),
+  category: z.string().min(1, { message: "Required" }),
   language: z.enum(["", "en", "fr", "es", "ar"]),
 });
 
@@ -58,17 +58,6 @@ export default function EditBlog() {
   const handleEditorChange = (newContent) => {
     setContent(newContent);
   };
-
-  const categoryOptions = [
-    {
-      label: t("settings.team.members.roles.member"),
-      value: "MEMBER",
-    },
-    {
-      label: t("settings.team.members.roles.owner"),
-      value: "OWNER",
-    },
-  ];
 
   const languageOptions = [
     {
@@ -101,6 +90,11 @@ export default function EditBlog() {
       description: "",
     },
   });
+
+  const { data: categories, isLoading: catLoading } =
+    apiClient.posts.getCategories.useQuery({
+      enabled: data?.category,
+    });
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     const updatingPost = toast({
@@ -152,20 +146,17 @@ export default function EditBlog() {
 
   useEffect(() => {
     if (!isLoading && data) {
-      console.log(data);
       form.setValue("title", data?.title);
       form.setValue("slug", data?.slug);
       form.setValue("author", data?.author);
       form.setValue("keywords", data?.keywords);
+      if (data?.category) {
+        form.setValue("category", data?.category);
+      }
       if (typeof data?.language === "string") {
         type Language = "" | "en" | "fr" | "es" | "ar";
         const a: Language = data?.language as Language;
         form.setValue("language", a ?? "");
-      }
-      if (data?.category === "MEMBER") {
-        form.setValue("category", "MEMBER");
-      } else if (data?.category === "OWNER") {
-        form.setValue("category", "OWNER");
       }
       form.setValue("description", data?.description);
       if (data?.content) {
@@ -175,6 +166,10 @@ export default function EditBlog() {
   }, [data]);
 
   if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (catLoading) {
     return <div>Loading...</div>;
   }
 
@@ -254,37 +249,39 @@ export default function EditBlog() {
                   )}
                 />
               </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={data?.category ?? ""}
-                        >
-                          <SelectTrigger className="">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {categoryOptions.map((option) => (
-                              <SelectItem
-                                key={option.value}
-                                value={option.value}
-                              >
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              {categories && (
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={data?.category ?? ""}
+                          >
+                            <SelectTrigger className="">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {categories.map((option) => (
+                                <SelectItem
+                                  key={option.name}
+                                  value={option.name}
+                                >
+                                  {option.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
               <div>
                 <FormField
                   control={form.control}

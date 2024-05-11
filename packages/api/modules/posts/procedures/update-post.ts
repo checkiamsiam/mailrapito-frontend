@@ -11,7 +11,7 @@ export const updatePost = publicProcedure
       author: z.string().min(1, { message: "Required" }),
       keywords: z.string().min(1, { message: "Required" }),
       description: z.string().min(1, { message: "Required" }),
-      category: z.enum(["", "MEMBER", "OWNER"]),
+      category: z.string().min(1, { message: "Required" }),
       language: z.enum(["", "en", "fr", "es", "ar"]),
       content: z
         .string()
