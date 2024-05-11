@@ -1,5 +1,3 @@
-"use server";
-
 import BlogCard from "@marketing/blog/components/BlogCard";
 import BlogDetails from "@marketing/blog/components/BlogDetails";
 import MostReadedArticle from "@marketing/blog/components/MostReadedArticle";
