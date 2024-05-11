@@ -135,13 +135,10 @@ export default function PublishBlog() {
     }
   };
 
-  const {
-    data: categories,
-    isLoading,
-    refetch,
-  } = apiClient.posts.getCategories.useQuery({
-    enabled: false,
-  });
+  const { data: categories, isLoading } =
+    apiClient.posts.getCategories.useQuery({
+      enabled: false,
+    });
 
   if (isLoading) {
     return <div>Loading...</div>;

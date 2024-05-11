@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import type {
+  GetPublicUrlHandler,
   GetSignedUploadUrlHandler,
-  GetSignedUrlHander,
 } from "../../types";
 
 let supabaseClient: ReturnType<typeof createClient> | null = null;
@@ -42,19 +42,26 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
   return data.signedUrl;
 };
 
-export const getSignedUrl: GetSignedUrlHander = async (
-  path,
-  { bucket, expiresIn },
-) => {
+export const getPublicUrl: GetPublicUrlHandler = (path, { bucket }) => {
   const supabaseClient = getSupabaseAdminClient();
-  const { data, error } = await supabaseClient.storage
-    .from(bucket)
-    .createSignedUrl(path, expiresIn ?? 3600);
+  const { data } = supabaseClient.storage.from(bucket).getPublicUrl(path);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Could not get signed url");
-  }
-
-  return data.signedUrl;
+  return data.publicUrl;
 };
+
+// export const getSignedUrl: GetSignedUrlHander = async (
+//   path,
+//   { bucket, expiresIn },
+// ) => {
+//   const supabaseClient = getSupabaseAdminClient();
+//   const { data, error } = await supabaseClient.storage
+//     .from(bucket)
+//     .createSignedUrl(path, expiresIn ?? 3600);
+
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Could not get signed url");
+//   }
+
+//   return data.signedUrl;
+// };

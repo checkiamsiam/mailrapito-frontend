@@ -55,7 +55,6 @@ export default function ClientComponent() {
     refetch();
   }, []);
 
-  console.log(data, isLoading);
   if (isLoading) {
     return <div>Loading...</div>;
   }
