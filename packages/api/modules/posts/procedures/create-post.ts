@@ -16,6 +16,7 @@ export const createPost = publicProcedure
       content: z
         .string()
         .min(100, { message: "Content must be at least 100 characters long" }),
+      thumbnail: z.string().min(1, { message: "Required" }),
     }),
   )
   .output(BlogSchema)

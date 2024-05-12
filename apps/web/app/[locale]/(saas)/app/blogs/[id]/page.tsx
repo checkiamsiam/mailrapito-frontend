@@ -4,6 +4,7 @@ import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Card } from "@ui/components/card";
 import { toast } from "@ui/hooks/use-toast";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
@@ -76,7 +77,22 @@ export default function ClientComponent() {
         <Button onClick={() => deletePost(id)}>Delete</Button>
       </div>
       <Card>
-        <div className="p-4">{data?.title}</div>
+        {data?.thumbnail && (
+          <div className="flex w-full items-center justify-center p-4">
+            <Image
+              src={data?.thumbnail}
+              alt={data?.title}
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
+              width={500}
+              height={300}
+            />
+          </div>
+        )}
+        <div className="p-4 text-lg font-bold">{data?.title}</div>
         {data && (
           <div className="p-4" dangerouslySetInnerHTML={createMarkup()} />
         )}
