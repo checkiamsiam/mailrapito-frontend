@@ -29,48 +29,56 @@ const LatestBlogs = () => {
             <LoadingIcon size={32} />
           </div>
         ) : (
-          <div className="mt-16 grid grid-cols-12 items-center gap-4">
+          <div className="mt-10 flex w-full flex-col items-center justify-between xl:flex-row">
             {firstBlog ? (
               <div
-                className="relative col-span-12 max-lg:mx-auto lg:col-span-7"
+                className="relative w-full overflow-hidden rounded-2xl md:w-[550px] md:max-w-[550px] lg:w-[550px] lg:max-w-[550px]"
                 data-aos="fade-up"
               >
-                <Link href={`/blog/${firstBlog?.slug}`} data-aos="fade-up">
-                  <div className="">
-                    <Image
-                      // src={firstBlog?.thumbnail}
-                      src="/images/blogs/blog.png"
-                      alt="Thumbnail"
-                      width={558}
-                      height={732}
-                    />
-                  </div>
-                  <div className="absolute bottom-0 left-0 w-[cac(100%-20px)] max-w-[420px] bg-white bg-opacity-90 p-6">
-                    <h5 className="text-primary text-base font-semibold md:text-2xl">
-                      {firstBlog?.title?.length >= 60
-                        ? firstBlog?.title?.slice(0, 60) + "..."
-                        : firstBlog?.title}
-                    </h5>
-                    <p className="my-2 text-sm font-medium md:my-5 md:text-base">
-                      {firstBlog?.description?.length >= 100
-                        ? firstBlog?.description?.slice(0, 100) + "..."
-                        : firstBlog?.description}
-                    </p>
-                    <div className="text-xs">
-                      {moment(firstBlog?.createdAt).format("MMMM DD, YYYY")}
+                <div className="h-[735px]">
+                  <Link href={`/blog/${firstBlog?.slug}`} data-aos="fade-up">
+                    <div className="">
+                      {firstBlog?.thumbnail && (
+                        <div className="h-full border-2 border-black">
+                          <Image
+                            src={firstBlog?.thumbnail}
+                            alt="Blog Image"
+                            width={0}
+                            height={0}
+                            style={{ width: "100%", height: "100%" }}
+                            layout="fill"
+                            objectFit="cover"
+                          />
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </Link>
+                    <div className="absolute bottom-0 left-0 w-[cac(100%-20px)] max-w-[420px] bg-white bg-opacity-90 p-6">
+                      <h5 className="text-primary text-base font-semibold md:text-2xl">
+                        {firstBlog?.title?.length >= 60
+                          ? firstBlog?.title?.slice(0, 60) + "..."
+                          : firstBlog?.title}
+                      </h5>
+                      <p className="my-2 text-sm font-medium md:my-5 md:text-base">
+                        {firstBlog?.description?.length >= 100
+                          ? firstBlog?.description?.slice(0, 100) + "..."
+                          : firstBlog?.description}
+                      </p>
+                      <div className="text-xs">
+                        {moment(firstBlog?.createdAt).format("MMMM DD, YYYY")}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
               </div>
             ) : null}
-            <div className="col-span-12 py-5 lg:col-span-5">
-              <div className="flex flex-col gap-8" data-aos="fade-up">
+            <div className="my-20">
+              <div className="flex w-full flex-col" data-aos="fade-up">
                 {data
                   ?.slice(1, 5)
                   ?.map(
                     ({ thumbnail, title, description, createdAt, slug }, i) => (
                       <Link
-                        className="mx-auto flex w-full items-center gap-4 sm:w-[80%] md:w-[558px] lg:w-full"
+                        className="mx-auto mb-6 flex w-full items-center gap-4 sm:w-[80%] md:w-[558px] lg:w-full"
                         href={`/blog/${slug}`}
                         key={i}
                       >
