@@ -52,8 +52,7 @@ export default function ClientComponent() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    refetch();
+    void refetch();
   }, []);
 
   if (isLoading) {

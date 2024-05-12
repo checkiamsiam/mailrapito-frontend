@@ -62,3 +62,16 @@ export const fetchMostLikedBlogs = async () => {
     throw new Error("No blogs found");
   }
 };
+
+export const fetchAllBlogs = async () => {
+  const data = await db.blog.findMany({});
+
+  if (data) {
+    return {
+      success: true,
+      allBlogs: data,
+    };
+  } else {
+    throw new Error("No blog found");
+  }
+};

@@ -1,15 +1,24 @@
 "use client";
-
 import BlogCard from "@marketing/blog/components/BlogCard";
 import MostReadedArticle from "@marketing/blog/components/MostReadedArticle";
 import PageBanner from "@marketing/shared/components/PageBanner";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import NewsLetter from "@shared/components/NewsLetter/NewsLetter";
 import LoadingIcon from "@shared/icons/LoadingIcon";
-import { useBlogs } from "../../../../hooks/useBlogs";
+import { apiClient } from "@shared/lib/api-client";
+import { useState } from "react";
 
 export default function BlogListPage() {
-  const { data, isLoading } = useBlogs();
+  const [numBlogsToShow, setNumBlogsToShow] = useState(6);
+
+  const { data, isLoading } = apiClient.posts.publishedPosts.useQuery({
+    enabled: false,
+  });
+
+  const handleLoadMore = () => {
+    setNumBlogsToShow(numBlogsToShow + 3);
+  };
+
   return (
     <>
       <PageBanner title="Blog" />
@@ -21,17 +30,20 @@ export default function BlogListPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {data?.allBlogs?.map((blog, i) => (
-              <BlogCard key={blog?.slug} data={blog} />
-            ))}
+            {data
+              ?.slice(0, numBlogsToShow)
+              .map((blog, i) => <BlogCard key={blog?.slug} data={blog} />)}
           </div>
         )}
-        <div className="mt-8 flex justify-center">
-          <PrimaryButton className="p-6">More articles</PrimaryButton>
-        </div>
+
+        {data && data?.length === numBlogsToShow && (
+          <div className="mt-10 flex justify-center">
+            <PrimaryButton onClick={handleLoadMore}>Load More</PrimaryButton>
+          </div>
+        )}
 
         {/* More Readed Articles */}
-        <MostReadedArticle data={data?.allBlogs ?? []} />
+        <MostReadedArticle data={data ?? []} />
       </div>
 
       <NewsLetter />
