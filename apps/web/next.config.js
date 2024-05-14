@@ -30,6 +30,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "hydktnnyqbrvrjozzith.supabase.co",
       },
+      {
+        protocol: "https",
+        hostname: "mailrapidoblogs.s3.ap-south-1.amazonaws.com",
+      },
     ],
   },
   async redirects() {

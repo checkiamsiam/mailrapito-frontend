@@ -53,16 +53,24 @@ export default function PublishBlog() {
   const [content, setContent] = useState<string>("");
   const [uploading, setUploading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  const [uploadedUrl, setUploadedUrl] = useState("");
+  const [uploadedUrl, setUploadedUrl] = useState<string>("");
 
   const createPostMutation = apiClient.posts.createPost.useMutation();
   const uploadUrlMutation = apiClient.uploads.signedUploadUrl.useMutation();
-  const getURLMutation = apiClient.uploads.getSignedUploadedUrl.useMutation();
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      console.log("acceptedFiles", acceptedFiles);
+    onDrop: (acceptedFiles, fileRejections) => {
       setImage(acceptedFiles[0]);
+      if (fileRejections.length > 0) {
+        fileRejections.forEach(({ errors }) => {
+          errors.forEach((error) => {
+            toast({
+              variant: "error",
+              title: error.message,
+            });
+          });
+        });
+      }
     },
     accept: {
       "image/png": [".png"],
@@ -79,19 +87,19 @@ export default function PublishBlog() {
       title: "Uploading thumbnail...",
     });
 
-    const path = uuid();
+    const path = `${uuid()}.${image?.name.split(".").pop()}`;
 
     try {
       const uploadUrl = await uploadUrlMutation.mutateAsync({
         path,
-        bucket: "avatars",
+        bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
       });
 
       const response = await fetch(uploadUrl, {
         method: "PUT",
         body: image,
         headers: {
-          "Content-Type": "image/png",
+          "Content-Type": image?.type ?? "application/octet-stream",
         },
       });
 
@@ -109,10 +117,7 @@ export default function PublishBlog() {
         title: "Fetching image url",
       });
 
-      const cloudUrl = await getURLMutation.mutateAsync({
-        path,
-        bucket: "avatars",
-      });
+      const cloudUrl = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/${path}`;
 
       if (cloudUrl) {
         setUploadedUrl(cloudUrl);

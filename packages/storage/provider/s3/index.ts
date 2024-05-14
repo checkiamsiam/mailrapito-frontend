@@ -16,9 +16,9 @@ const getS3Client = () => {
     return s3Client;
   }
 
-  const s3Endpoint = process.env.S3_ENDPOINT!;
+  const s3Endpoint = process.env.NEXT_PUBLIC_S3_ENDPOINT!;
   if (!s3Endpoint) {
-    throw new Error("Missing env variable S3_ENDPOINT");
+    throw new Error("Missing env variable NEXT_PUBLIC_S3_ENDPOINT");
   }
 
   const s3AccessKeyId = process.env.S3_ACCESS_KEY_ID!;
@@ -38,7 +38,7 @@ const getS3Client = () => {
 
   s3Client = new S3Client({
     region: s3BucketRegion,
-    endpoint: s3Endpoint,
+    // endpoint: s3Endpoint,
     credentials: {
       accessKeyId: s3AccessKeyId,
       secretAccessKey: s3SecretAccessKey,

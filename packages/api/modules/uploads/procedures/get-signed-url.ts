@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { getPublicUrl } from "storage";
+import { getSignedUrl } from "storage";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -11,8 +11,8 @@ export const getSignedUploadedUrl = protectedProcedure
     }),
   )
   .mutation(({ input: { bucket, path } }) => {
-    if (bucket === "avatars") {
-      return getPublicUrl(path, { bucket });
+    if (bucket === "mailrapidoblogs") {
+      return getSignedUrl(path, { bucket });
     }
 
     throw new TRPCError({
