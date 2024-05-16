@@ -31,7 +31,6 @@ const QuillWrapper = ({
   handleEditorChange,
 }: QuillEditorProps) => {
   const uploadUrlMutation = apiClient.uploads.signedUploadUrl.useMutation();
-  const getURLMutation = apiClient.uploads.getSignedUploadedUrl.useMutation();
 
   const saveToServer = async (file: File): Promise<string> => {
     toast({
@@ -44,14 +43,14 @@ const QuillWrapper = ({
     try {
       const uploadUrl = await uploadUrlMutation.mutateAsync({
         path,
-        bucket: "avatars",
+        bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
       });
 
       const response = await fetch(uploadUrl, {
         method: "PUT",
         body: file,
         headers: {
-          "Content-Type": "image/png",
+          "Content-Type": file?.type ?? "application/octet-stream",
         },
       });
 
@@ -68,10 +67,7 @@ const QuillWrapper = ({
         title: "Fetching image url",
       });
 
-      const cloudUrl = await getURLMutation.mutateAsync({
-        path,
-        bucket: "avatars",
-      });
+      const cloudUrl = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/${path}`;
 
       if (cloudUrl) {
         toast({
