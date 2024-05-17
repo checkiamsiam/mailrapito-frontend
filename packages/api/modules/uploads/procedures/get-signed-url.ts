@@ -11,7 +11,7 @@ export const getSignedUploadedUrl = protectedProcedure
     }),
   )
   .mutation(({ input: { bucket, path } }) => {
-    if (bucket === "mailrapido") {
+    if (bucket) {
       return getSignedUrl(path, { bucket });
     }
 
