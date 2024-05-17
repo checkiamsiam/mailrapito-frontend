@@ -12,6 +12,7 @@ const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
   ["blockquote", "code-block"],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ size: ["small", false, "large", "huge"] }],
   [{ list: "ordered" }, { list: "bullet" }],
   [{ script: "sub" }, { script: "super" }],
   [{ color: [] }, { background: [] }],
