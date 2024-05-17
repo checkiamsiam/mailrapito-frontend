@@ -2,9 +2,15 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import { toast } from "@ui/hooks/use-toast";
+import QuillResizeImage from "quill-resize-image";
 import { useMemo } from "react";
 import type ReactQuill from "react-quill";
+import { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
+if (typeof window !== "undefined") {
+  Quill.register("modules/resize", QuillResizeImage);
+}
 
 const toolbarOptions = [
   [{ font: [] }],
@@ -162,6 +168,9 @@ const QuillWrapper = ({
         clipboard: {
           matchVisual: false,
         },
+      },
+      resize: {
+        locale: {},
       },
     }),
     [],
