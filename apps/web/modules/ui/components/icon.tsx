@@ -57,6 +57,8 @@ import {
   Users2,
   Wand2,
   X,
+  PencilLine,
+  Component,
 } from "lucide-react";
 
 interface IconProps {
@@ -122,6 +124,8 @@ export const Icon = {
   squareCheck: SquareCheck,
   newspaper: Newspaper,
   qrCode: QrCode,
+  pencilLine: PencilLine,
+  component: Component,
 
   // social icons
   google: ({ ...props }: IconProps) => (

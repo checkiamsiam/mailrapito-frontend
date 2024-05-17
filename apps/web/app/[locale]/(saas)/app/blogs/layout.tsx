@@ -28,12 +28,12 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
               {
                 title: "Publish Blog",
                 href: `create-post`,
-                icon: "newspaper",
+                icon: "pencilLine",
               },
               {
                 title: "Categories",
                 href: `category`,
-                icon: "newspaper",
+                icon: "component",
               },
             ]}
           />
