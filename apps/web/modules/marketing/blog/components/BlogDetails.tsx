@@ -1,5 +1,8 @@
 import moment from "moment";
 import Image from "next/image";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import "react-quill/dist/quill.snow.css";
+import "./style.css";
 
 interface BlogPost {
   id: string;
@@ -23,6 +26,18 @@ interface IProps {
 
 const BlogDetails = ({ data }: IProps) => {
   const { title, description, content, author, createdAt } = data;
+
+  function createMarkup() {
+    const stringContent = data?.content;
+    const parsedContent = JSON.parse(stringContent as string);
+    if (stringContent) {
+      const deltaOps = parsedContent?.ops as any[];
+      const converter = new QuillDeltaToHtmlConverter(deltaOps);
+      const html = converter.convert();
+      return { __html: html };
+    }
+  }
+
   return (
     <div>
       <h2 className="text-primary-dark text-xl font-semibold capitalize md:text-3xl">
@@ -49,13 +64,11 @@ const BlogDetails = ({ data }: IProps) => {
 
       {/* Description */}
       <div className="text-title">
-        <p>{description}</p>
+        <div>{description}</div>
         {content && (
           <div
-            className="text mt-10"
-            dangerouslySetInnerHTML={{
-              __html: content,
-            }}
+            className="ql-editor mt-10 !p-0"
+            dangerouslySetInnerHTML={createMarkup()}
           ></div>
         )}
 

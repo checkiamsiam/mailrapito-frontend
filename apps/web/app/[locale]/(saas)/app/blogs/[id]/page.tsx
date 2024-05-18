@@ -6,8 +6,10 @@ import { Card } from "@ui/components/card";
 import { toast } from "@ui/hooks/use-toast";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
+import "./style.css";
 
 export default function ClientComponent() {
   const params = useParams();
@@ -51,16 +53,23 @@ export default function ClientComponent() {
     }
   };
 
+  function createMarkup() {
+    const stringContent = data?.content;
+    const parsedContent = JSON.parse(stringContent as string);
+    if (stringContent) {
+      const deltaOps = parsedContent?.ops as any[];
+      const converter = new QuillDeltaToHtmlConverter(deltaOps);
+      const html = converter.convert();
+      return { __html: html };
+    }
+  }
+
   useEffect(() => {
     void refetch();
   }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  function createMarkup() {
-    return { __html: typeof data?.content === "string" && data?.content };
   }
 
   return (
@@ -93,7 +102,7 @@ export default function ClientComponent() {
         )}
         <div className="p-4 text-lg font-bold">{data?.title}</div>
         {data && (
-          <div className="p-4" dangerouslySetInnerHTML={createMarkup()} />
+          <div className="ql-editor" dangerouslySetInnerHTML={createMarkup()} />
         )}
       </Card>
     </>

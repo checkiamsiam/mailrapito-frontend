@@ -32,6 +32,18 @@ import { Controller, useForm } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
+interface InsertAttributes {
+  size?: string;
+}
+
+interface InsertOperation {
+  attributes?: InsertAttributes;
+  insert: string;
+}
+
+interface QuillDocument {
+  ops: InsertOperation[];
+}
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Required" }),
@@ -52,7 +64,7 @@ export default function EditBlog() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
   const id = params.get("id") as string;
-  const [content, setContent] = useState<any>("");
+  const [content, setContent] = useState<QuillDocument>({ ops: [] });
   const [uploading, setUploading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [uploadedUrl, setUploadedUrl] = useState("");
@@ -145,7 +157,7 @@ export default function EditBlog() {
     }
   };
 
-  const handleEditorChange = (newContent) => {
+  const handleEditorChange = (newContent: QuillDocument) => {
     setContent(newContent);
   };
 
@@ -221,9 +233,11 @@ export default function EditBlog() {
       return;
     }
 
+    const stringContent = JSON.stringify(content);
+
     try {
       await editPostMutation.mutateAsync({
-        content,
+        content: stringContent,
         thumbnail: uploadedUrl ?? data?.thumbnail,
         id,
         slug: values.slug,
@@ -242,7 +256,7 @@ export default function EditBlog() {
       });
       await refetch();
       form.reset();
-      setContent("");
+      setContent({ ops: [] });
       router.refresh();
       router.push("/app/blogs/published-posts");
 
@@ -274,7 +288,7 @@ export default function EditBlog() {
       }
       form.setValue("description", data?.description);
       if (data?.content) {
-        setContent(data?.content);
+        setContent(JSON.parse(data?.content) as QuillDocument);
       }
       if (data?.thumbnail) {
         setUploadedUrl(data?.thumbnail);

@@ -34,6 +34,21 @@ import "react-quill/dist/quill.snow.css";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
+// TODO: quill-delta-to-react
+
+interface InsertAttributes {
+  size?: string;
+}
+
+interface InsertOperation {
+  attributes?: InsertAttributes;
+  insert: string;
+}
+
+interface QuillDocument {
+  ops: InsertOperation[];
+}
+
 const formSchema = z.object({
   title: z.string().min(1, { message: "Required" }),
   author: z.string().min(1, { message: "Required" }),
@@ -50,7 +65,7 @@ export default function PublishBlog() {
   const quillRef = useRef(null);
   const router = useRouter();
   const t = useTranslations();
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<QuillDocument>({ ops: [] });
   const [uploading, setUploading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [uploadedUrl, setUploadedUrl] = useState<string>("");
@@ -145,7 +160,7 @@ export default function PublishBlog() {
     }
   };
 
-  const handleEditorChange = (newContent: string) => {
+  const handleEditorChange = (newContent: QuillDocument) => {
     setContent(newContent);
   };
 
@@ -217,7 +232,7 @@ export default function PublishBlog() {
       return;
     }
 
-    if (content.length < 100) {
+    if (content.ops[0].insert.length < 100) {
       validationToast.update({
         id: validationToast.id,
         variant: "error",
@@ -226,14 +241,16 @@ export default function PublishBlog() {
       });
       return;
     }
+
+    const stringContent = JSON.stringify(content);
     try {
       await createPostMutation.mutateAsync({
         ...values,
-        content,
+        content: stringContent,
         thumbnail: uploadedUrl,
       });
       form.reset();
-      setContent("");
+      setContent({ ops: [] });
       router.push("/app/blogs/published-posts");
     } catch (e) {
       console.log(e);

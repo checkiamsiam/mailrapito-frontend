@@ -8,17 +8,31 @@ import type ReactQuill from "react-quill";
 import { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+interface InsertAttributes {
+  size?: string;
+  // Add more attributes if needed
+}
+
+interface InsertOperation {
+  attributes?: InsertAttributes;
+  insert: string;
+}
+
+interface QuillDocument {
+  ops: InsertOperation[];
+}
+
 if (typeof window !== "undefined") {
   Quill.register("modules/resize", QuillResizeImage);
 }
 
 const toolbarOptions = [
   [{ font: [] }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ size: ["small", false, "large", "huge"] }],
   [{ align: [] }],
   ["bold", "italic", "underline", "strike"],
   ["blockquote", "code-block"],
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ size: ["small", false, "large", "huge"] }],
   [{ list: "ordered" }, { list: "bullet" }],
   [{ script: "sub" }, { script: "super" }],
   [{ color: [] }, { background: [] }],
@@ -28,8 +42,8 @@ const toolbarOptions = [
 
 interface QuillEditorProps {
   forwardRef?: React.RefObject<ReactQuill>;
-  content: string;
-  handleEditorChange: (content: string) => void;
+  content: QuillDocument;
+  handleEditorChange: (content) => void;
 }
 
 const QuillWrapper = ({
@@ -150,8 +164,13 @@ const QuillWrapper = ({
     };
   };
 
-  const handleChange = (html: string) => {
-    handleEditorChange(html);
+  const handleChange = (
+    content: string,
+    delta: ReactQuill.Value,
+    source: ReactQuill.QuillOptions,
+    editor: ReactQuill.UnprivilegedEditor,
+  ) => {
+    handleEditorChange(editor.getContents());
   };
 
   const handleOnBlur = () => {
@@ -190,6 +209,13 @@ const QuillWrapper = ({
     "align",
     "color",
     "code-block",
+    "size",
+    "font",
+    "script",
+    "background",
+    "sub",
+    "super",
+    "video",
   ];
 
   const ReactQuill =
