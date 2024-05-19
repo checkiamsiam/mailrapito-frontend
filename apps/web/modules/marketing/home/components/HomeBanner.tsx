@@ -708,8 +708,8 @@ export default function HomeBanner() {
                             <button
                               key={email.email}
                               className={`flex w-[100%] items-center justify-between border-t-[1px] border-white ${selectedEmail === email.email ? "bg-[#4652D8]" : "bg-[#323FD4]"} px-2 py-3 text-sm text-white hover:bg-[#4652D8] hover:text-white`}
-                              onClick={() => {
-                                activeThisEmail(email);
+                              onClick={async () => {
+                                await activeThisEmail(email);
                               }}
                               onMouseEnter={() => setCopyEmail(email.email)}
                               onMouseLeave={() => setCopyEmail("")}
