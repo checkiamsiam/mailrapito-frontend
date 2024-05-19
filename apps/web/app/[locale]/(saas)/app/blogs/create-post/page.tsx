@@ -34,8 +34,6 @@ import "react-quill/dist/quill.snow.css";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
-// TODO: quill-delta-to-react
-
 interface InsertAttributes {
   size?: string;
 }

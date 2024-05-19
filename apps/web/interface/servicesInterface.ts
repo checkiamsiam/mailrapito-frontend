@@ -12,6 +12,7 @@ export interface IEmailToken {
   status: "success" | "error";
   data: {
     delete_in: Date | string;
+    email: string;
     email_token: string;
   };
 }

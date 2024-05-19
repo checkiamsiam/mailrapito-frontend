@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable prefer-const */
 "use client";
 
@@ -32,10 +31,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
 import { deleteEmail } from "../../../../services/services";
-import { persistObj } from "../../../../utils/cookie-config";
 import {
+  activeThisEmailInHistoryLS,
+  getActiveEmail,
   getLSEmails,
   getLSEmailsHistory,
+  persistLSEmails,
 } from "../../../../utils/localStorage-config";
 import BannerTable2 from "./BannerTable2";
 import CreateEmailModal from "./CreateEmailModal";
@@ -274,20 +275,31 @@ export default function HomeBanner() {
 
   const getEmailsHistory = () => {
     const data: Email[] = getLSEmailsHistory();
+    const currentEmails = getLSEmails();
     const emails: EmailGroup[] = [];
 
-    data.forEach((item: Email) => {
-      const date: Date = new Date(item.date);
-      const formattedDate = `${date.toLocaleDateString("en-US", { weekday: "long", month: "numeric", day: "numeric", year: "numeric" })}`;
-      const existingDate: EmailGroup | undefined = emails.find(
-        (e) => e.date === formattedDate,
-      );
-      if (existingDate) {
-        existingDate.emails.unshift(item);
-      } else {
-        emails.push({ date: formattedDate, emails: [item] });
-      }
+    const allEmails = [...data, ...currentEmails];
+
+    const allFilteredEmails = Array.from(
+      new Set(allEmails.map((a) => a.email)),
+    ).map((email) => {
+      return allEmails.find((a) => a.email === email);
     });
+
+    if (allFilteredEmails.length > 0) {
+      allFilteredEmails.forEach((item: Email) => {
+        const date: Date = new Date(item.date);
+        const formattedDate = `${date.toLocaleDateString("en-US", { weekday: "long", month: "numeric", day: "numeric", year: "numeric" })}`;
+        const existingDate: EmailGroup | undefined = emails.find(
+          (e) => e.date === formattedDate,
+        );
+        if (existingDate) {
+          existingDate.emails.unshift(item);
+        } else {
+          emails.push({ date: formattedDate, emails: [item] });
+        }
+      });
+    }
     const numberOfEmails = calculateNumberOfEmails(emails);
     setNumbersOfEmailsInHistory(numberOfEmails);
     setEmailsHistory(emails);
@@ -296,7 +308,6 @@ export default function HomeBanner() {
   const calculateNumberOfEmails = (data) => {
     let totalEmails = 0;
     data.forEach((item) => {
-      console.log(item);
       totalEmails += item.emails.length;
     });
 
@@ -332,7 +343,7 @@ export default function HomeBanner() {
     return count;
   }, [selectedEmails]);
 
-  const activeThisEmail = (e) => {
+  const activeThisEmail = async (e) => {
     let emails = getLSEmails();
     if (e.email === "All Emails") {
       emails.forEach((obj) => {
@@ -342,7 +353,8 @@ export default function HomeBanner() {
     } else {
       emails.forEach((obj) => {
         if (obj.email === e.email) {
-          persistObj("email", e.token);
+          persistLSEmails(e.email as string, e.token as string);
+          activeThisEmailInHistoryLS(e.email as string);
           obj.active = true;
         } else {
           obj.active = false;
@@ -351,15 +363,12 @@ export default function HomeBanner() {
     }
     localStorage.setItem("emails", JSON.stringify(emails));
     handleLocalStorageEmail();
+    await refetchMessages();
   };
 
   const activeHistoryEmail = async (email) => {
-    persistObj("email", email.token);
+    await activeThisEmail(email);
     setOpen(false);
-    await refetchMessages();
-    setTimeout(() => {
-      handleLocalStorageEmail();
-    }, 1000);
   };
 
   const handleLocalStorageEmail = () => {
@@ -382,28 +391,27 @@ export default function HomeBanner() {
     setGeneratedEmails(allEmails);
   };
 
+  useEffect(() => {
+    handleLocalStorageEmail();
+  }, [messageLoading]);
+
   // -------------- Socket IO ------------
   useEffect(() => {
+    handleLocalStorageEmail();
     let socket;
     socket = io("https://web.mailrapido.com/", {
       forceNew: true,
       secure: true,
     });
 
-    function getCookie(cookieName) {
-      const cookie = {};
-      document.cookie.split(";").forEach(function (el) {
-        const [key, value] = el.split("=");
-        cookie[key.trim()] = value;
-      });
-      return cookie[cookieName];
+    function getCookie() {
+      const a = getActiveEmail();
+      return a?.token;
     }
 
     function joinSocketRoom(room) {
       const message = { room: room };
-      // console.log("joinRoom", message);
       socket.emit("joinRoom", message);
-      handleLocalStorageEmail();
     }
 
     function leaveSocketRoom(room) {
@@ -411,7 +419,7 @@ export default function HomeBanner() {
       socket.emit("leaveRoom", message);
     }
 
-    const room = getCookie("email");
+    const room = getCookie();
 
     joinSocketRoom(room);
     // removed data from parameter of below function
@@ -486,12 +494,21 @@ export default function HomeBanner() {
                       <div
                         className={`w-[300px] ${isHover ? "rounded-none" : "rounded-bl-sm"}  bg-[#323FD4]`}
                       >
-                        <input
-                          value={selectedEmail}
-                          type="email"
-                          disabled
-                          className="text-md w-full appearance-none border-0 bg-transparent text-center text-white"
-                        />
+                        {messageLoading ? (
+                          <div className="flex h-[40px] items-center justify-center space-x-2 bg-transparent">
+                            <span className="sr-only">Loading...</span>
+                            <div className="h-3 w-3 animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>
+                            <div className="h-3 w-3 animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
+                            <div className="h-3 w-3 animate-bounce rounded-full bg-white"></div>
+                          </div>
+                        ) : (
+                          <input
+                            value={selectedEmail}
+                            type="email"
+                            disabled
+                            className="text-md w-full appearance-none border-0 bg-transparent text-center text-white"
+                          />
+                        )}
                       </div>
                       <div className="absolute right-0 rounded-[5px] px-1 text-sm text-white">
                         <Icon.chevronDown className="h-5 w-5" color="white" />
@@ -582,7 +599,10 @@ export default function HomeBanner() {
                                           <li
                                             key={email.email}
                                             onMouseEnter={() => {
-                                              if (email?.inHistory) {
+                                              if (
+                                                email?.inHistory &&
+                                                !email.active
+                                              ) {
                                                 setShowUseEmailBtn(email.email);
                                               }
                                             }}

@@ -12,8 +12,29 @@ export const getLSEmails = () => {
   } else {
     const found = localStorage.getItem("emails");
     const emails: Email[] = found ? JSON.parse(found) : [];
-    // console.log("🚀 ~ getLSEmails ~ emails:", emails);
     return emails;
+  }
+};
+
+// export const activeThisEmailLS = (email: string) => {
+//   const emails = getLSEmails();
+//   emails.map((e) => (e.active = false));
+//   const found = emails.find((e) => e.email === email);
+//   if (found) {
+//     found.active = true;
+//     localStorage.setItem("emails", JSON.stringify(emails));
+//   }
+// };
+
+export const activeThisEmailInHistoryLS = (email: string) => {
+  const emails = getLSEmailsHistory();
+  emails.map((e) => (e.active = false));
+  const found = emails.find((e) => e.email === email);
+  if (found) {
+    found.active = true;
+    localStorage.setItem("emailsHistory", JSON.stringify(emails));
+  } else {
+    localStorage.setItem("emailsHistory", JSON.stringify(emails));
   }
 };
 
@@ -44,7 +65,12 @@ export const getLSEmailsHistory = () => {
   } else {
     const found = localStorage.getItem("emailsHistory");
     const emails: Email[] = found ? JSON.parse(found) : [];
-    // console.log("🚀 ~ getLSEmails ~ emails:", emails);
     return emails;
   }
+};
+
+export const getActiveEmail = () => {
+  const emails = getLSEmails();
+  const found = emails.find((e) => e.active);
+  return found;
 };
