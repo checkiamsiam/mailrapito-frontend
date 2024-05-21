@@ -21,15 +21,15 @@ const SubscriptionModal = ({
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="z-[100] m-0 max-h-[90vh] overflow-auto p-0 sm:max-w-[1200px]"
+          className="z-[100] m-0 max-h-[95vh] overflow-auto p-0 sm:max-w-[1200px]"
           closeButtonDisable
         >
           <div className="grid md:grid-cols-2">
-            <div className="bg-primary-dark  order-2 p-9 text-white md:order-1">
+            <div className="bg-primary-dark  order-2 p-5 text-white md:order-1">
               <div className="overflow-hidden rounded-2xl border border-white">
                 <table className="w-full  border-collapse rounded-md">
                   <tbody className="">
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white bg-[#4F5ADA] px-4  py-2 text-xl text-white">
                         Name
                       </td>
@@ -44,7 +44,7 @@ const SubscriptionModal = ({
                         </p>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Custom domains</p>
@@ -70,7 +70,7 @@ const SubscriptionModal = ({
                         10
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> No ads</p>
@@ -97,7 +97,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Emails at the same time</p>
@@ -114,7 +114,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Messages storage time (days)</p>
@@ -131,7 +131,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white bg-[#4F5ADA]  px-4  py-2 text-white">
                         <div className="flex items-center gap-2">
                           <p> History size</p>
@@ -148,7 +148,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Premium domains</p>
@@ -175,7 +175,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Cloud history sync</p>
@@ -202,7 +202,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Unlimited forwarding</p>
@@ -229,7 +229,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-16 rounded-md  ">
+                    <tr className="h-12 rounded-md  ">
                       <td className="w-[272px]  border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Inbox in extensions</p>
@@ -259,7 +259,7 @@ const SubscriptionModal = ({
                   </tbody>
                 </table>
               </div>
-              <div className="mt-6">
+              <div className="mt-5">
                 <p className="text-2xl">Will Be Avialable Soon</p>
                 <div className="mt-4 flex gap-3">
                   <p className=" flex items-center justify-center gap-2 rounded-full bg-white p-3 font-semibold text-black">
@@ -283,8 +283,8 @@ const SubscriptionModal = ({
                 </div>
               </div>
             </div>
-            <div className="order-1 p-9 md:order-2">
-              <div className="flex items-center justify-between pb-4">
+            <div className="order-1 p-5 md:order-2">
+              <div className="flex items-center justify-between pb-3">
                 <div>
                   <Logo />
                 </div>
@@ -300,7 +300,7 @@ const SubscriptionModal = ({
                 </div>
               </div>
               <hr />
-              <div className="mt-6">
+              <div className="mt-4">
                 <RadioGroup
                   defaultValue={packLength}
                   onValueChange={(value) => {
@@ -342,7 +342,7 @@ const SubscriptionModal = ({
                   </Label>
                 </RadioGroup>
 
-                <p className="my-4 font-semibold">
+                <p className="my-3 font-semibold">
                   Select your preferred method of payment:
                 </p>
                 <RadioGroup
@@ -453,16 +453,16 @@ const SubscriptionModal = ({
                   </Label>
                 </RadioGroup>
 
-                <div className="border-primary mt-5  rounded-md border-l-4 bg-[#323FD414] px-6 py-4">
+                <div className="border-primary mt-3  rounded-md border-l-4 bg-[#323FD414] px-6 py-4">
                   <p className="font-semibold">
                     You can make a refund within 30 days after the subscription.
                     Cancel anytime.
                   </p>
                 </div>
-                <div className="mt-5 ">
+                <div className="mt-3 ">
                   <Input placeholder="Enter your real email" className="py-6" />
                 </div>
-                <div className="mt-5 ">
+                <div className="mt-3 ">
                   <p className="text-center">
                     By clicking &quot;Subscribe&quot; you agree to
                     <button className="ml-1 underline">
@@ -471,12 +471,12 @@ const SubscriptionModal = ({
                     .
                   </p>
                 </div>
-                <div className="mt-5 ">
+                <div className="mt-3 ">
                   <button className="bg-primary-gradient w-full rounded-md py-3 text-white">
                     Subscribe
                   </button>
                 </div>
-                <div className="mt-5 flex items-center justify-center gap-2">
+                <div className="mt-3 flex items-center justify-center gap-2">
                   <Image
                     src="/images/icons/lock-2-line.svg"
                     alt="icon"
