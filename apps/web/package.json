@@ -65,7 +65,8 @@
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
     "uuid": "^9.0.1",
-    "zod": "^3.22.2"
+    "zod": "^3.22.2",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@content-collections/core": "^0.3.1",

@@ -7,14 +7,10 @@ import { RadioGroup, RadioGroupItem } from "@ui/components/radio-group";
 import { cn } from "@ui/lib";
 import Image from "next/image";
 import { useState } from "react";
+import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
 
-const SubscriptionModal = ({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const SubscriptionModal = () => {
+  const {open , setOpen} = useSubscriptionModalStore()
   const [packLength, setPackLength] = useState("option-one");
   const [paymentOption, setPaymentOption] = useState("p-option-one");
   return (
@@ -269,7 +265,7 @@ const SubscriptionModal = ({
                       width={16}
                       height={16}
                     />
-                    <span>API</span>
+                    <span className="text-sm">API</span>
                   </p>
                   <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
                     <Image
@@ -278,7 +274,7 @@ const SubscriptionModal = ({
                       width={16}
                       height={16}
                     />
-                    <span>And More</span>
+                    <span className="text-sm">And More</span>
                   </p>
                 </div>
               </div>
