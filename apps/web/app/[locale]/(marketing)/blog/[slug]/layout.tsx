@@ -9,6 +9,21 @@ export async function generateMetadata({ params: { slug } }) {
     title: post?.singlePost?.title,
     description: post?.singlePost?.description,
     keywords: post?.singlePost?.keywords.split(" ").join(", "),
+    openGraph: {
+      title: post?.singlePost?.title,
+      description: post?.singlePost?.description,
+      siteName: "Mail Rapido",
+      type: "article",
+      url: `https://mailrapido.com/${post?.singlePost?.slug}`,
+      images: [
+        {
+          url: post?.singlePost?.thumbnail ?? "",
+          width: 800,
+          height: 600,
+          alt: post?.singlePost?.title,
+        },
+      ],
+    },
     metadataBase: new URL(`https://mailrapido.com/${post?.singlePost?.slug}`),
   };
   return metadata;
