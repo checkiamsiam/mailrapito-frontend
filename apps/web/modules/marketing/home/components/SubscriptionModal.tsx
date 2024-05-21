@@ -399,12 +399,11 @@ const SubscriptionModal = ({
                           height={24}
                         />
 
-                        <a
-                          href="#"
+                        <button
                           className="text-[12px] text-blue-500 underline"
                         >
                           And More
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </Label>
@@ -444,12 +443,11 @@ const SubscriptionModal = ({
                           height={24}
                         />
 
-                        <a
-                          href="#"
+                        <button
                           className="text-[12px] text-blue-500 underline"
                         >
                           And More
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </Label>
@@ -467,9 +465,9 @@ const SubscriptionModal = ({
                 <div className="mt-5 ">
                   <p className="text-center">
                     By clicking "Subscribe" you agree to
-                    <a href="#" className="ml-1 underline">
+                    <button className="ml-1 underline">
                       Terms of Service
-                    </a>{" "}
+                    </button>
                     .
                   </p>
                 </div>
@@ -488,9 +486,9 @@ const SubscriptionModal = ({
                   />
                   <p>
                     Secure payments
-                    <a href="#" className="ml-1 underline">
+                    <button  className="ml-1 underline">
                       Paddle
-                    </a>{" "}
+                    </button>
                     .
                   </p>
                 </div>
