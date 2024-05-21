@@ -1,5 +1,6 @@
 "use client";
 
+import SubscriptionModal from "@marketing/home/components/SubscriptionModal";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import SectionHeading from "@shared/components/Section/SectionHeading";
 import CheckIcon from "@shared/icons/CheckIcon";
@@ -52,7 +53,10 @@ const Pricing = () => {
 
   return (
     <>
-      <section className="bg-primary-gradient relative pb-20 pt-12 md:pb-40 md:pt-20" id="pricing">
+      <section
+        className="bg-primary-gradient relative pb-20 pt-12 md:pb-40 md:pt-20"
+        id="pricing"
+      >
         <div
           className="absolute left-0 top-0 z-0 w-full md:h-[100%]" //md:h-[792px]
         ></div>
@@ -94,7 +98,9 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <div className={`lg:rounded-tr-none ${i === 0 ? "lg:rounded-br-none" : data?.length === i + 1 ? "lg:rounded-bl-none" : ""} rounded-b-2xl bg-gray-50 p-5 sm:p-10`}>
+                <div
+                  className={`lg:rounded-tr-none ${i === 0 ? "lg:rounded-br-none" : data?.length === i + 1 ? "lg:rounded-bl-none" : ""} rounded-b-2xl bg-gray-50 p-5 sm:p-10`}
+                >
                   <ul className="flex flex-col gap-4">
                     {item.features.map((feature, index) => (
                       <li
@@ -110,32 +116,29 @@ const Pricing = () => {
                   </ul>
                 </div>
 
-                <div className="m-6 text-center flex flex-col items-center">
-                    {item?.label ? (
-                      <PrimaryButton
-                        className="w-full py-8"
-                        onClick={() =>
-                          router.push("/app/settings/team/billing")
-                        }
-                      >
-                        {t("pricing.btnText")}
-                      </PrimaryButton>
-                    ) : (
-                      <Button
-                        className="w-full py-8 bottom-2 text-primary-dark hover:bg-primary-dark bg-white shadow-xl hover:text-white"
-                        onClick={() =>
-                          router.push("/app/settings/team/billing")
-                        }
-                      >
-                        {t("pricing.btnText")}
-                      </Button>
-                    )}
-                  </div>
+                <div className="m-6 flex flex-col items-center text-center">
+                  {item?.label ? (
+                    <PrimaryButton
+                      className="w-full py-8"
+                      onClick={() => router.push("/app/settings/team/billing")}
+                    >
+                      {t("pricing.btnText")}
+                    </PrimaryButton>
+                  ) : (
+                    <Button
+                      className="text-primary-dark hover:bg-primary-dark bottom-2 w-full bg-white py-8 shadow-xl hover:text-white"
+                      onClick={() => router.push("/app/settings/team/billing")}
+                    >
+                      {t("pricing.btnText")}
+                    </Button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+      {/* <SubscriptionModal /> */}
     </>
   );
 };
