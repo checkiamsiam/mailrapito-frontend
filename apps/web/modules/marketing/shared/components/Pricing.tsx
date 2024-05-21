@@ -7,8 +7,10 @@ import CheckIcon from "@shared/icons/CheckIcon";
 import { Button } from "@ui/components/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Pricing = () => {
+  const [open, setOpen] = useState(false);
   const t = useTranslations();
   const router = useRouter();
   const data = [
@@ -120,14 +122,14 @@ const Pricing = () => {
                   {item?.label ? (
                     <PrimaryButton
                       className="w-full py-8"
-                      onClick={() => router.push("/app/settings/team/billing")}
+                      onClick={() => setOpen(true)}
                     >
                       {t("pricing.btnText")}
                     </PrimaryButton>
                   ) : (
                     <Button
                       className="text-primary-dark hover:bg-primary-dark bottom-2 w-full bg-white py-8 shadow-xl hover:text-white"
-                      onClick={() => router.push("/app/settings/team/billing")}
+                      onClick={() => setOpen(true)}
                     >
                       {t("pricing.btnText")}
                     </Button>
@@ -138,7 +140,7 @@ const Pricing = () => {
           </div>
         </div>
       </section>
-      {/* <SubscriptionModal /> */}
+      <SubscriptionModal open={open} setOpen={setOpen} />
     </>
   );
 };
