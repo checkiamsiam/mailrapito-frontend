@@ -260,23 +260,23 @@ const SubscriptionModal = ({
                 </table>
               </div>
               <div className="mt-5">
-                <p className="text-2xl">Will Be Avialable Soon</p>
+                <p className="text-xl">Will Be Avialable Soon</p>
                 <div className="mt-4 flex gap-3">
-                  <p className=" flex items-center justify-center gap-2 rounded-full bg-white p-3 font-semibold text-black">
+                  <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
                     <Image
                       src="/images/icons/clock.svg"
                       alt="icon"
-                      width={24}
-                      height={24}
+                      width={16}
+                      height={16}
                     />
                     <span>API</span>
                   </p>
-                  <p className=" flex items-center justify-center gap-2 rounded-full bg-white p-3 font-semibold text-black">
+                  <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
                     <Image
                       src="/images/icons/clock.svg"
                       alt="icon"
-                      width={24}
-                      height={24}
+                      width={16}
+                      height={16}
                     />
                     <span>And More</span>
                   </p>
