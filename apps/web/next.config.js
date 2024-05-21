@@ -26,6 +26,18 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "hydktnnyqbrvrjozzith.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "mailrapidoblogs.s3.ap-south-1.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "mailrapido.s3.eu-central-1.amazonaws.com",
+      },
     ],
   },
   async redirects() {

@@ -5,6 +5,7 @@ import { useUser } from "@saas/auth/hooks/use-user";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
+import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
@@ -16,6 +17,9 @@ import { useDebounceCallback, useIsClient } from "usehooks-ts";
 // ----------- Un Used -----------
 // import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 
+const uniqueId = Date.now();
+const email = "ksher1995@gmail.com";
+
 export function NavBar() {
   const t = useTranslations();
   const { user, loaded: userLoaded } = useUser();
@@ -23,6 +27,8 @@ export function NavBar() {
   const pathname = usePathname();
   const isClient = useIsClient();
   const [isTop, setIsTop] = useState(true);
+
+  const createOrderMutation = apiClient.payments.createOrder.useMutation();
 
   const debouncedScrollHandler = useDebounceCallback(
     () => {
@@ -33,6 +39,20 @@ export function NavBar() {
       maxWait: 150,
     },
   );
+
+  const handleOrder = async () => {
+    try {
+      await createOrderMutation.mutateAsync({
+        orderId: String(uniqueId),
+        email: email,
+        status: "CREATED",
+      });
+
+      console.log("success");
+    } catch {
+      console.log("error");
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", debouncedScrollHandler);
@@ -57,7 +77,7 @@ export function NavBar() {
     {
       label: t("common.menu.pricing"),
       href: `/#pricing`,
-    }
+    },
   ];
 
   return (
@@ -90,6 +110,55 @@ export function NavBar() {
                 {menuItem.label}
               </Link>
             ))}
+            <div></div>
+            <div>
+              <form
+                action="https://www.coinpayments.net/index.php"
+                method="post"
+              >
+                <input type="hidden" name="cmd" value="_pay_simple" />
+                <input type="hidden" name="reset" value="0" />
+                <input
+                  type="hidden"
+                  name="merchant"
+                  value="5429f80c5b82ba211691c5ed2183cb4b"
+                />
+                <input
+                  type="hidden"
+                  name="item_name"
+                  value="1 year subscription"
+                />
+                <input type="hidden" name="currency" value="USD" />
+                <input type="hidden" name="amountf" value="1" />
+                <input type="hidden" name="email" value={email} />
+                <input
+                  type="hidden"
+                  name="success_url"
+                  value="http://localhost:3000"
+                />
+                <input
+                  type="hidden"
+                  name="cancel_url"
+                  value="http://localhost:3000"
+                />
+                <input
+                  type="hidden"
+                  name="custom"
+                  value={JSON.stringify({
+                    orderId: uniqueId,
+                    status: "CREATED",
+                    email: email,
+                  })}
+                />
+                <Button
+                  className="rounded-lg bg-red-500 px-8 py-6 text-base"
+                  variant="default"
+                  onClick={handleOrder}
+                >
+                  Test Payment
+                </Button>
+              </form>
+            </div>
           </div>
 
           <div className="flex items-center justify-end gap-3">
@@ -143,13 +212,11 @@ export function NavBar() {
 
             {isClient && userLoaded && (
               <>
-                <PrimaryButton className="hidden rounded-lg py-6 text-base md:flex px-8">
+                <PrimaryButton className="hidden rounded-lg px-8 py-6 text-base md:flex">
                   {user ? (
                     <Link href="/app">{t("common.menu.dashboard")}</Link>
                   ) : (
-                    <Link href="/auth/login">
-                      {t("common.menu.login")}
-                    </Link>
+                    <Link href="/auth/login">{t("common.menu.login")}</Link>
                   )}
                 </PrimaryButton>
               </>

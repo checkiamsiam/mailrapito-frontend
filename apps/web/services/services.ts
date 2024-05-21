@@ -8,36 +8,75 @@ import type {
   IFetchMessages,
 } from "../interface/servicesInterface";
 import { loadObj, persistObj } from "../utils/cookie-config";
+import {
+  activeThisEmailInHistoryLS,
+  getActiveEmail,
+  getLSEmails,
+  getLSEmailsHistory,
+  persistLSEmails,
+} from "../utils/localStorage-config";
 
 export const API_KEY = "nMpKDjd1baWWIBl7p357s1ac7RCbwWp1F8aLDB5n" ?? "";
 const API = appConfig.api;
 
 // ------------ Start of Email/Message Services ------------
+
+export const getEmailFromMsgAPI = async (token: string) => {
+  const { data } = await axios.get<IFetchMessages>(
+    `${API}/messages/${token}/${API_KEY}`,
+  );
+  persistLSEmails(data?.data.mailbox, token);
+  await fetchMessages();
+  return data;
+};
+
 export const fetchEmailToken = async () => {
   const { data } = await axios.post<IEmailToken>(
     `${API}/email/create/${API_KEY}`,
   );
-  persistObj("email", data?.data?.email_token);
+  await getEmailFromMsgAPI(data.data.email_token);
   return data;
 };
 
 export const fetchMessages = async () => {
+  const a = getActiveEmail();
+  if (!a) {
+    await fetchEmailToken();
+    return;
+  }
   const { data } = await axios.get<IFetchMessages>(
-    `${API}/messages/${loadObj("email")}/${API_KEY}`,
+    `${API}/messages/${a?.token}/${API_KEY}`,
   );
   return data;
 };
 
 export const deleteEmail = async () => {
+  const allEmails = getLSEmails();
+  const a = getActiveEmail();
+  const deletedEmail = allEmails.find((obj) => obj.token === a?.token);
+  const history = getLSEmailsHistory();
+  if (deletedEmail) {
+    deletedEmail.inHistory = true;
+    deletedEmail.active = false;
+    history.unshift(deletedEmail);
+  }
+  if (history.length > 50) {
+    history.pop();
+  }
+  localStorage.setItem("emailsHistory", JSON.stringify(history));
   const { data } = await axios.post<IEmailToken>(
-    `${API}/email/delete/${loadObj("email")}/${API_KEY}`,
+    `${API}/email/delete/${a?.token}/${API_KEY}`,
   );
-  persistObj("email", data?.data?.email_token);
+  if (data.status === "success") {
+    persistLSEmails(data?.data.email, data?.data.email_token);
+    activeThisEmailInHistoryLS(data?.data.email);
+  }
   return data;
 };
 
 export const fetchDomains = async () => {
   const { data } = await axios.get<IDomains>(`${API}/domains/${API_KEY}`);
+  // console.log("fetchDomains", data);
   return data;
 };
 
@@ -52,6 +91,7 @@ export const createNewEmail = async ({
   const { data } = await axios.post<IEmailToken>(
     `${API}/email/change/${loadObj("email")}/${name}/${domain}/${API_KEY}`,
   );
+  console.log("createNewEmail", data);
   persistObj("email", data?.data?.email_token);
   return data;
 };

@@ -33,10 +33,12 @@ import {
   Moon,
   MoreVertical,
   MousePointer,
+  Newspaper,
   Paperclip,
   Pause,
   Phone,
   Plus,
+  QrCode,
   Send,
   Settings,
   Square,
@@ -55,6 +57,8 @@ import {
   Users2,
   Wand2,
   X,
+  PencilLine,
+  Component,
 } from "lucide-react";
 
 interface IconProps {
@@ -118,6 +122,10 @@ export const Icon = {
   copy: Copy,
   square: Square,
   squareCheck: SquareCheck,
+  newspaper: Newspaper,
+  qrCode: QrCode,
+  pencilLine: PencilLine,
+  component: Component,
 
   // social icons
   google: ({ ...props }: IconProps) => (

@@ -21,21 +21,23 @@ export interface IMessage {
 }
 
 export interface IBlog {
-  _id: string;
+  // _id: string;
   title: string;
   author: string;
   slug: string;
   description: string;
-  keywords: string[];
-  category: string;
-  content: { ops: IContent[] };
-  thumbnail: string;
-  language: string;
-  status: Status;
-  published_date: Date | string;
-  created_Date: Date | string;
-  __v: number;
-  views: number;
+  keywords: string | null;
+  category: string | null;
+  // content: { ops: IContent[] };
+  content: string | null;
+  thumbnail?: string | null;
+  language: string | null;
+  status: string | null;
+  createdAt?: Date | string;
+  // published_date: Date | string;
+  // created_Date: Date | string;
+  // __v: number;
+  views: number | null;
 }
 
 export interface IContent {

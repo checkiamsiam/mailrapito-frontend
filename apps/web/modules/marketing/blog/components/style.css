@@ -1,0 +1,7 @@
+.ql-editor img {
+    width: auto;
+    height: auto;
+    /* revert-layer */
+    display: inline-block !important;
+
+}

@@ -19,3 +19,10 @@ export type GetSignedUrlHander = (
     expiresIn?: number;
   },
 ) => Promise<string>;
+
+export type GetPublicUrlHandler = (
+  path: string,
+  options: {
+    bucket: string;
+  },
+) => string;

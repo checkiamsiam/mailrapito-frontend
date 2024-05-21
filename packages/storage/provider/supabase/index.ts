@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import type {
+  GetPublicUrlHandler,
   GetSignedUploadUrlHandler,
   GetSignedUrlHander,
 } from "../../types";
@@ -42,6 +43,14 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
   return data.signedUrl;
 };
 
+export const getPublicUrl: GetPublicUrlHandler = (path, { bucket }) => {
+  const supabaseClient = getSupabaseAdminClient();
+  const { data } = supabaseClient.storage.from(bucket).getPublicUrl(path);
+
+  return data.publicUrl;
+};
+
+// This function can be used to get signed URLs for uploaded files in S3 which has the expiry time
 export const getSignedUrl: GetSignedUrlHander = async (
   path,
   { bucket, expiresIn },
@@ -49,7 +58,7 @@ export const getSignedUrl: GetSignedUrlHander = async (
   const supabaseClient = getSupabaseAdminClient();
   const { data, error } = await supabaseClient.storage
     .from(bucket)
-    .createSignedUrl(path, expiresIn ?? 60);
+    .createSignedUrl(path, expiresIn ?? 3600);
 
   if (error) {
     console.error(error);

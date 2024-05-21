@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const BlogCard = ({ data }: IProps) => {
-  const { title, description, thumbnail, author, published_date, views, slug } =
+  const { title, description, thumbnail, author, createdAt, views, slug } =
     data;
   return (
     <div
@@ -20,7 +20,7 @@ const BlogCard = ({ data }: IProps) => {
         <div className="relative h-[218px] w-full overflow-hidden rounded-2xl">
           <Image
             className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-            src={thumbnail}
+            src={thumbnail ?? ""}
             alt="Blog Thumbnail"
             fill
           />
@@ -50,7 +50,7 @@ const BlogCard = ({ data }: IProps) => {
           </div>
 
           <div className="flex items-center gap-1 text-xs">
-            <p>{moment(published_date).format("MMMM DD, YYYY")}</p>
+            {createdAt && <p>{moment(createdAt).format("MMMM DD, YYYY")}</p>}
             <span>-</span>
             <p>{views} views</p>
           </div>

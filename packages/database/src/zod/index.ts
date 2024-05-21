@@ -12,6 +12,10 @@ import type { Prisma } from '@prisma/client';
 
 export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','createdAt','hashedPassword']);
 
+export const BlogScalarFieldEnumSchema = z.enum(['id','title','author','slug','description','keywords','category','content','thumbnail','language','status','views','createdAt','published']);
+
+export const CategoryScalarFieldEnumSchema = z.enum(['id','name','language']);
+
 export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
 
 export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
@@ -27,6 +31,10 @@ export const TeamMembershipScalarFieldEnumSchema = z.enum(['id','teamId','userId
 export const TeamInvitationScalarFieldEnumSchema = z.enum(['id','teamId','email','role','createdAt','expiresAt']);
 
 export const SubscriptionScalarFieldEnumSchema = z.enum(['id','teamId','customerId','status','planId','variantId','nextPaymentDate']);
+
+export const OrderScalarFieldEnumSchema = z.enum(['id','orderId','email','status','createdAt']);
+
+export const UserSubscriptionScalarFieldEnumSchema = z.enum(['id','orderId','txnId','itemAmount','receivedAmount','receivedConfirms','email','status','firstCurrency','secondCurrency','firstAmount','secondAmount','paidAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -48,6 +56,10 @@ export const SubscriptionStatusSchema = z.enum(['TRIALING','ACTIVE','PAUSED','CA
 
 export type SubscriptionStatusType = `${z.infer<typeof SubscriptionStatusSchema>}`
 
+export const OrderStatusSchema = z.enum(['CREATED','PENDING','PAID']);
+
+export type OrderStatusType = `${z.infer<typeof OrderStatusSchema>}`
+
 /////////////////////////////////////////
 // MODELS
 /////////////////////////////////////////
@@ -68,6 +80,41 @@ export const UserSchema = z.object({
 })
 
 export type User = z.infer<typeof UserSchema>
+
+/////////////////////////////////////////
+// BLOG SCHEMA
+/////////////////////////////////////////
+
+export const BlogSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string(),
+  author: z.string(),
+  slug: z.string(),
+  description: z.string(),
+  keywords: z.string(),
+  category: z.string().nullable(),
+  content: z.string().nullable(),
+  thumbnail: z.string().nullable(),
+  language: z.string().nullable(),
+  status: z.string().nullable(),
+  views: z.number().int().nullable(),
+  createdAt: z.coerce.date(),
+  published: z.boolean(),
+})
+
+export type Blog = z.infer<typeof BlogSchema>
+
+/////////////////////////////////////////
+// CATEGORY SCHEMA
+/////////////////////////////////////////
+
+export const CategorySchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  language: z.string(),
+})
+
+export type Category = z.infer<typeof CategorySchema>
 
 /////////////////////////////////////////
 // USER SESSION SCHEMA
@@ -179,6 +226,42 @@ export const SubscriptionSchema = z.object({
 })
 
 export type Subscription = z.infer<typeof SubscriptionSchema>
+
+/////////////////////////////////////////
+// ORDER SCHEMA
+/////////////////////////////////////////
+
+export const OrderSchema = z.object({
+  status: OrderStatusSchema,
+  id: z.string().cuid(),
+  orderId: z.string(),
+  email: z.string(),
+  createdAt: z.coerce.date(),
+})
+
+export type Order = z.infer<typeof OrderSchema>
+
+/////////////////////////////////////////
+// USER SUBSCRIPTION SCHEMA
+/////////////////////////////////////////
+
+export const UserSubscriptionSchema = z.object({
+  status: OrderStatusSchema,
+  id: z.string(),
+  orderId: z.string(),
+  txnId: z.string(),
+  itemAmount: z.number().int().nullable(),
+  receivedAmount: z.number().nullable(),
+  receivedConfirms: z.number().int().nullable(),
+  email: z.string(),
+  firstCurrency: z.string(),
+  secondCurrency: z.string(),
+  firstAmount: z.number().int().nullable(),
+  secondAmount: z.number().nullable(),
+  paidAt: z.coerce.date(),
+})
+
+export type UserSubscription = z.infer<typeof UserSubscriptionSchema>
 
 /////////////////////////////////////////
 // MONGODB TYPES

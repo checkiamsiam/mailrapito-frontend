@@ -46,6 +46,11 @@ export function NavBar({
             href: `/app/admin`,
             icon: Icon.admin,
           },
+          {
+            label: t("dashboard.menu.blogs"),
+            href: `/app/blogs/published-posts`,
+            icon: Icon.newspaper,
+          },
         ]
       : []),
   ];

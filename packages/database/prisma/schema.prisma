@@ -38,6 +38,31 @@ model User {
   oneTimePasswords   UserOneTimePassword[]
 }
 
+
+model Blog {
+  id              String    @id @default(uuid()) @map("_id")
+  title           String
+  author          String
+  slug            String    @unique
+  description     String
+  keywords        String
+  category        String?
+  content         String?   
+  thumbnail       String?
+  language        String?
+  status          String?    
+  views           Int?       @default(0)
+  createdAt       DateTime                @default(now())
+  published       Boolean    @default(true)
+}
+
+model Category {
+  id            String    @id @default(uuid()) @map("_id")
+  name          String    
+  language      String
+}
+
+
 model UserSession {
   id             String   @id @map("_id")
   userId         String
@@ -144,4 +169,34 @@ model Subscription {
   planId          String
   variantId       String
   nextPaymentDate DateTime?
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING
+  PAID
+}
+
+model Order {
+  id              String              @id @default(cuid()) @map("_id")
+  orderId         String              @unique
+  email           String
+  status          OrderStatus         @default(CREATED)
+  createdAt       DateTime            @default(now())
+}
+
+model UserSubscription {
+  id                      String             @id @map("_id")
+  orderId                 String              @unique
+  txnId                   String
+  itemAmount              Int?
+  receivedAmount          Float?
+  receivedConfirms        Int?
+  email                   String
+  status                  OrderStatus
+  firstCurrency           String
+  secondCurrency          String
+  firstAmount             Int?
+  secondAmount            Float?
+  paidAt                  DateTime            @default(now())
 }

@@ -1,8 +1,19 @@
 "use client";
 
-import type { Post } from "content-collections";
+// import type { Post } from "content-collections";
 import Image from "next/image";
 import Link from "next/link";
+
+interface Post {
+  title: string;
+  excerpt: string;
+  authorName: string;
+  image: string;
+  date: string | number | Date;
+  slug: string;
+  authorImage: string;
+  tags: string[];
+}
 
 export function PostListItem({ post }: { post: Post }) {
   const { title, excerpt, authorName, image, date, slug, authorImage, tags } =
