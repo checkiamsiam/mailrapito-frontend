@@ -41,10 +41,10 @@ const SubscriptionModal = ({
                       <td className="w-[128px] border-b border-white bg-[#4F5ADA] px-4 py-2 text-center">
                         <p className=" bg-primary-gradient rounded-full  px-3 py-1">
                           Premium
-                        </p>
+                        </p> 
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Custom domains</p>
@@ -70,7 +70,7 @@ const SubscriptionModal = ({
                         10
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> No ads</p>
@@ -97,7 +97,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Emails at the same time</p>
@@ -114,7 +114,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Messages storage time (days)</p>
@@ -131,24 +131,24 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
-                      <td className="w-[272px]  border-b border-r border-white bg-[#4F5ADA]  px-4  py-2 text-white">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                      <td className="w-[272px]  border-b border-r border-white   px-4  py-2 text-white">
                         <div className="flex items-center gap-2">
                           <p> History size</p>
                         </div>
                       </td>
-                      <td className="w-[128px]  border-b border-r border-white bg-[#4F5ADA] px-4 py-2 text-center">
+                      <td className="w-[128px]  border-b border-r border-white  px-4 py-2 text-center">
                         <div className="flex items-center justify-center">
                           50
                         </div>
                       </td>
-                      <td className="w-[128px] border-b border-white  bg-[#4F5ADA] px-4 py-2 text-center">
+                      <td className="w-[128px] border-b border-white   px-4 py-2 text-center">
                         <div className="flex items-center justify-center">
                           500
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Premium domains</p>
@@ -175,7 +175,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Cloud history sync</p>
@@ -202,7 +202,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Unlimited forwarding</p>
@@ -229,7 +229,7 @@ const SubscriptionModal = ({
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md  ">
+                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
                       <td className="w-[272px]  border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Inbox in extensions</p>
@@ -472,7 +472,7 @@ const SubscriptionModal = ({
                   </p>
                 </div>
                 <div className="mt-3 ">
-                  <button className="bg-primary-gradient w-full rounded-md py-3 text-white">
+                  <button className="bg-primary-gradient hover:bg-secondary-gradient w-full rounded-md py-3 text-white">
                     Subscribe
                   </button>
                 </div>
