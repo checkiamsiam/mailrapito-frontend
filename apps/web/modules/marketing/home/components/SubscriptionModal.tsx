@@ -464,7 +464,7 @@ const SubscriptionModal = ({
                 </div>
                 <div className="mt-5 ">
                   <p className="text-center">
-                    By clicking "Subscribe" you agree to
+                    By clicking &quot;Subscribe&quot; you agree to
                     <button className="ml-1 underline">
                       Terms of Service
                     </button>
