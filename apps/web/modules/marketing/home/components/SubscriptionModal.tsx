@@ -6,8 +6,13 @@ import { RadioGroup, RadioGroupItem } from "@ui/components/radio-group";
 import { cn } from "@ui/lib";
 import Image from "next/image";
 import { useState } from "react";
-import { Modal } from "react-responsive-modal";
+// import { Modal } from "react-responsive-modal";
+import dynamic from "next/dynamic";
 import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
+
+const Modal = dynamic(() => import("react-responsive-modal"), {
+  ssr: false,
+});
 
 const SubscriptionModal = () => {
   const { open, setOpen } = useSubscriptionModalStore();
@@ -16,13 +21,17 @@ const SubscriptionModal = () => {
   return (
     <div>
       <Modal
+        role="dialog"
         center
         open={open}
+        blockScroll={false}
         onClose={() => setOpen(false)}
         showCloseIcon={false}
+        closeOnOverlayClick={false}
+        onOverlayClick={() => setOpen(false)}
         classNames={{
           modal:
-            "p-0 z-[100]  m-0 max-h-[95vh] my-auto overflow-auto p-0 sm:max-w-[1200px] mx-auto rounded-3xl",
+            "p-0 z-[100]  m-0  my-auto overflow-hidden p-0 sm:max-w-[1200px] mx-auto rounded-3xl",
         }}
       >
         <div>
