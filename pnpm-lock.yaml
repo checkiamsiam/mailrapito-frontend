@@ -219,6 +219,9 @@ importers:
       react-phone-input-2:
         specifier: ^2.15.1
         version: 2.15.1(react-dom@18.2.0)(react@18.2.0)
+      react-responsive-modal:
+        specifier: 5.0.2
+        version: 5.0.2(react-dom@18.2.0)(react@18.2.0)
       react-slick:
         specifier: ^0.30.2
         version: 0.30.2(react-dom@18.2.0)(react@18.2.0)
@@ -10359,6 +10362,10 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
+  /no-scroll@2.1.1:
+    resolution: {integrity: sha512-YTzGAJOo/B6hkodeT5SKKHpOhAzjMfkUCCXjLJwjWk2F4/InIg+HbdH9kmT7bKpleDuqLZDTRy2OdNtAj0IVyQ==}
+    dev: false
+
   /node-addon-api@7.1.0:
     resolution: {integrity: sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==}
     engines: {node: ^16 || ^18 || >= 20}
@@ -11264,6 +11271,18 @@ packages:
       tslib: 2.6.2
       use-callback-ref: 1.3.1(@types/react@18.2.67)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.67)(react@18.2.0)
+    dev: false
+
+  /react-responsive-modal@5.0.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-7QzL5NIhzYKe+jnl3QQVBWlpVCQv6QDCKtlJQvBxEbnjNSMkwFep2uSTu4CQFt9QItFEBV7onC/1i6O0t78nYg==}
+    peerDependencies:
+      react: ^16.8.0
+      react-dom: ^16.8.0
+    dependencies:
+      classnames: 2.5.1
+      no-scroll: 2.1.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-slick@0.30.2(react-dom@18.2.0)(react@18.2.0):

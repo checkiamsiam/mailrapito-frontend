@@ -1,26 +1,32 @@
 "use client";
 import { Logo } from "@shared/components/Logo";
-import { Dialog, DialogContent } from "@ui/components/dialog";
 import { Input } from "@ui/components/input";
 import { Label } from "@ui/components/label";
 import { RadioGroup, RadioGroupItem } from "@ui/components/radio-group";
 import { cn } from "@ui/lib";
 import Image from "next/image";
 import { useState } from "react";
+import { Modal } from "react-responsive-modal";
 import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
 
 const SubscriptionModal = () => {
-  const {open , setOpen} = useSubscriptionModalStore()
+  const { open, setOpen } = useSubscriptionModalStore();
   const [packLength, setPackLength] = useState("option-one");
   const [paymentOption, setPaymentOption] = useState("p-option-one");
   return (
     <div>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className="z-[100] m-0 max-h-[95vh] overflow-auto p-0 sm:max-w-[1200px]"
-          closeButtonDisable
-        >
-          <div className="grid md:grid-cols-2">
+      <Modal
+        center
+        open={open}
+        onClose={() => setOpen(false)}
+        showCloseIcon={false}
+        classNames={{
+          modal:
+            "p-0 z-[100]  m-0 max-h-[95vh] my-auto overflow-auto p-0 sm:max-w-[1200px] mx-auto rounded-3xl",
+        }}
+      >
+        <div>
+          <div className="grid md:grid-cols-2 ">
             <div className="bg-primary-dark  order-2 p-5 text-white md:order-1">
               <div className="overflow-hidden rounded-2xl border border-white">
                 <table className="w-full  border-collapse rounded-md">
@@ -37,10 +43,10 @@ const SubscriptionModal = () => {
                       <td className="w-[128px] border-b border-white bg-[#4F5ADA] px-4 py-2 text-center">
                         <p className=" bg-primary-gradient rounded-full  px-3 py-1">
                           Premium
-                        </p> 
+                        </p>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer  ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA]  ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Custom domains</p>
@@ -66,7 +72,7 @@ const SubscriptionModal = () => {
                         10
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> No ads</p>
@@ -93,7 +99,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Emails at the same time</p>
@@ -110,7 +116,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p> Messages storage time (days)</p>
@@ -127,7 +133,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white   px-4  py-2 text-white">
                         <div className="flex items-center gap-2">
                           <p> History size</p>
@@ -144,7 +150,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Premium domains</p>
@@ -171,7 +177,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Cloud history sync</p>
@@ -198,7 +204,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Unlimited forwarding</p>
@@ -225,7 +231,7 @@ const SubscriptionModal = () => {
                         </div>
                       </td>
                     </tr>
-                    <tr className="h-12 rounded-md hover:bg-[#4F5ADA] cursor-pointer ">
+                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
                       <td className="w-[272px]  border-r border-white px-4  py-2  text-white">
                         <div className="flex items-center gap-2">
                           <p>Inbox in extensions</p>
@@ -395,9 +401,7 @@ const SubscriptionModal = () => {
                           height={24}
                         />
 
-                        <button
-                          className="text-[12px] text-blue-500 underline"
-                        >
+                        <button className="text-[12px] text-blue-500 underline">
                           And More
                         </button>
                       </div>
@@ -439,9 +443,7 @@ const SubscriptionModal = () => {
                           height={24}
                         />
 
-                        <button
-                          className="text-[12px] text-blue-500 underline"
-                        >
+                        <button className="text-[12px] text-blue-500 underline">
                           And More
                         </button>
                       </div>
@@ -461,9 +463,7 @@ const SubscriptionModal = () => {
                 <div className="mt-3 ">
                   <p className="text-center">
                     By clicking &quot;Subscribe&quot; you agree to
-                    <button className="ml-1 underline">
-                      Terms of Service
-                    </button>
+                    <button className="ml-1 underline">Terms of Service</button>
                     .
                   </p>
                 </div>
@@ -482,17 +482,14 @@ const SubscriptionModal = () => {
                   />
                   <p>
                     Secure payments
-                    <button  className="ml-1 underline">
-                      Paddle
-                    </button>
-                    .
+                    <button className="ml-1 underline">Paddle</button>.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      </Modal>
     </div>
   );
 };
