@@ -129,7 +129,7 @@ export function NavBar() {
                   value="1 year subscription"
                 />
                 <input type="hidden" name="currency" value="USD" />
-                <input type="hidden" name="amountf" value="1" />
+                <input type="hidden" name="amountf" value="1.00" />
                 <input type="hidden" name="email" value={email} />
                 <input
                   type="hidden"
