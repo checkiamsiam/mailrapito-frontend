@@ -7,10 +7,10 @@ import CheckIcon from "@shared/icons/CheckIcon";
 import { Button } from "@ui/components/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
 
 const Pricing = () => {
-  const [open, setOpen] = useState(false);
+  const { setOpen } = useSubscriptionModalStore();
   const t = useTranslations();
   const router = useRouter();
   const data = [
@@ -140,7 +140,7 @@ const Pricing = () => {
           </div>
         </div>
       </section>
-      <SubscriptionModal open={open} setOpen={setOpen} />
+      <SubscriptionModal />
     </>
   );
 };

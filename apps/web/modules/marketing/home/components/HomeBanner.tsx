@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
+import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
 import { deleteEmail } from "../../../../services/services";
 import {
   activeThisEmailInHistoryLS,
@@ -172,6 +173,7 @@ interface EmailGroup {
 }
 
 export default function HomeBanner() {
+  const subScriptionModal = useSubscriptionModalStore();
   const t = useTranslations();
   const queryClient = useQueryClient();
   const [copy, setCopy] = useState(false);
@@ -788,7 +790,10 @@ export default function HomeBanner() {
                         </TooltipProvider>
                       </div>
 
-                      <button className="rounded-[3px] bg-white px-1.5 py-[2px] text-xs text-black">
+                      <button
+                        onClick={() => subScriptionModal.setOpen(true)}
+                        className="rounded-[3px] bg-white px-1.5 py-[2px] text-xs text-black"
+                      >
                         Upgrade
                       </button>
                     </div>

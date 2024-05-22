@@ -21,7 +21,6 @@ export const createOrder = publicProcedure
       const newOrder = await db.order.create({
         data: input,
       });
-      console.log("order created", newOrder);
       return newOrder;
     } catch (e) {
       throw new TRPCError({
