@@ -31,12 +31,17 @@ const SubscriptionModal = () => {
         onOverlayClick={() => setOpen(false)}
         classNames={{
           modal:
-            "p-0 z-[100]  m-0  my-auto overflow-hidden p-0 sm:max-w-[1200px] mx-auto rounded-3xl",
+            "p-0 z-[100]  m-0  my-auto  p-0 sm:max-w-[1200px] mx-auto rounded-3xl",
         }}
       >
-        <div>
+        <div className="relative">
           <div className="grid md:grid-cols-2 ">
-            <div className="bg-primary-dark  order-2 p-5 text-white md:order-1">
+            <div className="bg-primary-dark  order-2 rounded-s-3xl px-5 py-8 text-white md:order-1">
+              <div className="mb-3">
+                <p className="text-center text-xl uppercase text-white">
+                  Plans Comparator
+                </p>
+              </div>
               <div className="overflow-hidden rounded-2xl border border-white">
                 <table className="w-full  border-collapse rounded-md">
                   <tbody className="">
@@ -46,12 +51,12 @@ const SubscriptionModal = () => {
                       </td>
                       <td className="w-[128px]  border-b border-r border-white bg-[#4F5ADA] px-4 py-2 text-center">
                         <p className=" rounded-full bg-white px-3 py-1 font-semibold text-black">
-                          Free
+                          Premium
                         </p>
                       </td>
                       <td className="w-[128px] border-b border-white bg-[#4F5ADA] px-4 py-2 text-center">
                         <p className=" bg-primary-gradient rounded-full  px-3 py-1">
-                          Premium
+                          Privet
                         </p>
                       </td>
                     </tr>
@@ -271,7 +276,7 @@ const SubscriptionModal = () => {
                 </table>
               </div>
               <div className="mt-5">
-                <p className="text-xl">Will Be Avialable Soon</p>
+                <p className="text-xl uppercase">WE ARE WORKING ON:</p>
                 <div className="mt-4 flex gap-3">
                   <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
                     <Image
@@ -294,20 +299,18 @@ const SubscriptionModal = () => {
                 </div>
               </div>
             </div>
-            <div className="order-1 p-5 md:order-2">
+            <div className="order-1 px-5 py-8 md:order-2">
               <div className="flex items-center justify-between pb-3">
                 <div>
                   <Logo />
                 </div>
-                <div>
-                  <Image
-                    src="/images/icons/close-icon.svg"
-                    alt="icon"
-                    width={16}
-                    height={16}
-                    className="cursor-pointer"
-                    onClick={() => setOpen(false)}
-                  />
+                <div className="flex">
+                  <button className="bg-primary-gradient hover:bg-secondary-gradient w-24 rounded-s-md px-3 py-2 text-center text-white">
+                    Premium
+                  </button>
+                  <button className="border-primary-gradient hover:border-secondary-gradient text-primary-gradient gradient-border w-24 rounded-e-md  border px-3 py-2 text-center">
+                    Privet
+                  </button>
                 </div>
               </div>
               <hr />
@@ -496,6 +499,19 @@ const SubscriptionModal = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="absolute -top-4 right-10">
+            <button
+              className="bg-primary cursor-pointer rounded-full p-2"
+              onClick={() => setOpen(false)}
+            >
+              <Image
+                src="/images/icons/white-cross.svg"
+                width={16}
+                height={16}
+                alt="icon"
+              />
+            </button>
           </div>
         </div>
       </Modal>

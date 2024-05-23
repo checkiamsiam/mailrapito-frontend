@@ -154,6 +154,18 @@ export default {
         "secondary-gradient":
           "linear-gradient(-90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
       },
+      borderImage: {
+        "primary-gradient":
+          "linear-gradient(90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
+        "secondary-gradient":
+          "linear-gradient(-90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
+      },
+      textImage: {
+        "primary-gradient":
+          "linear-gradient(90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
+        "secondary-gradient":
+          "linear-gradient(-90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
+      },
     },
     variables: {
       DEFAULT: lightVariables,
