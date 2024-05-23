@@ -22,7 +22,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@ui/components/tooltip";
-import { getCookie } from "cookies-next";
 import moment from "moment";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -178,7 +177,7 @@ export default function HomeBanner() {
   const queryClient = useQueryClient();
   const [copy, setCopy] = useState(false);
   const router = useRouter();
-  const email = getCookie("email") ?? "";
+  // const email = getCookie("email") ?? "";
   const [generatedEmails, setGeneratedEmails] = useState<Email[]>([]);
   const [selectedEmail, setSelectedEmail] = useState("");
   const [isHover, setHover] = useState(false);
@@ -189,6 +188,8 @@ export default function HomeBanner() {
   const [open, setOpen] = React.useState(false);
   const [numbersOfEmailsInHistory, setNumbersOfEmailsInHistory] = useState(0);
   const [copyEmail, setCopyEmail] = useState("");
+  const [email, setEmail] = useState(getActiveEmail()?.token ?? "");
+  const [emailLoading, setEmailLoading] = useState(true);
 
   const handleDateCheckboxChange = (date) => {
     const newSelectedEmails = new Set(selectedEmails);
@@ -244,8 +245,14 @@ export default function HomeBanner() {
     setSearchText(event);
   };
 
+  // console.log("storage", email);
+
   // ----------- Data Fetching ----------
-  const { data: emailToken, refetch: refetchEmailToken } = useEmailToken({
+  const {
+    data: emailToken,
+    isFetching: emailTokenFetching,
+    refetch: refetchEmailToken,
+  } = useEmailToken({
     enabled: email ? false : true,
   });
 
@@ -394,6 +401,31 @@ export default function HomeBanner() {
   };
 
   useEffect(() => {
+    if (email) {
+      void refetchMessages();
+    }
+  }, [email]);
+
+  useEffect(() => {
+    const activeEmail = getActiveEmail();
+    if (activeEmail) {
+      setEmail(activeEmail.token);
+    }
+  }, [emailToken]);
+
+  useEffect(() => {
+    if (messageLoading || emailTokenFetching) {
+      setEmailLoading(true);
+    } else {
+      const activeEmail = getActiveEmail();
+      if (activeEmail) {
+        setEmail(activeEmail.token);
+      }
+      setEmailLoading(false);
+    }
+  }, [messageLoading, emailTokenFetching]);
+
+  useEffect(() => {
     handleLocalStorageEmail();
   }, [messageLoading]);
 
@@ -496,7 +528,7 @@ export default function HomeBanner() {
                       <div
                         className={`w-[300px] ${isHover ? "rounded-none" : "rounded-bl-sm"}  bg-[#323FD4]`}
                       >
-                        {messageLoading ? (
+                        {emailLoading ? (
                           <div className="flex h-[40px] items-center justify-center space-x-2 bg-transparent">
                             <span className="sr-only">Loading...</span>
                             <div className="h-3 w-3 animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>

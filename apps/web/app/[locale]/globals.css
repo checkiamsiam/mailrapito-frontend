@@ -77,11 +77,10 @@ body {
 
 /* Testimonial Slick  */
 .slick-active .custom-dot {
-  background: #F1FBF9;
-  border: 3px solid #173C96;
+  background: #f1fbf9;
+  border: 3px solid #173c96;
   width: 10px;
   height: 10px;
-
 }
 
 .slick-active .testimonial-item {
@@ -89,17 +88,15 @@ body {
 }
 
 .slick-active .testimonial-item blockquote {
-  background-color: #323FD4;
+  background-color: #323fd4;
   color: white;
 }
-
 
 @media only screen and (max-width: 415px) {
   .slick-list {
     height: 410px;
     overflow: hidden;
   }
-
 }
 
 /* .slick-track {
@@ -110,14 +107,48 @@ body {
   opacity: 0.5;
 }
 
+.gradient-border {
+  background: linear-gradient(90deg, #4e6aff 0%, #f55b7a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+  text-decoration: none;
+}
+/* check lined question for the detail of the below code */
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-radius: 0px calc(0.75rem /* 12px */ - 2px)
+    calc(0.75rem /* 12px */ - 2px) 0px;
+  background: inherit;
+  background-origin: border-box;
+  background-clip: border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  -webkit-mask-repeat: no-repeat;
+}
+
 /* Firefox-specific CSS */
 @-moz-document url-prefix() {
   .blur_element {
     opacity: 0.2;
   }
 }
-
-
 
 /* ------- Start Banner Section -------- */
 /* .hidden-table-data {
