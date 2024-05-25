@@ -463,13 +463,13 @@ export default function HomeBanner() {
       secure: true,
     });
 
-    function getCookie() {
+    function getEmail() {
       const a = getActiveEmail();
       return a?.token;
     }
 
     function joinSocketRoom(room) {
-      const message = { room: room };
+      const message = { room: encodeURIComponent(room) };
       socket.emit("joinRoom", message);
     }
 
@@ -478,9 +478,11 @@ export default function HomeBanner() {
       socket.emit("leaveRoom", message);
     }
 
-    const room = getCookie();
+    const room = getEmail();
 
-    joinSocketRoom(room);
+    if (room) {
+      joinSocketRoom(room);
+    }
     // removed data from parameter of below function
     socket.on("check", async function () {
       // console.log(JSON.parse(data));
