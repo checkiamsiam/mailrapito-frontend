@@ -231,13 +231,14 @@ export default function HomeBanner() {
     if (!searchText) {
       return emailsHistory;
     }
-    return emailsHistory.filter(
-      (day) =>
-        day.date.toLowerCase().includes(searchText.toLowerCase()) ||
-        day.emails.some((email) =>
-          email.email.toLowerCase().includes(searchText.toLowerCase()),
-        ),
-    );
+    const filteredEmails = emailsHistory.map((day) => {
+      const emails = day.emails.filter((email) =>
+        email.email.includes(searchText),
+      );
+      return { ...day, emails };
+    });
+    const a = filteredEmails.filter((day) => day.emails.length > 0);
+    return a;
   };
 
   const displayedEmails = filterEmails(searchText);
