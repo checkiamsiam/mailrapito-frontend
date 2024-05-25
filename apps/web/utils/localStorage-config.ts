@@ -4,6 +4,7 @@ interface Email {
   date: number;
   active: boolean;
   inHistory?: boolean;
+  expireIn: string;
 }
 
 export const getLSEmails = () => {
@@ -38,7 +39,11 @@ export const activeThisEmailInHistoryLS = (email: string) => {
   }
 };
 
-export const persistLSEmails = (email: string, token: string) => {
+export const persistLSEmails = (
+  email: string,
+  token: string,
+  expireIn: string,
+) => {
   const found = getLSEmails();
   const emails = found ? found : [];
   if (typeof window !== "undefined") {
@@ -49,6 +54,7 @@ export const persistLSEmails = (email: string, token: string) => {
         token: token,
         date: new Date().getTime(),
         active: true,
+        expireIn: expireIn,
       });
     }
     if (emails.length > 5) {

@@ -21,20 +21,16 @@ const API = appConfig.api;
 
 // ------------ Start of Email/Message Services ------------
 
-export const getEmailFromMsgAPI = async (token: string) => {
-  const { data } = await axios.get<IFetchMessages>(
-    `${API}/messages/${token}/${API_KEY}`,
-  );
-  persistLSEmails(data?.data.mailbox, token);
-  await fetchMessages();
-  return data;
-};
-
 export const fetchEmailToken = async () => {
   const { data } = await axios.post<IEmailToken>(
     `${API}/email/create/${API_KEY}`,
   );
-  await getEmailFromMsgAPI(data.data.email_token);
+
+  persistLSEmails(
+    data?.data.email,
+    data.data.email_token,
+    data.data.delete_in as string,
+  );
   return data;
 };
 
@@ -68,7 +64,11 @@ export const deleteEmail = async () => {
     `${API}/email/delete/${a?.token}/${API_KEY}`,
   );
   if (data.status === "success") {
-    persistLSEmails(data?.data.email, data?.data.email_token);
+    persistLSEmails(
+      data?.data.email,
+      data?.data.email_token,
+      data.data.delete_in as string,
+    );
     activeThisEmailInHistoryLS(data?.data.email);
   }
   return data;

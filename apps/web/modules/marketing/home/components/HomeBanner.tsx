@@ -164,6 +164,7 @@ interface Email {
   active: boolean;
   token: string;
   inHistory?: boolean;
+  expireIn: string;
 }
 
 interface EmailGroup {
@@ -230,6 +231,7 @@ export default function HomeBanner() {
     if (!searchText) {
       return emailsHistory;
     }
+    // console.log("emailsHistory", emailsHistory);
     return emailsHistory.filter(
       (day) =>
         day.date.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -294,6 +296,8 @@ export default function HomeBanner() {
     ).map((email) => {
       return allEmails.find((a) => a.email === email);
     });
+
+    console.log("allFilteredEmails", allFilteredEmails);
 
     if (allFilteredEmails.length > 0) {
       allFilteredEmails.forEach((item: Email) => {
@@ -362,7 +366,11 @@ export default function HomeBanner() {
     } else {
       emails.forEach((obj) => {
         if (obj.email === e.email) {
-          persistLSEmails(e.email as string, e.token as string);
+          persistLSEmails(
+            e.email as string,
+            e.token as string,
+            e.expireIn as string,
+          );
           activeThisEmailInHistoryLS(e.email as string);
           obj.active = true;
         } else {
@@ -669,23 +677,41 @@ export default function HomeBanner() {
                                                     "hh:mm A",
                                                   )}
                                                 </span>
-                                                <span className="pl-3">
+                                                <span
+                                                  className={`pl-3 ${
+                                                    new Date(
+                                                      new Date().getTime(),
+                                                    ).toISOString() >=
+                                                    email.expireIn
+                                                      ? "text-gray-400"
+                                                      : "text-white"
+                                                  } `}
+                                                >
                                                   {email.email}
                                                 </span>
                                               </label>
                                             </div>
-                                            {showUseEmailBtn ===
-                                              email.email && (
-                                              <div className="z-20 rounded-[5px] bg-[#F35B7B]">
-                                                <button
-                                                  className=" px-[5px] py-[2px] text-xs text-white hover:opacity-70"
-                                                  onClick={() =>
-                                                    activeHistoryEmail(email)
-                                                  }
-                                                >
-                                                  Use this email
-                                                </button>
+                                            {new Date(
+                                              new Date().getTime(),
+                                            ).toISOString() >=
+                                            email.expireIn ? (
+                                              <div className="rounded-[5px] bg-gray-700 px-2 py-1">
+                                                Cannot be chosen
                                               </div>
+                                            ) : (
+                                              showUseEmailBtn ===
+                                                email.email && (
+                                                <div className="z-20 rounded-[5px] bg-[#F35B7B]">
+                                                  <button
+                                                    className="px-[5px] py-[2px] text-xs text-white hover:opacity-70"
+                                                    onClick={() =>
+                                                      activeHistoryEmail(email)
+                                                    }
+                                                  >
+                                                    Use this email
+                                                  </button>
+                                                </div>
+                                              )
                                             )}
                                           </li>
                                         ))}
