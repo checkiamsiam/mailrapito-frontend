@@ -231,7 +231,6 @@ export default function HomeBanner() {
     if (!searchText) {
       return emailsHistory;
     }
-    // console.log("emailsHistory", emailsHistory);
     return emailsHistory.filter(
       (day) =>
         day.date.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -297,8 +296,6 @@ export default function HomeBanner() {
       return allEmails.find((a) => a.email === email);
     });
 
-    console.log("allFilteredEmails", allFilteredEmails);
-
     if (allFilteredEmails.length > 0) {
       allFilteredEmails.forEach((item: Email) => {
         const date: Date = new Date(item.date);
@@ -329,7 +326,10 @@ export default function HomeBanner() {
 
   const deleteSelectedEmails = () => {
     const emails: Email[] = getLSEmailsHistory();
+    const currentEmails = getLSEmails();
     let toDeleteEmails: Email[] = [];
+    console.log("selectedEmails", selectedEmails);
+
     for (const email of selectedEmails as any) {
       const filteredEmails = emails.filter((e) => {
         return e.email === email;
@@ -337,10 +337,25 @@ export default function HomeBanner() {
       toDeleteEmails.push(...filteredEmails);
     }
 
+    for (const email of selectedEmails as any) {
+      const filteredEmails = currentEmails.filter((e) => {
+        return e.email === email;
+      });
+      toDeleteEmails.push(...filteredEmails);
+    }
+
     const a = emails.filter((email) => !toDeleteEmails.includes(email));
+    const b = currentEmails.filter((email) => !toDeleteEmails.includes(email));
 
     if (a.length > 0) {
       localStorage.setItem("emailsHistory", JSON.stringify(a));
+      getEmailsHistory();
+      setSelectedEmails(new Set());
+    }
+
+    if (b.length > 0) {
+      localStorage.setItem("emails", JSON.stringify(b));
+      handleLocalStorageEmail();
       getEmailsHistory();
       setSelectedEmails(new Set());
     }
@@ -396,6 +411,7 @@ export default function HomeBanner() {
       token: "0",
       date: Date.now(),
       active: false,
+      expireIn: "",
     };
     if (isActive) {
       newObj.active = false;
