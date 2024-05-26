@@ -2,7 +2,7 @@ import { createApiCaller } from "api/trpc/caller";
 import { createHmac, timingSafeEqual } from "crypto";
 import { parse } from "querystring";
 
-const secret = "4S$eJ#8dLpM3aD*G4KbFhE1iR$cC9mN7wX";
+const secret = process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_IPN_SECRET!;
 
 interface CustomData {
   orderId: string;

@@ -121,7 +121,7 @@ export function NavBar() {
                 <input
                   type="hidden"
                   name="merchant"
-                  value="5429f80c5b82ba211691c5ed2183cb4b"
+                  value={process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_ID ?? ""}
                 />
                 <input
                   type="hidden"

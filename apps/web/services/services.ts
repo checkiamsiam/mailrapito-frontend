@@ -26,7 +26,7 @@ export const fetchEmailToken = async () => {
     `${API}/email/create/${API_KEY}`,
   );
 
-  persistLSEmails(
+  void persistLSEmails(
     data?.data.email,
     data.data.email_token,
     data.data.delete_in as string,
@@ -64,7 +64,7 @@ export const deleteEmail = async () => {
     `${API}/email/delete/${a?.token}/${API_KEY}`,
   );
   if (data.status === "success") {
-    persistLSEmails(
+    void persistLSEmails(
       data?.data.email,
       data?.data.email_token,
       data.data.delete_in as string,
