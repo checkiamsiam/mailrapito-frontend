@@ -454,11 +454,13 @@ export default function HomeBanner() {
     if (messageLoading || emailTokenFetching) {
       setEmailLoading(true);
     } else {
-      const activeEmail = getActiveEmail();
-      if (activeEmail) {
-        setEmail(activeEmail.token);
-      }
-      setEmailLoading(false);
+      setTimeout(() => {
+        const activeEmail = getActiveEmail();
+        if (activeEmail) {
+          setEmail(activeEmail.token);
+        }
+        setEmailLoading(false);
+      }, 100);
     }
   }, [messageLoading, emailTokenFetching]);
 
