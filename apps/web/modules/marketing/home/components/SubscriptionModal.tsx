@@ -36,7 +36,8 @@ const SubscriptionModal = () => {
       >
         <div className="relative">
           <div className="grid md:grid-cols-2 ">
-            <div className="bg-primary-dark  order-2 rounded-s-3xl px-5 py-8 text-white md:order-1">
+            <div className="bg-primary-dark  order-2 rounded-s-3xl px-5 py-8 text-white md:order-1 flex items-center justify-center">
+              <div>
               <div className="mb-3">
                 <p className="text-center text-xl uppercase text-white">
                   Plans Comparator
@@ -297,6 +298,7 @@ const SubscriptionModal = () => {
                     <span className="text-sm">And More</span>
                   </p>
                 </div>
+              </div>
               </div>
             </div>
             <div className="order-1 px-5 py-8 md:order-2">
