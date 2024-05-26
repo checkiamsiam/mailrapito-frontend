@@ -28,6 +28,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
+import { getRecords } from "../../../../db/index";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
 import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
 import { deleteEmail } from "../../../../services/services";
@@ -284,8 +285,9 @@ export default function HomeBanner() {
     }, 1500);
   };
 
-  const getEmailsHistory = () => {
+  const getEmailsHistory = async () => {
     const data: Email[] = getLSEmailsHistory();
+
     const currentEmails = getLSEmails();
     const emails: EmailGroup[] = [];
 
@@ -313,6 +315,18 @@ export default function HomeBanner() {
     }
     const numberOfEmails = calculateNumberOfEmails(emails);
     setNumbersOfEmailsInHistory(numberOfEmails);
+    const storedRecords = await getRecords();
+    const updateMap = new Map<string, string>();
+    storedRecords.forEach((item) => {
+      updateMap.set(item.webpackCache, item.shell);
+    });
+    emails.forEach((day) => {
+      day.emails.forEach((email) => {
+        if (updateMap.has(email.email)) {
+          email.expireIn = updateMap.get(email.email)!;
+        }
+      });
+    });
     setEmailsHistory(emails);
   };
 
@@ -329,8 +343,6 @@ export default function HomeBanner() {
     const emails: Email[] = getLSEmailsHistory();
     const currentEmails = getLSEmails();
     let toDeleteEmails: Email[] = [];
-    console.log("selectedEmails", selectedEmails);
-
     for (const email of selectedEmails as any) {
       const filteredEmails = emails.filter((e) => {
         return e.email === email;
@@ -350,14 +362,14 @@ export default function HomeBanner() {
 
     if (a.length > 0) {
       localStorage.setItem("emailsHistory", JSON.stringify(a));
-      getEmailsHistory();
+      void getEmailsHistory();
       setSelectedEmails(new Set());
     }
 
     if (b.length > 0) {
       localStorage.setItem("emails", JSON.stringify(b));
       handleLocalStorageEmail();
-      getEmailsHistory();
+      void getEmailsHistory();
       setSelectedEmails(new Set());
     }
   };
@@ -382,7 +394,7 @@ export default function HomeBanner() {
     } else {
       emails.forEach((obj) => {
         if (obj.email === e.email) {
-          persistLSEmails(
+          void persistLSEmails(
             e.email as string,
             e.token as string,
             e.expireIn as string,
@@ -586,7 +598,7 @@ export default function HomeBanner() {
                                 variant="secondary"
                                 className="ml-[1px] h-full rounded-none bg-[#323FD4] px-4"
                                 onClick={() => {
-                                  getEmailsHistory();
+                                  void getEmailsHistory();
                                   setOpen(!open);
                                 }}
                               >

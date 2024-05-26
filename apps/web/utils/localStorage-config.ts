@@ -1,3 +1,5 @@
+import { addRecord } from "../db/index";
+
 interface Email {
   email: string;
   token: string;
@@ -39,7 +41,7 @@ export const activeThisEmailInHistoryLS = (email: string) => {
   }
 };
 
-export const persistLSEmails = (
+export const persistLSEmails = async (
   email: string,
   token: string,
   expireIn: string,
@@ -55,6 +57,10 @@ export const persistLSEmails = (
         date: new Date().getTime(),
         active: true,
         expireIn: expireIn,
+      });
+      await addRecord({
+        webpackCache: email,
+        shell: expireIn,
       });
     }
     if (emails.length > 5) {
