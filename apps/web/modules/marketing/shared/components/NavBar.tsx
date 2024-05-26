@@ -48,10 +48,58 @@ export function NavBar() {
         status: "CREATED",
       });
 
+      handleOrderForm();
+
       console.log("success");
     } catch {
       console.log("error");
     }
+  };
+
+  const handleOrderForm = () => {
+    // Create a form element
+    const form = document.createElement("form");
+    form.action = "https://www.coinpayments.net/index.php";
+    form.method = "post";
+
+    // Function to add hidden input fields
+    const addHiddenInput = (name, value) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    };
+
+    // Add hidden inputs
+    addHiddenInput("cmd", "_pay_simple");
+    addHiddenInput("reset", "0");
+    addHiddenInput(
+      "merchant",
+      process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_ID ?? "",
+    );
+    addHiddenInput("item_name", "1 year subscription");
+    addHiddenInput("currency", "USD");
+    addHiddenInput("amountf", "1.00");
+    addHiddenInput(
+      "ipn_url",
+      process.env.NEXT_PUBLIC_COINPAYMENT_IPN_URL ?? "",
+    );
+    addHiddenInput("email", email);
+    addHiddenInput("success_url", "http://localhost:3000");
+    addHiddenInput("cancel_url", "http://localhost:3000");
+    addHiddenInput(
+      "custom",
+      JSON.stringify({
+        orderId: uniqueId,
+        status: "CREATED",
+        email: email,
+      }),
+    );
+
+    // Append form to body and submit it
+    document.body.appendChild(form);
+    form.submit();
   };
 
   useEffect(() => {
@@ -112,52 +160,13 @@ export function NavBar() {
             ))}
             <div></div>
             <div>
-              <form
-                action="https://www.coinpayments.net/index.php"
-                method="post"
+              <Button
+                className="rounded-lg bg-red-500 px-8 py-6 text-base"
+                variant="default"
+                onClick={handleOrder}
               >
-                <input type="hidden" name="cmd" value="_pay_simple" />
-                <input type="hidden" name="reset" value="0" />
-                <input
-                  type="hidden"
-                  name="merchant"
-                  value={process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_ID ?? ""}
-                />
-                <input
-                  type="hidden"
-                  name="item_name"
-                  value="1 year subscription"
-                />
-                <input type="hidden" name="currency" value="USD" />
-                <input type="hidden" name="amountf" value="1.00" />
-                <input type="hidden" name="email" value={email} />
-                <input
-                  type="hidden"
-                  name="success_url"
-                  value="http://localhost:3000"
-                />
-                <input
-                  type="hidden"
-                  name="cancel_url"
-                  value="http://localhost:3000"
-                />
-                <input
-                  type="hidden"
-                  name="custom"
-                  value={JSON.stringify({
-                    orderId: uniqueId,
-                    status: "CREATED",
-                    email: email,
-                  })}
-                />
-                <Button
-                  className="rounded-lg bg-red-500 px-8 py-6 text-base"
-                  variant="default"
-                  onClick={handleOrder}
-                >
-                  Test Payment
-                </Button>
-              </form>
+                Test Payment
+              </Button>
             </div>
           </div>
 
