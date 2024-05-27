@@ -129,7 +129,7 @@ export async function POST(req: Request) {
           status: 202,
         });
       }
-      if (payload.status >= 100) {
+      if (payload.status >= 100 || payload.status == 2) {
         const isPaymentReceived = await apiCaller.payments.getPaymentInfo({
           txid: payload.txn_id,
           full: 0,
