@@ -98,7 +98,7 @@ export async function POST(req: Request) {
       });
     }
 
-    if (payload?.merchant !== process.env.COINPAYMENT_MERCHANT_ID) {
+    if (payload?.merchant !== process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_ID) {
       return new Response("Invalid merchant.", {
         status: 400,
       });
@@ -154,7 +154,10 @@ export async function POST(req: Request) {
             secondAmount: payload.amount2,
             email: payload.custom.email,
             paidAt: new Date(),
-            plan: "",
+            plan:
+              payload.item_amount === 29.9
+                ? "1 year subscription"
+                : "1 month subscription",
           });
         } else if (isPaymentReceived.status < 0) {
           return new Response("Cancelled / Timed Out.", {
