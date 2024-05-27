@@ -533,7 +533,7 @@ export default function HomeBanner() {
 
       <section className="px-2">
         <div
-          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-lg bg-white shadow-xl"
+          className="relative z-10 mx-auto mt-[-346px] max-w-[874px] rounded-lg bg-white shadow-xl"
           data-aos="fade-up"
         >
           <div>
