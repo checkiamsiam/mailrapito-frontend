@@ -515,7 +515,7 @@ export default function HomeBanner() {
 
   return (
     <div>
-      <div className="before:bg-primary-gradient relative h-full pb-[365px] before:absolute before:h-full before:w-full">
+      <div className="before:bg-primary-gradient relative h-full pb-[284px] before:absolute before:h-full before:w-full">
         <TsParticles />
 
         <div
@@ -533,11 +533,11 @@ export default function HomeBanner() {
 
       <section className="px-2">
         <div
-          className="relative z-10 mx-auto mt-[-346px] max-w-[874px] rounded-lg bg-white shadow-xl"
+          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-lg bg-white shadow-xl"
           data-aos="fade-up"
         >
           <div>
-            <div className="absolute left-0 top-8 z-0 hidden md:block opacity-30">
+            <div className="absolute left-0 top-8 z-0 hidden md:block">
               <Image
                 src={"/images/banner/banner-top-shape.svg"}
                 className="mail-shape"
