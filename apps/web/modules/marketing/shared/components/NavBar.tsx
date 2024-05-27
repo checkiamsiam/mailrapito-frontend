@@ -46,6 +46,7 @@ export function NavBar() {
         orderId: String(uniqueId),
         email: email,
         status: "CREATED",
+        plan: "1 year subscription",
       });
 
       handleOrderForm();
@@ -80,7 +81,7 @@ export function NavBar() {
     );
     addHiddenInput("item_name", "1 year subscription");
     addHiddenInput("currency", "USD");
-    addHiddenInput("amountf", "1.00");
+    addHiddenInput("amountf", "29.90");
     addHiddenInput(
       "ipn_url",
       process.env.NEXT_PUBLIC_COINPAYMENT_IPN_URL ?? "",
@@ -94,6 +95,7 @@ export function NavBar() {
         orderId: uniqueId,
         status: "CREATED",
         email: email,
+        plan: "1 year subscription",
       }),
     );
 

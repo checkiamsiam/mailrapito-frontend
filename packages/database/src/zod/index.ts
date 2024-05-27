@@ -32,9 +32,9 @@ export const TeamInvitationScalarFieldEnumSchema = z.enum(['id','teamId','email'
 
 export const SubscriptionScalarFieldEnumSchema = z.enum(['id','teamId','customerId','status','planId','variantId','nextPaymentDate']);
 
-export const OrderScalarFieldEnumSchema = z.enum(['id','orderId','email','status','createdAt']);
+export const OrderScalarFieldEnumSchema = z.enum(['id','orderId','email','status','createdAt','plan']);
 
-export const UserSubscriptionScalarFieldEnumSchema = z.enum(['id','orderId','txnId','itemAmount','receivedAmount','receivedConfirms','email','status','firstCurrency','secondCurrency','firstAmount','secondAmount','paidAt']);
+export const UserSubscriptionScalarFieldEnumSchema = z.enum(['id','orderId','txnId','itemAmount','receivedAmount','receivedConfirms','email','status','firstCurrency','secondCurrency','firstAmount','secondAmount','paidAt','plan']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -237,6 +237,7 @@ export const OrderSchema = z.object({
   orderId: z.string(),
   email: z.string(),
   createdAt: z.coerce.date(),
+  plan: z.string(),
 })
 
 export type Order = z.infer<typeof OrderSchema>
@@ -259,6 +260,7 @@ export const UserSubscriptionSchema = z.object({
   firstAmount: z.number().int().nullable(),
   secondAmount: z.number().nullable(),
   paidAt: z.coerce.date(),
+  plan: z.string(),
 })
 
 export type UserSubscription = z.infer<typeof UserSubscriptionSchema>

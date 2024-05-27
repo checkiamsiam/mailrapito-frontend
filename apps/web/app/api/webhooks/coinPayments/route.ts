@@ -154,6 +154,7 @@ export async function POST(req: Request) {
             secondAmount: payload.amount2,
             email: payload.custom.email,
             paidAt: new Date(),
+            plan: "",
           });
         } else if (isPaymentReceived.status < 0) {
           return new Response("Cancelled / Timed Out.", {

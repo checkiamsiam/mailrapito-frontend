@@ -13,6 +13,7 @@ export const createOrder = publicProcedure
         .transform((v) => v.toLowerCase()),
       email: z.string().email(),
       status: z.enum(["CREATED", "PENDING", "PAID"]),
+      plan: z.string(),
     }),
   )
   .output(OrderSchema)

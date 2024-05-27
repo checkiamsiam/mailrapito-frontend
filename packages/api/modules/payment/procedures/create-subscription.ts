@@ -13,6 +13,7 @@ export const createSubscription = publicProcedure
       email?: string;
       status?: OrderStatusType;
       createdAt?: Date;
+      plan: string;
     } | null = null;
 
     if (subscription?.orderId) {
