@@ -515,25 +515,25 @@ export default function HomeBanner() {
 
   return (
     <div>
-      <div className="before:bg-primary-gradient relative h-full pb-[80vh] before:absolute before:h-full before:w-full">
+      <div className="before:bg-primary-gradient relative h-full pb-[365px] before:absolute before:h-full before:w-full">
         <TsParticles />
 
         <div
           className="container relative py-[42px] text-center text-white md:py-[82px]"
           data-aos="fade-up"
         >
-          {/* <h2 className="text-xl font-bold capitalize md:text-5xl">
+          <h2 className="text-xl font-bold capitalize md:text-5xl">
             {t("banner.title")}
           </h2>
           <p className="text-md mx-auto mt-6 max-w-2xl font-medium md:text-xl">
             {t("banner.subtitle")}
-          </p> */}
+          </p>
         </div>
       </div>
 
       <section className="px-2">
         <div
-          className="relative z-10 mx-auto mt-[-776px] max-w-[874px] rounded-lg bg-white shadow-xl"
+          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-lg bg-white shadow-xl"
           data-aos="fade-up"
         >
           <div>
