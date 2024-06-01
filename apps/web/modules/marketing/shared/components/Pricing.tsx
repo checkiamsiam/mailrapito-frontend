@@ -1,6 +1,6 @@
 "use client";
 
-import SubscriptionModal from "@marketing/home/components/SubscriptionModal";
+import SubscriptionModal from "@marketing/home/modals/SubscriptionModal";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import SectionHeading from "@shared/components/Section/SectionHeading";
 import CheckIcon from "@shared/icons/CheckIcon";
