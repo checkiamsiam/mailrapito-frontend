@@ -157,8 +157,12 @@ body {
   position: absolute;
   z-index: -1;
   inset: 0;
-  border: 2px solid transparent;
-  border-radius: 1.5rem;
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-left: 0px solid transparent;
+  border-radius: 0px calc(0.75rem /* 12px */ - 2px)
+    calc(0.75rem /* 12px */ - 2px) 0px;
   background: inherit;
   background-origin: border-box;
   background-clip: border-box;

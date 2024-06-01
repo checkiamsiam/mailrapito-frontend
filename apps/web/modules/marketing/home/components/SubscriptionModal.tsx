@@ -36,269 +36,269 @@ const SubscriptionModal = () => {
       >
         <div className="relative">
           <div className="grid md:grid-cols-2 ">
-            <div className="bg-primary-dark  order-2 rounded-s-3xl px-5 py-8 text-white md:order-1 flex items-center justify-center">
+            <div className="bg-primary-dark  order-2 flex items-center justify-center rounded-s-3xl px-5 py-8 text-white md:order-1">
               <div>
-              <div className="mb-3">
-                <p className="text-center text-xl uppercase text-white">
-                  Plans Comparator
-                </p>
-              </div>
-              <div className="overflow-hidden rounded-2xl border border-white">
-                <table className="w-full  border-collapse rounded-md">
-                  <tbody className="">
-                    <tr className="h-12 rounded-md  ">
-                      <td className="w-[272px]  border-b border-r border-white bg-[#4F5ADA] px-4  py-2 text-xl text-white">
-                        Name
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white bg-[#4F5ADA] px-4 py-2 text-center">
-                        <p className=" rounded-full bg-white px-3 py-1 font-semibold text-black">
-                          Premium
-                        </p>
-                      </td>
-                      <td className="w-[128px] border-b border-white bg-[#4F5ADA] px-4 py-2 text-center">
-                        <p className=" bg-primary-gradient rounded-full  px-3 py-1">
-                          Privet
-                        </p>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA]  ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p> Custom domains</p>
-                          <Image
-                            src="/images/icons/question-circle.svg"
-                            alt="icon"
-                            width={16}
-                            height={16}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/minus-white.svg"
-                            alt="icon"
-                            width={20}
-                            height={20}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        10
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p> No ads</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/minus-white.svg"
-                            alt="icon"
-                            width={20}
-                            height={20}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/checked.svg"
-                            alt="icon"
-                            width={24}
-                            height={24}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p> Emails at the same time</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          2
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          10
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p> Messages storage time (days)</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          1
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          30
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white   px-4  py-2 text-white">
-                        <div className="flex items-center gap-2">
-                          <p> History size</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          50
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white   px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          500
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p>Premium domains</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/minus-white.svg"
-                            alt="icon"
-                            width={20}
-                            height={20}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/checked.svg"
-                            alt="icon"
-                            width={24}
-                            height={24}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p>Cloud history sync</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/minus-white.svg"
-                            alt="icon"
-                            width={20}
-                            height={20}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/checked.svg"
-                            alt="icon"
-                            width={24}
-                            height={24}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p>Unlimited forwarding</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/minus-white.svg"
-                            alt="icon"
-                            width={20}
-                            height={20}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/checked.svg"
-                            alt="icon"
-                            width={24}
-                            height={24}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
-                      <td className="w-[272px]  border-r border-white px-4  py-2  text-white">
-                        <div className="flex items-center gap-2">
-                          <p>Inbox in extensions</p>
-                        </div>
-                      </td>
-                      <td className="w-[128px]   border-r border-white px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/minus-white.svg"
-                            alt="icon"
-                            width={20}
-                            height={20}
-                          />
-                        </div>
-                      </td>
-                      <td className="w-[128px]   px-4 py-2 text-center">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src="/images/icons/checked.svg"
-                            alt="icon"
-                            width={24}
-                            height={24}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="mt-5">
-                <p className="text-xl uppercase">WE ARE WORKING ON:</p>
-                <div className="mt-4 flex gap-3">
-                  <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
-                    <Image
-                      src="/images/icons/clock.svg"
-                      alt="icon"
-                      width={16}
-                      height={16}
-                    />
-                    <span className="text-sm">API</span>
-                  </p>
-                  <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
-                    <Image
-                      src="/images/icons/clock.svg"
-                      alt="icon"
-                      width={16}
-                      height={16}
-                    />
-                    <span className="text-sm">And More</span>
+                <div className="mb-3">
+                  <p className="text-center text-xl uppercase text-white">
+                    Plans Comparator
                   </p>
                 </div>
-              </div>
+                <div className="overflow-hidden rounded-2xl border border-white">
+                  <table className="w-full  border-collapse rounded-md">
+                    <tbody className="">
+                      <tr className="h-12 rounded-md  ">
+                        <td className="w-[272px]  border-b border-r border-white bg-[#4F5ADA] px-4  py-2 text-xl text-white">
+                          Name
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white bg-[#4F5ADA] px-4 py-2 text-center">
+                          <p className=" rounded-full bg-white px-3 py-1 font-semibold text-black">
+                            Premium
+                          </p>
+                        </td>
+                        <td className="w-[128px] border-b border-white bg-[#4F5ADA] px-4 py-2 text-center">
+                          <p className=" bg-primary-gradient rounded-full  px-3 py-1">
+                            Privet
+                          </p>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA]  ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p> Custom domains</p>
+                            <Image
+                              src="/images/icons/question-circle.svg"
+                              alt="icon"
+                              width={16}
+                              height={16}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/minus-white.svg"
+                              alt="icon"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          10
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p> No ads</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/minus-white.svg"
+                              alt="icon"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/checked.svg"
+                              alt="icon"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p> Emails at the same time</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            2
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            10
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p> Messages storage time (days)</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            1
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            30
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white   px-4  py-2 text-white">
+                          <div className="flex items-center gap-2">
+                            <p> History size</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            50
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white   px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            500
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p>Premium domains</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/minus-white.svg"
+                              alt="icon"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/checked.svg"
+                              alt="icon"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p>Cloud history sync</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/minus-white.svg"
+                              alt="icon"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/checked.svg"
+                              alt="icon"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p>Unlimited forwarding</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/minus-white.svg"
+                              alt="icon"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/checked.svg"
+                              alt="icon"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="h-12 cursor-pointer rounded-md hover:bg-[#4F5ADA] ">
+                        <td className="w-[272px]  border-r border-white px-4  py-2  text-white">
+                          <div className="flex items-center gap-2">
+                            <p>Inbox in extensions</p>
+                          </div>
+                        </td>
+                        <td className="w-[128px]   border-r border-white px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/minus-white.svg"
+                              alt="icon"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                        </td>
+                        <td className="w-[128px]   px-4 py-2 text-center">
+                          <div className="flex items-center justify-center">
+                            <Image
+                              src="/images/icons/checked.svg"
+                              alt="icon"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-5">
+                  <p className="text-xl uppercase">WE ARE WORKING ON:</p>
+                  <div className="mt-4 flex gap-3">
+                    <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
+                      <Image
+                        src="/images/icons/clock.svg"
+                        alt="icon"
+                        width={16}
+                        height={16}
+                      />
+                      <span className="text-sm">API</span>
+                    </p>
+                    <p className=" flex items-center justify-center gap-2 rounded-full bg-white px-4 py-1 font-semibold text-black">
+                      <Image
+                        src="/images/icons/clock.svg"
+                        alt="icon"
+                        width={16}
+                        height={16}
+                      />
+                      <span className="text-sm">And More</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="order-1 px-5 py-8 md:order-2">
@@ -310,7 +310,7 @@ const SubscriptionModal = () => {
                   <button className="bg-primary-gradient hover:bg-secondary-gradient w-24 rounded-s-md px-3 py-2 text-center text-white">
                     Premium
                   </button>
-                  <button className="border-primary-gradient hover:border-secondary-gradient text-primary-gradient gradient-border w-24 rounded-e-md  border px-3 py-2 text-center">
+                  <button className="gradient-border-with-text hover:border-secondary-gradient text-primary-gradient gradient-border w-24 rounded-e-md  border px-3 py-2 text-center">
                     Privet
                   </button>
                 </div>
