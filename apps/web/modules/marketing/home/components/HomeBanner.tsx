@@ -40,7 +40,7 @@ import {
   persistLSEmails,
 } from "../../../../utils/localStorage-config";
 import BannerTable2 from "./BannerTable2";
-import CreateEmailModal from "./CreateEmailModal";
+import CreateEmailModal from "../modals/CreateEmailModal";
 
 interface Email {
   email: string;

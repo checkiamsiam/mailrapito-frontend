@@ -10,7 +10,7 @@ const Modal = dynamic(() => import("react-responsive-modal"), {
 });
 
 const ProfileModal = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const remainJSX = (
     <p className="text-[#56565B] max-md:text-[14px]">
       Remain 20 days before expire.{" "}
