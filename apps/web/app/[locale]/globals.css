@@ -170,6 +170,39 @@ body {
   -webkit-mask-repeat: no-repeat;
 }
 
+/* gradient border light */
+.gradient-border-light {
+  position: relative;
+}
+/* check lined question for the detail of the below code */
+.gradient-border-light::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  background: linear-gradient(107.79deg, #dedffa 1.84%, #ffceda 100%);
+}
+
+.gradient-border-primary {
+  position: relative;
+}
+
+.gradient-border-primary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  background: linear-gradient(
+    142.22deg,
+    rgba(50, 63, 212, 0.9) 6.03%,
+    rgba(245, 91, 122, 0.9) 100.27%
+  );
+}
+
 /* Firefox-specific CSS */
 @-moz-document url-prefix() {
   .blur_element {
