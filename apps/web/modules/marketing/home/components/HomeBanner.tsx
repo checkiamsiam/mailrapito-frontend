@@ -1,28 +1,8 @@
 /* eslint-disable prefer-const */
 "use client";
 
-import SecondaryButton from "@shared/components/Button/SecondaryButton";
-import DeleteIcon from "@shared/icons/DeleteIcon";
-import LoadingIcon from "@shared/icons/LoadingIcon";
-import RefreshIcon from "@shared/icons/RefreshIcon";
 import SMSIcon from "@shared/icons/SMSIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "@ui/components/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@ui/components/dialog";
-import { Icon } from "@ui/components/icon";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@ui/components/tooltip";
-import moment from "moment";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -39,8 +19,8 @@ import {
   getLSEmailsHistory,
   persistLSEmails,
 } from "../../../../utils/localStorage-config";
+import BannerCardTop from "./BannerCardTop";
 import BannerTable2 from "./BannerTable2";
-import CreateEmailModal from "../modals/CreateEmailModal";
 
 interface Email {
   email: string;
@@ -465,7 +445,7 @@ export default function HomeBanner() {
           data-aos="fade-up"
         >
           <div>
-            <div className="absolute left-0 top-8 z-0 hidden md:block">
+            {/* <div className="absolute left-0 top-8 z-0 hidden md:block">
               <Image
                 src={"/images/banner/banner-top-shape.svg"}
                 className="mail-shape"
@@ -474,10 +454,10 @@ export default function HomeBanner() {
                 height={271}
                 priority
               />
-            </div>
+            </div> */}
             {/* Email Top */}
-            <div className="relative flex flex-col items-center pb-6 pt-10">
-              {/* new email container */}
+            <BannerCardTop />
+            {/* <div className="relative flex flex-col items-center pb-6 pt-10">
               <div className="relative mb-2 flex flex-col">
                 <div className="flex">
                   <div className="w-full">
@@ -842,10 +822,7 @@ export default function HomeBanner() {
                 </SecondaryButton>
                 <CreateEmailModal refetchMessages={refetchMessages} />
 
-                {/* <SecondaryButton className="px-2 md:px-6">
-                  <PenIcon size={16} />
-                  {"Create"}
-                </SecondaryButton> */}
+                
               </div>
               <div className="mt-6 flex items-center justify-center gap-3">
                 <div className="relative">
@@ -866,7 +843,7 @@ export default function HomeBanner() {
                   {"new messages"}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* Message List Table */}
 
