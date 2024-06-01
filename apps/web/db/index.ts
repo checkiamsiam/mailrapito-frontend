@@ -13,7 +13,7 @@ const dbPromise = openDB("entity-babel", 1, {
 const SECRET_KEY = process.env.NEXT_PUBLIC_EMAIL_EXPIRY_DE_ENCRYPT_KEY!;
 
 const encrypt = (data: string): string => {
-  return CryptoJS.AES.encrypt(data, SECRET_KEY).toString() as string;
+  return CryptoJS?.AES?.encrypt(data, SECRET_KEY).toString() as string;
 };
 
 const decrypt = (data: string): string => {

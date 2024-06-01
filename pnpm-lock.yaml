@@ -210,6 +210,9 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
+      react-circular-progressbar:
+        specifier: ^2.0.0
+        version: 2.0.0(react@18.2.0)
       react-cropper:
         specifier: ^2.3.3
         version: 2.3.3(react@18.2.0)
@@ -12102,6 +12105,14 @@ packages:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
+
+  /react-circular-progressbar@2.0.0(react@18.2.0):
+    resolution: {integrity: sha512-UO0GahFVWJu3uXAZHaTmQr2z6eQ0tuZSSNtVS4rEdeElCvY0jcS/6rk/xRQ2KbQidNzCd+ZMXuZI4wlHfw2EjQ==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-cropper@2.3.3(react@18.2.0):

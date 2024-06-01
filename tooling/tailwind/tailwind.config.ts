@@ -151,6 +151,8 @@ export default {
       backgroundImage: {
         "primary-gradient":
           "linear-gradient(90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
+        "primary-light-gradient":
+          "linear-gradient(188.57deg, rgba(240, 241, 255, 0.6) -5.24%, rgba(255, 225, 231, 0.6) 91.83%)",
         "secondary-gradient":
           "linear-gradient(-90deg, var(--colors-primary-dark) 0%, var(--colors-secondary) 100%)",
       },
