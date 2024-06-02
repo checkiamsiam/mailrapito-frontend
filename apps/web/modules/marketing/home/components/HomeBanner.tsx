@@ -450,8 +450,11 @@ export default function HomeBanner() {
 
       <section className="px-2">
         <div
-          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-[34px] bg-white shadow-xl"
+          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-[34px] bg-white"
           data-aos="fade-up"
+          style={{
+            boxShadow: "0px 35px 70px -20px #613D4B1A",
+          }}
         >
           <div>
             {/* <div className="absolute left-0 top-8 z-0 hidden md:block">
