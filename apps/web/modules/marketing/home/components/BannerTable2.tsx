@@ -20,7 +20,7 @@ const BannerTable2 = ({ messages, refetchMessages }: IProps) => {
     <>
       <div className="table-responsive w-full">
         <div className="grid w-full grid-cols-12">
-          <div className="bg-primary-dark col-span-12 text-white">
+          {/* <div className="bg-primary-dark col-span-12 text-white">
             <div className="grid grid-cols-12 font-semibold">
               <p className="col-span-4 py-4 pl-3 text-left text-base md:py-6 md:text-2xl">
                 From
@@ -32,11 +32,11 @@ const BannerTable2 = ({ messages, refetchMessages }: IProps) => {
                 Action
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* First Table Data which contains search & refresh icon */}
-          <div className="hover:bg-primary/10 col-span-12 flex items-center justify-between border-b duration-200">
-            <div className="flex items-center py-2">
+          <div className="hover:bg-primary/10 col-span-12 flex items-center justify-between border-b bg-[#F8F9FA] duration-200">
+            <div className="flex items-center py-1">
               <div
                 className="grid place-items-center rounded-full px-2"
                 onClick={() => setSelected(!selected)}
@@ -44,7 +44,7 @@ const BannerTable2 = ({ messages, refetchMessages }: IProps) => {
                 <Checkbox style={{ boxShadow: "0px 1px 2px 0px #1018280D" }} />
               </div>
 
-              <Button
+              {/* <Button
                 size="icon"
                 variant="ghost"
                 className="rounded-full"
@@ -56,7 +56,7 @@ const BannerTable2 = ({ messages, refetchMessages }: IProps) => {
                   width={14}
                   height={14}
                 />
-              </Button>
+              </Button> */}
 
               <Button size="icon" variant="ghost" className="rounded-full">
                 <Image

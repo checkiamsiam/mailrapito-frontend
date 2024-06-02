@@ -4,11 +4,11 @@
 import SMSIcon from "@shared/icons/SMSIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { getRecords } from "../../../../db/index";
+import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
 import { deleteEmail } from "../../../../services/services";
 import {
@@ -20,7 +20,6 @@ import {
 } from "../../../../utils/localStorage-config";
 import BannerCardTop from "./BannerCardTop";
 import BannerTable2 from "./BannerTable2";
-import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
 
 interface Email {
   email: string;
@@ -411,7 +410,7 @@ export default function HomeBanner() {
         {/* Bg Element:: Left SMS */}
         <div className="absolute left-5 top-[220px] hidden md:block">
           <img
-            src="/images/banner/sms_1.png"
+            src="/images/banner/sms_1.svg"
             width={183}
             height={157}
             alt="sms"
@@ -421,9 +420,19 @@ export default function HomeBanner() {
         {/* Bg Element:: Bottom Left Line */}
         <div className="absolute bottom-8 left-0 hidden md:block">
           <img
-            src="/images/banner/banner_line.png"
+            src="/images/banner/banner_line_bottom.svg"
             width={449}
             height={270}
+            alt="line"
+          />
+        </div>
+
+        {/* Bg Element:: Top Right Line */}
+        <div className="absolute right-0 top-0 hidden md:block">
+          <img
+            src="/images/banner/banner_line_top.svg"
+            width={314}
+            height={189}
             alt="line"
           />
         </div>
@@ -431,7 +440,7 @@ export default function HomeBanner() {
         {/* Bg Element:: Bottom Right SMS */}
         <div className="absolute bottom-[-80px] right-32 hidden md:block">
           <img
-            src="/images/banner/sms_2.png"
+            src="/images/banner/sms_2.svg"
             width={181}
             height={165}
             alt="sms"
