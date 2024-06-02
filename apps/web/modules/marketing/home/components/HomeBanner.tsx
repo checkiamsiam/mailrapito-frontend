@@ -1,28 +1,8 @@
 /* eslint-disable prefer-const */
 "use client";
 
-import SecondaryButton from "@shared/components/Button/SecondaryButton";
-import TsParticles from "@shared/components/TsParticle/TsParticle";
-import DeleteIcon from "@shared/icons/DeleteIcon";
-import LoadingIcon from "@shared/icons/LoadingIcon";
-import RefreshIcon from "@shared/icons/RefreshIcon";
+import SMSIcon from "@shared/icons/SMSIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "@ui/components/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@ui/components/dialog";
-import { Icon } from "@ui/components/icon";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@ui/components/tooltip";
-import moment from "moment";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -39,125 +19,8 @@ import {
   getLSEmailsHistory,
   persistLSEmails,
 } from "../../../../utils/localStorage-config";
+import BannerCardTop from "./BannerCardTop";
 import BannerTable2 from "./BannerTable2";
-import CreateEmailModal from "../modals/CreateEmailModal";
-
-// -------------- Fake Data ------------
-// const fakeMessages: IMessage[] = [
-//   {
-//     _id: "1asdfasd",
-//     is_seen: true,
-//     is_favorite: false,
-//     from: "John Doe",
-//     from_email: "john@example.com",
-//     subject:
-//       "Meeting Reminder dasff adsf asdf asdf asdf asdf asdf asdfasd fasdf asdf df asdf df adf dsf d adf asdf asdf sadf asdfsad fasdf ",
-//     content:
-//       "Don't forget about the meeting tomorrow at 10 AM. asdf asdf asdf sadf ",
-//     receivedAt: new Date(),
-//     attachments: [],
-//   },
-//   {
-//     _id: "2asdfasd",
-//     is_seen: false,
-//     is_favorite: true,
-//     from: "Alice Smith",
-//     from_email: "alice@example.com",
-//     subject: "Project Update",
-//     content: "Attached is the latest progress report.",
-//     receivedAt: new Date(),
-//     attachments: [{ filename: "progress_report.pdf", size: "1.5MB" }],
-//   },
-//   // Add more messages as needed
-//   {
-//     _id: "3klklkllkk",
-//     is_seen: true,
-//     is_favorite: true,
-//     from: "Bob Johnson",
-//     from_email: "bob@example.com",
-//     subject: "Important Announcement",
-//     content: "Please review the attached document.",
-//     receivedAt: new Date(),
-//     attachments: [{ filename: "announcement.docx", size: "800KB" }],
-//   },
-//   {
-//     _id: "4aghgsdf",
-//     is_seen: false,
-//     is_favorite: false,
-//     from: "Sarah Lee",
-//     from_email: "sarah@example.com",
-//     subject: "Weekly Newsletter",
-//     content: "Check out the latest news and updates.",
-//     receivedAt: new Date(),
-//     attachments: [],
-//   },
-//   {
-//     _id: "5hgdgsdd",
-//     is_seen: true,
-//     is_favorite: false,
-//     from: "Michael Brown",
-//     from_email: "michael@example.com",
-//     subject: "Upcoming Event",
-//     content: "Join us for the event this weekend.",
-//     receivedAt: new Date(),
-//     attachments: [{ filename: "event_details.pdf", size: "2MB" }],
-//   },
-//   {
-//     _id: "6asdeerer",
-//     is_seen: true,
-//     is_favorite: true,
-//     from: "Emily Wang",
-//     from_email: "emily@example.com",
-//     subject: "Vacation Request",
-//     content: "Please approve my vacation request for next month.",
-//     receivedAt: new Date(),
-//     attachments: [],
-//   },
-//   {
-//     _id: "7eterere",
-//     is_seen: false,
-//     is_favorite: false,
-//     from: "David Kim",
-//     from_email: "david@example.com",
-//     subject: "Meeting Agenda",
-//     content: "Here's the agenda for tomorrow's meeting.",
-//     receivedAt: new Date(),
-//     attachments: [],
-//   },
-//   {
-//     _id: "8nfghdger",
-//     is_seen: true,
-//     is_favorite: false,
-//     from: "Jennifer Lopez",
-//     from_email: "jennifer@example.com",
-//     subject: "Task Assignment",
-//     content: "Assigning tasks for the upcoming project.",
-//     receivedAt: new Date(),
-//     attachments: [{ filename: "task_list.xlsx", size: "500KB" }],
-//   },
-//   {
-//     _id: "9adaeregsaer",
-//     is_seen: false,
-//     is_favorite: true,
-//     from: "Kevin Garcia",
-//     from_email: "kevin@example.com",
-//     subject: "Feedback Request",
-//     content: "Please provide feedback on the latest proposal.",
-//     receivedAt: new Date(),
-//     attachments: [],
-//   },
-//   {
-//     _id: "10aeterasdfadsfwera",
-//     is_seen: true,
-//     is_favorite: true,
-//     from: "Emma Thompson",
-//     from_email: "emma@example.com",
-//     subject: "Holiday Greetings",
-//     content: "Wishing you a happy holiday season!",
-//     receivedAt: new Date(),
-//     attachments: [],
-//   },
-// ];
 
 interface Email {
   email: string;
@@ -515,29 +378,74 @@ export default function HomeBanner() {
 
   return (
     <div>
-      <div className="before:bg-primary-gradient relative h-full pb-[284px] before:absolute before:h-full before:w-full">
-        <TsParticles />
+      <div className="bg-primary-light-gradient gradient-border-light relative mx-8 h-full rounded-[40px] pb-[284px] before:h-[calc(100%-2px)] before:w-[calc(100%-2px)] before:rounded-[40px]">
+        {/* <TsParticles /> */}
 
         <div
-          className="container relative py-[42px] text-center text-white md:py-[82px]"
+          className="container relative flex flex-col items-center gap-4 py-[42px] text-center text-white md:py-[82px]"
           data-aos="fade-up"
         >
-          <h2 className="text-xl font-bold capitalize md:text-5xl">
+          {/* Button */}
+          <div className="gradient-border-primary rounded-full bg-white/70 before:h-[calc(100%+4px)] before:w-[calc(100%+4px)] before:rounded-full">
+            <div
+              className="flex items-center gap-2 rounded-full px-4 py-2"
+              style={{
+                background:
+                  "linear-gradient(142deg, rgba(50, 63, 212, 0.1) 6.03%, rgba(245, 91, 122, 0.1) 100.27%)",
+              }}
+            >
+              <SMSIcon />
+              <span className="text-primary">Temporary Email Services</span>
+            </div>
+          </div>
+
+          {/* title */}
+          <h2 className="mt-6 text-xl font-bold capitalize text-black md:text-5xl">
             {t("banner.title")}
           </h2>
-          <p className="text-md mx-auto mt-6 max-w-2xl font-medium md:text-xl">
+          {/* description */}
+          <p className="mx-auto max-w-2xl font-medium text-[#7C7D81]">
             {t("banner.subtitle")}
           </p>
+        </div>
+        {/* Bg Element:: Left SMS */}
+        <div className="absolute left-5 top-[220px] hidden md:block">
+          <img
+            src="/images/banner/sms_1.png"
+            width={183}
+            height={157}
+            alt="sms"
+          />
+        </div>
+
+        {/* Bg Element:: Bottom Left Line */}
+        <div className="absolute bottom-8 left-0 hidden md:block">
+          <img
+            src="/images/banner/banner_line.png"
+            width={449}
+            height={270}
+            alt="line"
+          />
+        </div>
+
+        {/* Bg Element:: Bottom Right SMS */}
+        <div className="absolute bottom-[-80px] right-32 hidden md:block">
+          <img
+            src="/images/banner/sms_2.png"
+            width={181}
+            height={165}
+            alt="sms"
+          />
         </div>
       </div>
 
       <section className="px-2">
         <div
-          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-lg bg-white shadow-xl"
+          className="relative z-10 mx-auto mt-[-322px] max-w-[874px] rounded-[34px] bg-white shadow-xl"
           data-aos="fade-up"
         >
           <div>
-            <div className="absolute left-0 top-8 z-0 hidden md:block">
+            {/* <div className="absolute left-0 top-8 z-0 hidden md:block">
               <Image
                 src={"/images/banner/banner-top-shape.svg"}
                 className="mail-shape"
@@ -546,10 +454,10 @@ export default function HomeBanner() {
                 height={271}
                 priority
               />
-            </div>
+            </div> */}
             {/* Email Top */}
-            <div className="relative flex flex-col items-center pb-6 pt-10">
-              {/* new email container */}
+            <BannerCardTop />
+            {/* <div className="relative flex flex-col items-center pb-6 pt-10">
               <div className="relative mb-2 flex flex-col">
                 <div className="flex">
                   <div className="w-full">
@@ -914,10 +822,7 @@ export default function HomeBanner() {
                 </SecondaryButton>
                 <CreateEmailModal refetchMessages={refetchMessages} />
 
-                {/* <SecondaryButton className="px-2 md:px-6">
-                  <PenIcon size={16} />
-                  {"Create"}
-                </SecondaryButton> */}
+                
               </div>
               <div className="mt-6 flex items-center justify-center gap-3">
                 <div className="relative">
@@ -938,7 +843,7 @@ export default function HomeBanner() {
                   {"new messages"}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* Message List Table */}
 
