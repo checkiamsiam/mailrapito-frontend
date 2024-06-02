@@ -1,16 +1,23 @@
 "use client";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
+import CloseIcon from "@shared/icons/CloseIcon";
+import EditIcon from "@shared/icons/EditIcon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
   ssr: false,
 });
 
-const ProfileModal = () => {
-  const [open, setOpen] = useState(true);
+const ProfileModal = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const remainJSX = (
     <p className="text-[#56565B] max-md:text-[14px]">
       Remain 20 days before expire.{" "}
@@ -31,12 +38,7 @@ const ProfileModal = () => {
         closeIcon={
           <div>
             <div className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#DEE2E6]">
-              <Image
-                src="/images/icons/close-icon.svg"
-                alt="close"
-                width={10.61}
-                height={10.61}
-              />
+              <CloseIcon />
             </div>
           </div>
         }
@@ -63,17 +65,20 @@ const ProfileModal = () => {
                   John Smith
                 </p>
                 <button>
-                  <Image
-                    src="/images/icons/edit.svg"
-                    alt="close"
-                    width={18}
-                    height={20}
-                  />
+                  <EditIcon />
                 </button>
               </div>
               <p className="text-[12px] text-[#7C7D81] sm:text-[20px]">
                 johnsmith22@gmail.com
               </p>
+              <div className="flex gap-3 ">
+                <p className="text-[12px] font-semibold sm:text-[20px] mt-1">
+                ***********
+                </p>
+                <button>
+                  <EditIcon />
+                </button>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-12 gap-6">
@@ -99,7 +104,7 @@ const ProfileModal = () => {
                           27 June, 2024
                         </p>
                       </div>
-                      <div className="flex justify-center items-center">
+                      <div className="flex items-center justify-center">
                         {/* progress will go there */}
                         <CircularProgressbarWithChildren
                           value={66}
@@ -115,7 +120,6 @@ const ProfileModal = () => {
                             Day Left
                           </p>
                         </CircularProgressbarWithChildren>
-                        
                       </div>
                     </div>
                     <div className="max-md:hidden">{remainJSX}</div>

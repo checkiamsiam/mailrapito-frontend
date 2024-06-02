@@ -10,7 +10,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { getRecords } from "../../../../db/index";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
-import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
 import { deleteEmail } from "../../../../services/services";
 import {
   activeThisEmailInHistoryLS,
@@ -21,6 +20,7 @@ import {
 } from "../../../../utils/localStorage-config";
 import BannerCardTop from "./BannerCardTop";
 import BannerTable2 from "./BannerTable2";
+import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
 
 interface Email {
   email: string;

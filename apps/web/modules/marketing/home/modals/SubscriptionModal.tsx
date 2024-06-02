@@ -7,8 +7,13 @@ import { cn } from "@ui/lib";
 import Image from "next/image";
 import { useState } from "react";
 // import { Modal } from "react-responsive-modal";
+import CloseIcon from "@shared/icons/CloseIcon";
+import LockIcon from "@shared/icons/LockIcon";
+import MarkCircleIcon from "@shared/icons/MarkCircleIcon";
+import MinusIcon from "@shared/icons/MinusIcon";
+import QuestionCircleIcon from "@shared/icons/QuestionCircleIcon";
 import dynamic from "next/dynamic";
-import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
+import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
   ssr: false,
@@ -65,22 +70,12 @@ const SubscriptionModal = () => {
                         <td className="w-[272px]  border-b border-r border-white px-4  py-2  text-white">
                           <div className="flex items-center gap-2">
                             <p> Custom domains</p>
-                            <Image
-                              src="/images/icons/question-circle.svg"
-                              alt="icon"
-                              width={16}
-                              height={16}
-                            />
+                            <QuestionCircleIcon />
                           </div>
                         </td>
                         <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/minus-white.svg"
-                              alt="icon"
-                              width={20}
-                              height={20}
-                            />
+                            <MinusIcon width={20} height={20} />
                           </div>
                         </td>
                         <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
@@ -95,21 +90,15 @@ const SubscriptionModal = () => {
                         </td>
                         <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/minus-white.svg"
-                              alt="icon"
-                              width={20}
-                              height={20}
-                            />
+                            <MinusIcon width={20} height={20} />
                           </div>
                         </td>
                         <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/checked.svg"
-                              alt="icon"
+                            <MarkCircleIcon
                               width={24}
                               height={24}
+                              color="#00C16A"
                             />
                           </div>
                         </td>
@@ -173,21 +162,15 @@ const SubscriptionModal = () => {
                         </td>
                         <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/minus-white.svg"
-                              alt="icon"
-                              width={20}
-                              height={20}
-                            />
+                            <MinusIcon width={20} height={20} />
                           </div>
                         </td>
                         <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/checked.svg"
-                              alt="icon"
+                            <MarkCircleIcon
                               width={24}
                               height={24}
+                              color="#00C16A"
                             />
                           </div>
                         </td>
@@ -200,21 +183,15 @@ const SubscriptionModal = () => {
                         </td>
                         <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/minus-white.svg"
-                              alt="icon"
-                              width={20}
-                              height={20}
-                            />
+                            <MinusIcon width={20} height={20} />
                           </div>
                         </td>
                         <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/checked.svg"
-                              alt="icon"
+                            <MarkCircleIcon
                               width={24}
                               height={24}
+                              color="#00C16A"
                             />
                           </div>
                         </td>
@@ -227,21 +204,15 @@ const SubscriptionModal = () => {
                         </td>
                         <td className="w-[128px]  border-b border-r border-white px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/minus-white.svg"
-                              alt="icon"
-                              width={20}
-                              height={20}
-                            />
+                            <MinusIcon width={20} height={20} />
                           </div>
                         </td>
                         <td className="w-[128px] border-b border-white  px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/checked.svg"
-                              alt="icon"
+                            <MarkCircleIcon
                               width={24}
                               height={24}
+                              color="#00C16A"
                             />
                           </div>
                         </td>
@@ -254,21 +225,15 @@ const SubscriptionModal = () => {
                         </td>
                         <td className="w-[128px]   border-r border-white px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/minus-white.svg"
-                              alt="icon"
-                              width={20}
-                              height={20}
-                            />
+                            <MinusIcon width={20} height={20} />
                           </div>
                         </td>
                         <td className="w-[128px]   px-4 py-2 text-center">
                           <div className="flex items-center justify-center">
-                            <Image
-                              src="/images/icons/checked.svg"
-                              alt="icon"
+                            <MarkCircleIcon
                               width={24}
                               height={24}
+                              color="#00C16A"
                             />
                           </div>
                         </td>
@@ -487,13 +452,7 @@ const SubscriptionModal = () => {
                   </button>
                 </div>
                 <div className="mt-3 flex items-center justify-center gap-2">
-                  <Image
-                    src="/images/icons/lock-2-line.svg"
-                    alt="icon"
-                    width={20}
-                    height={20}
-                    className="cursor-pointer"
-                  />
+                  <LockIcon />
                   <p>
                     Secure payments
                     <button className="ml-1 underline">Paddle</button>.
@@ -507,12 +466,7 @@ const SubscriptionModal = () => {
               className="bg-primary cursor-pointer rounded-full p-2"
               onClick={() => setOpen(false)}
             >
-              <Image
-                src="/images/icons/white-cross.svg"
-                width={16}
-                height={16}
-                alt="icon"
-              />
+              <CloseIcon color="white" width={15} height={15} />
             </button>
           </div>
         </div>

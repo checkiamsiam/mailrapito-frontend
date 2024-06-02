@@ -1,18 +1,27 @@
 "use client";
-
 import { Link } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
+import LogoutIcon from "@shared/icons/LogoutIcon";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounceCallback, useIsClient } from "usehooks-ts";
+
+const ProfileModal = dynamic(
+  () => import("@marketing/home/modals/ProfileModal"),
+  {
+    ssr: false,
+  },
+);
 
 // ----------- Un Used -----------
 // import { ColorModeToggle } from "@shared/components/ColorModeToggle";
@@ -27,6 +36,7 @@ export function NavBar() {
   const pathname = usePathname();
   const isClient = useIsClient();
   const [isTop, setIsTop] = useState(true);
+  const [openProfileModal, setOpenProfileModal] = useState(false);
 
   const createOrderMutation = apiClient.payments.createOrder.useMutation();
 
@@ -232,9 +242,35 @@ export function NavBar() {
                 </PrimaryButton>
               </>
             )}
+            <>
+              <button
+                onClick={() => setOpenProfileModal(true)}
+                className="flex items-center gap-2 rounded-md bg-[#F4F5FB] p-2"
+              >
+                <div className="relative h-12 w-12 ">
+                  <Image
+                    src="/images/avatar/avatar3.png"
+                    alt="close"
+                    layout="fill"
+                  />
+                </div>
+                <div>
+                  <p className="text-primary-gradient  text-[20px]">Premium</p>
+                  <p className="ml-2 text-[12px] text-[#7C7D81]">
+                    Remain 100days
+                  </p>
+                </div>
+                <div>
+                  <div className="shadow-[0px 4px 4px 0px #00000040] ml-1 flex h-12 w-12 items-center justify-center rounded-md bg-white">
+                    <LogoutIcon />
+                  </div>
+                </div>
+              </button>
+            </>
           </div>
         </div>
       </div>
+      <ProfileModal open={openProfileModal} setOpen={setOpenProfileModal} />
     </nav>
   );
 }

@@ -1,4 +1,6 @@
 "use client";
+import CloseIcon from "@shared/icons/CloseIcon";
+import DeleteIcon from "@shared/icons/DeleteIcon";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
@@ -8,7 +10,7 @@ const Modal = dynamic(() => import("react-responsive-modal"), {
 });
 
 const ForwardingModal = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <Modal
@@ -20,12 +22,7 @@ const ForwardingModal = () => {
         closeIcon={
           <div>
             <div className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#DEE2E6]">
-              <Image
-                src="/images/icons/close-icon.svg"
-                alt="close"
-                width={10.61}
-                height={10.61}
-              />
+              <CloseIcon />
             </div>
           </div>
         }
@@ -84,16 +81,26 @@ const ForwardingModal = () => {
                   </div>
                   <div className="col-span-1 flex items-center justify-center border-b">
                     <button className="flex items-center justify-center">
-                      <Image
-                        src="/images/icons/delete.svg"
-                        alt="delete"
-                        width={20}
-                        height={20}
-                      />
+                      <DeleteIcon width={20} height={20} color="#7C7D81" />
                     </button>
                   </div>
                 </>
               ))}
+            </div>
+          </div>
+          <div className="mt-6">
+            <div>
+              <div className="flex justify-between">
+                <p className="text-[#7C7D81]">Email From</p>
+                <div className="flex gap-2">
+                  <button className="bg-primary rounded-sm px-2 py-1 text-[12px] text-white">
+                    Random
+                  </button>
+                  <button className="rounded-sm bg-[#F1F3F5] px-2 py-1 text-[12px] text-[#868E96]">
+                    Current
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
