@@ -14,6 +14,7 @@ import {
 import { cn } from "@ui/lib";
 import { ChevronDown } from "lucide-react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
@@ -133,8 +134,8 @@ const ForwardingModal = ({
                     y2="24.5556"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stop-color="#323FD4" />
-                    <stop offset="1" stop-color="#F55B7A" />
+                    <stop stopColor="#323FD4" />
+                    <stop offset="1" stopColor="#F55B7A" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -146,7 +147,7 @@ const ForwardingModal = ({
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   <p className="text-[18px]">
-                    Left <span className="font-bold">3 mounth</span>
+                    Left <span className="font-bold">3 month</span>
                   </p>
                   <TimerIcon/>
                 </div>
