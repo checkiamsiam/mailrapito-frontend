@@ -10,16 +10,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui/components/select";
+import { cn } from "@ui/lib";
 import { ChevronDown } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
   ssr: false,
 });
 
-const ForwardingModal = () => {
-  const [open, setOpen] = useState(true);
+
+const ForwardingModal = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const [duration, setDuration] = useState(45);
   return (
     <div>
       <Modal
@@ -147,7 +156,7 @@ const ForwardingModal = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[8%] flex justify-center items-center ">
+            <div className="flex w-[8%] items-center justify-center ">
               <SendIcon className="mt-10" />
             </div>
             <div className="w-[46%]">
@@ -190,6 +199,92 @@ const ForwardingModal = () => {
                   </Select>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="mt-6">
+            <div className="mb-2 flex justify-between">
+              <p className="text-[#7C7D81]">Duration (in minutes)</p>
+              <div className="flex gap-2">
+                <div className="rounded-sm bg-[#F1F3F5] px-2 py-1 text-[12px] text-[#868E96]">
+                  Max. 90 Days
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-12 place-content-center rounded-lg bg-[#F8F9FA] px-4 py-2">
+              <div className="flex items-center justify-center lg:col-span-6 xl:col-span-7">
+                <Input
+                  type="number"
+                  placeholder="Enter Duration"
+                  className="focus-visible::border-transparent w-full border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0"
+                  disabled={duration !== 0}
+                />
+              </div>
+
+              <div className="lg:col-span-6 xl:col-span-5">
+                <div className="flex gap-[2px]  overflow-hidden rounded-md">
+                  <button
+                    onClick={() => setDuration(9)}
+                    className={cn(
+                      `w-[112px] bg-white p-4 text-center text-[#495057]`,
+                      duration === 9 && "border-primary border-b-[3px]",
+                    )}
+                  >
+                    9 days
+                  </button>
+                  <button
+                    onClick={() => setDuration(45)}
+                    className={cn(
+                      `w-[112px] bg-white p-4 text-center text-[#495057]`,
+                      duration === 45 && "border-primary border-b-[3px]",
+                    )}
+                  >
+                    45 days
+                  </button>
+                  <button
+                    onClick={() => setDuration(90)}
+                    className={cn(
+                      `w-[112px] bg-white p-4 text-center text-[#495057]`,
+                      duration === 90 && "border-primary border-b-[3px]",
+                    )}
+                  >
+                    90 days
+                  </button>
+                  <button
+                    onClick={() => setDuration(0)}
+                    className={cn(
+                      `w-[112px] bg-white p-4 text-center text-[#495057]`,
+                      duration === 0 && "border-primary border-b-[3px]",
+                    )}
+                  >
+                    Custom
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="mt-6 text-[#868E96]">
+            Create your time-limited email forwarding and all messages that
+            would be sent to the selected email will be also sent to your real
+            email.
+          </p>
+          <div className="mt-6 flex justify-between">
+            <div className="relative">
+              <ReCAPTCHA
+                sitekey="6LdUz-4pAAAAADLtRLmlVIRjxUml7TQye2laJaJb"
+               className="absolute top-0 left-0"
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <button className="bg-primary rounded-md px-[32px] py-[18px] text-white">
+                FORWARD
+              </button>
+              <button
+                onClick={() => setOpen(false)}
+                className="rounded-md border  border-[#495057] px-[32px] py-[18px] text-[#495057]"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>

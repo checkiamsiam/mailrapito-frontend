@@ -14,10 +14,16 @@ const Modal = dynamic(() => import("react-responsive-modal"), {
 const ProfileModal = ({
   open,
   setOpen,
+  handleOpenForwardModal,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  handleOpenForwardModal: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const handleOpenFroward = () => {
+    setOpen(false);
+    handleOpenForwardModal(true);
+  };
   const remainJSX = (
     <p className="text-[#56565B] max-md:text-[14px]">
       Remain 20 days before expire.{" "}
@@ -72,8 +78,8 @@ const ProfileModal = ({
                 johnsmith22@gmail.com
               </p>
               <div className="flex gap-3 ">
-                <p className="text-[12px] font-semibold sm:text-[20px] mt-1">
-                ***********
+                <p className="mt-1 text-[12px] font-semibold sm:text-[20px]">
+                  ***********
                 </p>
                 <button>
                   <EditIcon />
@@ -129,7 +135,7 @@ const ProfileModal = ({
               </div>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div className="gradient-border relative rounded-3xl border p-6">
+              <button className="gradient-border relative rounded-3xl border p-6">
                 <div>
                   <div className="mb-4">
                     <Image
@@ -151,10 +157,13 @@ const ProfileModal = ({
                     New
                   </PrimaryButton>
                 </div>
-              </div>
+              </button>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div className="rounded-3xl border bg-[#FCFEFF] p-6">
+              <button
+                onClick={handleOpenFroward}
+                className="rounded-3xl border bg-[#FCFEFF] p-6"
+              >
                 <div>
                   <div className="mb-4">
                     <Image
@@ -171,10 +180,10 @@ const ProfileModal = ({
                     </p>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div className="rounded-3xl border bg-[#FCFEFF] p-6">
+              <button className="rounded-3xl border bg-[#FCFEFF] p-6">
                 <div>
                   <div className="mb-4">
                     <Image
@@ -191,7 +200,7 @@ const ProfileModal = ({
                     </p>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
