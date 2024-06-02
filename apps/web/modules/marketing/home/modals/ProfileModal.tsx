@@ -183,7 +183,7 @@ const ProfileModal = () => {
                   <div>
                     <p className="text-[24px] ">Manage Team</p>
                     <p className="text-[14px] text-[#56565B]">
-                      Manage members to streamline your team's workflow.
+                      Manage members to streamline your team&apos;s workflow.
                     </p>
                   </div>
                 </div>
