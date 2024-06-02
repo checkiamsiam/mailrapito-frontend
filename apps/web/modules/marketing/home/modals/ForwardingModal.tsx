@@ -14,9 +14,11 @@ import { cn } from "@ui/lib";
 import { ChevronDown } from "lucide-react";
 import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
+  ssr: false,
+});
+const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"), {
   ssr: false,
 });
 
@@ -264,14 +266,14 @@ const ForwardingModal = ({
           </div>
           <p className="mt-6 text-[#868E96]">
             Create your time-limited email forwarding and all messages that
-            would be sent to the selected email will be also sent to your real
+            would be sent to the selected email will be also sent to your real
             email.
           </p>
           <div className="mt-6 flex justify-between">
             <div className="relative">
               <ReCAPTCHA
                 sitekey="6LdUz-4pAAAAADLtRLmlVIRjxUml7TQye2laJaJb"
-               className="absolute top-0 left-0"
+               className="absolute top-0 left-0 overflow-hidden rounded-md"
               />
             </div>
 

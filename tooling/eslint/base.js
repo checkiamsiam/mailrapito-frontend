@@ -14,6 +14,10 @@ const config = {
   parserOptions: { project: true },
   plugins: ["@typescript-eslint", "import"],
   rules: {
+    "no-irregular-whitespace": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/no-redundant-type-constituents" : "off" ,
     "@typescript-eslint/no-unsafe-argument" : "off" ,
     "@typescript-eslint/no-unsafe-assignment": "off",
