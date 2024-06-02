@@ -151,7 +151,7 @@ export function NavBar() {
 
       <div className="container">
         <div
-          className={`flex items-center justify-between gap-6 ${isTop ? "py-5" : "py-4"} transition-[padding] duration-200`}
+          className={`flex items-center justify-between gap-6 ${isTop ? "py-[18px]" : "py-3"} transition-[padding] duration-200`}
         >
           <div className="flex justify-start">
             <Link
