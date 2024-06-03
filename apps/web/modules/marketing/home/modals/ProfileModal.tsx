@@ -15,14 +15,20 @@ const ProfileModal = ({
   open,
   setOpen,
   handleOpenForwardModal,
+  handleOpenCustomModal
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   handleOpenForwardModal: Dispatch<SetStateAction<boolean>>;
+  handleOpenCustomModal: Dispatch<SetStateAction<boolean>>;
 }) => {
   const handleOpenFroward = () => {
     setOpen(false);
     handleOpenForwardModal(true);
+  };
+  const handleOpenCustom = () => {
+    setOpen(false);
+    handleOpenCustomModal(true);
   };
   const remainJSX = (
     <p className="text-[#56565B] max-md:text-[14px]">
@@ -135,7 +141,7 @@ const ProfileModal = ({
               </div>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <button className="gradient-border relative rounded-3xl border p-6 w-full">
+              <button onClick={handleOpenCustom} className="gradient-border relative rounded-3xl border p-6 w-full">
                 <div>
                   <div className="mb-4">
                     <Image
