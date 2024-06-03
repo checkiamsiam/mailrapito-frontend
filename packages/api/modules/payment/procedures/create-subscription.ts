@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import type { OrderStatusType } from "database";
 import { UserSubscriptionSchema, db } from "database";
+import { sendEmail } from "mail";
 import { publicProcedure } from "../../../trpc/base";
 
 export const createSubscription = publicProcedure
@@ -12,6 +13,7 @@ export const createSubscription = publicProcedure
       email?: string;
       status?: OrderStatusType;
       createdAt?: Date;
+      plan: string;
     } | null = null;
 
     if (subscription?.orderId) {
@@ -37,6 +39,10 @@ export const createSubscription = publicProcedure
             ...subscription,
             status: "PAID",
           },
+        });
+        await sendEmail({
+          to: subscription.email,
+          templateId: "paymentConfirm",
         });
       } else {
         throw new TRPCError({

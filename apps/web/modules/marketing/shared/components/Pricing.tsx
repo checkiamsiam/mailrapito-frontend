@@ -1,13 +1,13 @@
 "use client";
 
-import SubscriptionModal from "@marketing/home/components/SubscriptionModal";
+import SubscriptionModal from "@marketing/home/modals/SubscriptionModal";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import SectionHeading from "@shared/components/Section/SectionHeading";
 import CheckIcon from "@shared/icons/CheckIcon";
 import { Button } from "@ui/components/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import useSubscriptionModalStore from "../../../../hooks/useSubscriptionModal";
+import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
 
 const Pricing = () => {
   const { setOpen } = useSubscriptionModalStore();

@@ -2,7 +2,7 @@ import { createApiCaller } from "api/trpc/caller";
 import { createHmac, timingSafeEqual } from "crypto";
 import { parse } from "querystring";
 
-const secret = "4S$eJ#8dLpM3aD*G4KbFhE1iR$cC9mN7wX";
+const secret = process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_IPN_SECRET!;
 
 interface CustomData {
   orderId: string;
@@ -98,7 +98,7 @@ export async function POST(req: Request) {
       });
     }
 
-    if (payload?.merchant !== process.env.COINPAYMENT_MERCHANT_ID) {
+    if (payload?.merchant !== process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_ID) {
       return new Response("Invalid merchant.", {
         status: 400,
       });
@@ -129,7 +129,7 @@ export async function POST(req: Request) {
           status: 202,
         });
       }
-      if (payload.status >= 100) {
+      if (payload.status >= 100 || payload.status == 2) {
         const isPaymentReceived = await apiCaller.payments.getPaymentInfo({
           txid: payload.txn_id,
           full: 0,
@@ -154,6 +154,10 @@ export async function POST(req: Request) {
             secondAmount: payload.amount2,
             email: payload.custom.email,
             paidAt: new Date(),
+            plan:
+              payload.item_amount === 29.9
+                ? "1 year subscription"
+                : "1 month subscription",
           });
         } else if (isPaymentReceived.status < 0) {
           return new Response("Cancelled / Timed Out.", {

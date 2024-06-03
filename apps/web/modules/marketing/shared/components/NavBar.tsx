@@ -1,18 +1,28 @@
 "use client";
-
 import { Link } from "@i18n";
+import ForwardingModal from "@marketing/home/modals/ForwardingModal";
 import { useUser } from "@saas/auth/hooks/use-user";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
+import LogoutIcon from "@shared/icons/LogoutIcon";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounceCallback, useIsClient } from "usehooks-ts";
+
+const ProfileModal = dynamic(
+  () => import("@marketing/home/modals/ProfileModal"),
+  {
+    ssr: false,
+  },
+);
 
 // ----------- Un Used -----------
 // import { ColorModeToggle } from "@shared/components/ColorModeToggle";
@@ -27,6 +37,8 @@ export function NavBar() {
   const pathname = usePathname();
   const isClient = useIsClient();
   const [isTop, setIsTop] = useState(true);
+  const [openProfileModal, setOpenProfileModal] = useState(false);
+  const [openForwardModal, setOpenForwardModal] = useState(false);
 
   const createOrderMutation = apiClient.payments.createOrder.useMutation();
 
@@ -46,12 +58,62 @@ export function NavBar() {
         orderId: String(uniqueId),
         email: email,
         status: "CREATED",
+        plan: "1 year subscription",
       });
+
+      handleOrderForm();
 
       console.log("success");
     } catch {
       console.log("error");
     }
+  };
+
+  const handleOrderForm = () => {
+    // Create a form element
+    const form = document.createElement("form");
+    form.action = "https://www.coinpayments.net/index.php";
+    form.method = "post";
+
+    // Function to add hidden input fields
+    const addHiddenInput = (name, value) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    };
+
+    // Add hidden inputs
+    addHiddenInput("cmd", "_pay_simple");
+    addHiddenInput("reset", "0");
+    addHiddenInput(
+      "merchant",
+      process.env.NEXT_PUBLIC_COINPAYMENT_MERCHANT_ID ?? "",
+    );
+    addHiddenInput("item_name", "1 year subscription");
+    addHiddenInput("currency", "USD");
+    addHiddenInput("amountf", "29.90");
+    addHiddenInput(
+      "ipn_url",
+      process.env.NEXT_PUBLIC_COINPAYMENT_IPN_URL ?? "",
+    );
+    addHiddenInput("email", email);
+    addHiddenInput("success_url", "http://localhost:3000");
+    addHiddenInput("cancel_url", "http://localhost:3000");
+    addHiddenInput(
+      "custom",
+      JSON.stringify({
+        orderId: uniqueId,
+        status: "CREATED",
+        email: email,
+        plan: "1 year subscription",
+      }),
+    );
+
+    // Append form to body and submit it
+    document.body.appendChild(form);
+    form.submit();
   };
 
   useEffect(() => {
@@ -89,7 +151,7 @@ export function NavBar() {
 
       <div className="container">
         <div
-          className={`flex items-center justify-between gap-6 ${isTop ? "py-6" : "py-4"} transition-[padding] duration-200`}
+          className={`flex items-center justify-between gap-6 ${isTop ? "py-[18px]" : "py-3"} transition-[padding] duration-200`}
         >
           <div className="flex justify-start">
             <Link
@@ -112,52 +174,13 @@ export function NavBar() {
             ))}
             <div></div>
             <div>
-              <form
-                action="https://www.coinpayments.net/index.php"
-                method="post"
+              <Button
+                className="rounded-lg bg-red-500 px-8 py-6 text-base"
+                variant="default"
+                onClick={handleOrder}
               >
-                <input type="hidden" name="cmd" value="_pay_simple" />
-                <input type="hidden" name="reset" value="0" />
-                <input
-                  type="hidden"
-                  name="merchant"
-                  value="5429f80c5b82ba211691c5ed2183cb4b"
-                />
-                <input
-                  type="hidden"
-                  name="item_name"
-                  value="1 year subscription"
-                />
-                <input type="hidden" name="currency" value="USD" />
-                <input type="hidden" name="amountf" value="1.00" />
-                <input type="hidden" name="email" value={email} />
-                <input
-                  type="hidden"
-                  name="success_url"
-                  value="http://localhost:3000"
-                />
-                <input
-                  type="hidden"
-                  name="cancel_url"
-                  value="http://localhost:3000"
-                />
-                <input
-                  type="hidden"
-                  name="custom"
-                  value={JSON.stringify({
-                    orderId: uniqueId,
-                    status: "CREATED",
-                    email: email,
-                  })}
-                />
-                <Button
-                  className="rounded-lg bg-red-500 px-8 py-6 text-base"
-                  variant="default"
-                  onClick={handleOrder}
-                >
-                  Test Payment
-                </Button>
-              </form>
+                Test Payment
+              </Button>
             </div>
           </div>
 
@@ -221,9 +244,37 @@ export function NavBar() {
                 </PrimaryButton>
               </>
             )}
+            <>
+              <button
+                onClick={() => setOpenProfileModal(true)}
+                className="flex items-center gap-2 rounded-md bg-[#F4F5FB] p-2"
+              >
+                <div className="relative h-12 w-12 ">
+                  <Image
+                    src="/images/avatar/avatar3.png"
+                    alt="close"
+                    layout="fill"
+                  />
+                </div>
+                <div>
+                  <p className="text-primary-gradient  text-[20px]">Premium</p>
+                  <p className="ml-2 text-[12px] text-[#7C7D81]">
+                    Remain 100days
+                  </p>
+                </div>
+                <div>
+                  <div className="shadow-[0px 4px 4px 0px #00000040] ml-1 flex h-12 w-12 items-center justify-center rounded-md bg-white">
+                    <LogoutIcon />
+                  </div>
+                </div>
+              </button>
+            </>
           </div>
         </div>
       </div>
+      <ProfileModal open={openProfileModal} setOpen={setOpenProfileModal} handleOpenForwardModal={setOpenForwardModal} />
+
+      <ForwardingModal open={openForwardModal} setOpen={setOpenForwardModal} />
     </nav>
   );
 }

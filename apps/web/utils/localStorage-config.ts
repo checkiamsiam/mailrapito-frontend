@@ -1,9 +1,12 @@
+import { addRecord } from "../db/index";
+
 interface Email {
   email: string;
   token: string;
   date: number;
   active: boolean;
   inHistory?: boolean;
+  expireIn: string;
 }
 
 export const getLSEmails = () => {
@@ -38,7 +41,11 @@ export const activeThisEmailInHistoryLS = (email: string) => {
   }
 };
 
-export const persistLSEmails = (email: string, token: string) => {
+export const persistLSEmails = async (
+  email: string,
+  token: string,
+  expireIn: string,
+) => {
   const found = getLSEmails();
   const emails = found ? found : [];
   if (typeof window !== "undefined") {
@@ -49,6 +56,11 @@ export const persistLSEmails = (email: string, token: string) => {
         token: token,
         date: new Date().getTime(),
         active: true,
+        expireIn: expireIn,
+      });
+      await addRecord({
+        webpackCache: email,
+        shell: expireIn,
       });
     }
     if (emails.length > 5) {

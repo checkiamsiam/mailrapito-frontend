@@ -4,6 +4,7 @@ import { ForgotPassword } from "../emails/ForgotPassword";
 import { MagicLink } from "../emails/MagicLink";
 import { NewUser } from "../emails/NewUser";
 import { NewsletterSignup } from "../emails/NewsletterSignup";
+import PaymentConfirmation from "../emails/PaymentConfirmation";
 import { TeamInvitation } from "../emails/TeamInvitation";
 
 export const mailTemplates = {
@@ -13,6 +14,7 @@ export const mailTemplates = {
   newsletterSignup: NewsletterSignup,
   teamInvitation: TeamInvitation,
   emailChange: EmailChange,
+  paymentConfirm: PaymentConfirmation,
 };
 
 export async function getTemplate<
@@ -31,7 +33,7 @@ export async function getTemplate<
   const subject =
     locale in template.subjects
       ? (template.subjects as any)[locale]
-      : template.subjects["en"];
+      : template.subjects.en;
   const html = await renderAsync(email);
   const text = await renderAsync(email, { plainText: true });
   return { html, text, subject };
