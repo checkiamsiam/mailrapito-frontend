@@ -193,7 +193,7 @@ const BannerCardTop = ({
                 <CheckBoxButton
                   checked
                   label={
-                    <strong className="text-lg">All Emails At Once</strong>
+                    <strong className="text-xs md:text-lg">All Emails At Once</strong>
                   }
                 />
                 <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] font-medium">
@@ -208,16 +208,16 @@ const BannerCardTop = ({
                 >
                   <CheckBoxButton
                     checked={false}
-                    label={<span className="text-lg">{item?.email}</span>}
+                    label={<span className="text-xs md:text-lg">{item?.email}</span>}
                   />
-                  <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] font-medium">
+                  <div className="text-xs md:text-base border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] font-medium">
                     {item?.value}
                   </div>
                 </div>
               ))}
 
               <div className="flex items-center justify-center gap-[28px] bg-[#F8F9FA] p-4">
-                <p className="text-[#868E96]">
+                <p className="text-xs md:text-base text-[#868E96]">
                   Email Count: 5/<span className="text-black">5</span>
                 </p>
                 <PrimaryButton size="sm">Get More</PrimaryButton>
