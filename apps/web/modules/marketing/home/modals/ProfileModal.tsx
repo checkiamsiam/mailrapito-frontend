@@ -135,7 +135,7 @@ const ProfileModal = ({
               </div>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div className="gradient-border relative rounded-3xl border p-6">
+              <button className="gradient-border relative rounded-3xl border p-6 w-full">
                 <div>
                   <div className="mb-4">
                     <Image
@@ -157,12 +157,12 @@ const ProfileModal = ({
                     New
                   </PrimaryButton>
                 </div>
-              </div>
+              </button>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div
+              <button
                 onClick={handleOpenFroward}
-                className="rounded-3xl border bg-[#FCFEFF] p-6 cursor-pointer"
+                className="rounded-3xl border bg-[#FCFEFF] p-6 cursor-pointer w-full"
               >
                 <div>
                   <div className="mb-4">
@@ -180,10 +180,10 @@ const ProfileModal = ({
                     </p>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div className="rounded-3xl border bg-[#FCFEFF] p-6">
+              <button className="rounded-3xl border bg-[#FCFEFF] p-6 w-full">
                 <div>
                   <div className="mb-4">
                     <Image
@@ -200,7 +200,7 @@ const ProfileModal = ({
                     </p>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
