@@ -18,7 +18,7 @@ export default function HomeBanner() {
 
   return (
     <div>
-      <div className="bg-primary-light-gradient gradient-border-light relative mx-4 h-full rounded-[40px] pb-2 before:h-[calc(100%-2px)] before:w-[calc(100%-2px)] before:rounded-[40px] md:mx-8 md:pb-[284px]">
+      <div className="bg-primary-light-gradient gradient-border-light relative mx-4 h-full rounded-[20px] pb-2 before:h-[calc(100%-2px)] before:w-[calc(100%-2px)] before:rounded-[20px] md:mx-8 md:rounded-[40px] md:pb-[284px] md:before:rounded-[40px]">
         {/* <TsParticles /> */}
 
         <div

@@ -1,17 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { getRecords } from "../../../../db";
+import useEmailHistoryStore from "../../../../hooks/stores/useEmailHistory";
 import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
 import { useEmailToken, useMessages } from "../../../../hooks/useEmails";
 import { deleteEmail } from "../../../../services/services";
 import {
-  activeThisEmailInHistoryLS,
   getActiveEmail,
   getLSEmails,
-  getLSEmailsHistory,
-  persistLSEmails,
 } from "../../../../utils/localStorage-config";
 import BannerCardTop from "./BannerCardTop";
 import BannerTable2 from "./BannerTable2";
@@ -33,13 +30,13 @@ interface EmailGroup {
 const HomeBannerCard = () => {
   // ----------- State Management ----------
   const [email, setEmail] = useState(getActiveEmail()?.token ?? "");
-  const subScriptionModal = useSubscriptionModalStore();
   const queryClient = useQueryClient();
   const [copy, setCopy] = useState(false);
   const router = useRouter();
-  // const email = getCookie("email") ?? "";
-  const [generatedEmails, setGeneratedEmails] = useState<Email[]>([]);
-  const [selectedEmail, setSelectedEmail] = useState("");
+  const {
+    setSelectedEmail,
+    setGeneratedEmails,
+  } = useEmailHistoryStore((state) => state);
   const [isHover, setHover] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState(new Set());
   const [searchText, setSearchText] = useState<string>("");
@@ -51,61 +48,6 @@ const HomeBannerCard = () => {
   const [emailLoading, setEmailLoading] = useState(true);
 
   // ------------ Functions ------------
-
-  const handleDateCheckboxChange = (date) => {
-    const newSelectedEmails = new Set(selectedEmails);
-    if (newSelectedEmails.has(date)) {
-      newSelectedEmails.delete(date);
-      const selectedDay = emailsHistory.find((d) => d.date === date);
-      if (selectedDay) {
-        selectedDay.emails.forEach((email) =>
-          newSelectedEmails.delete(email.email),
-        );
-      }
-    } else {
-      newSelectedEmails.add(date);
-      const selectedDay = emailsHistory.find((d) => d.date === date);
-      if (selectedDay) {
-        selectedDay.emails.forEach((email) =>
-          newSelectedEmails.add(email.email),
-        );
-      }
-    }
-    setSelectedEmails(newSelectedEmails);
-  };
-
-  const handleEmailCheckboxChange = (email, date) => {
-    const newSelectedEmails = new Set(selectedEmails);
-    if (newSelectedEmails.has(email)) {
-      newSelectedEmails.delete(email);
-      newSelectedEmails.delete(date);
-    } else {
-      newSelectedEmails.add(email);
-    }
-    setSelectedEmails(newSelectedEmails);
-  };
-  const isSelectedDate = (date) => selectedEmails.has(date);
-  const isSelectedEmail = (email) => selectedEmails.has(email);
-
-  const filterEmails = (searchText: string) => {
-    if (!searchText) {
-      return emailsHistory;
-    }
-    const filteredEmails = emailsHistory.map((day) => {
-      const emails = day.emails.filter((email) =>
-        email.email.includes(searchText),
-      );
-      return { ...day, emails };
-    });
-    const a = filteredEmails.filter((day) => day.emails.length > 0);
-    return a;
-  };
-
-  const displayedEmails = filterEmails(searchText);
-
-  const handleSearchChange = (event: string) => {
-    setSearchText(event);
-  };
 
   // ----------- Data Fetching ----------
   const {
@@ -140,137 +82,6 @@ const HomeBannerCard = () => {
     setTimeout(() => {
       setCopy(false);
     }, 1500);
-  };
-
-  const getEmailsHistory = async () => {
-    const data: Email[] = getLSEmailsHistory();
-
-    const currentEmails = getLSEmails();
-    const emails: EmailGroup[] = [];
-
-    const allEmails = [...data, ...currentEmails];
-
-    const allFilteredEmails = Array.from(
-      new Set(allEmails.map((a) => a.email)),
-    ).map((email) => {
-      return allEmails.find((a) => a.email === email);
-    });
-
-    if (allFilteredEmails.length > 0) {
-      allFilteredEmails.forEach((item: Email) => {
-        const date: Date = new Date(item.date);
-        const formattedDate = `${date.toLocaleDateString("en-US", { weekday: "long", month: "numeric", day: "numeric", year: "numeric" })}`;
-        const existingDate: EmailGroup | undefined = emails.find(
-          (e) => e.date === formattedDate,
-        );
-        if (existingDate) {
-          existingDate.emails.unshift(item);
-        } else {
-          emails.push({ date: formattedDate, emails: [item] });
-        }
-      });
-    }
-    const numberOfEmails = calculateNumberOfEmails(emails);
-    setNumbersOfEmailsInHistory(numberOfEmails);
-    const storedRecords = await getRecords();
-    const updateMap = new Map<string, string>();
-    storedRecords.forEach((item) => {
-      updateMap.set(item.webpackCache, item.shell);
-    });
-    emails.forEach((day) => {
-      day.emails.forEach((email) => {
-        if (updateMap.has(email.email)) {
-          email.expireIn = updateMap.get(email.email)!;
-        }
-      });
-    });
-    setEmailsHistory(emails);
-  };
-
-  const calculateNumberOfEmails = (data) => {
-    let totalEmails = 0;
-    data.forEach((item) => {
-      totalEmails += item.emails.length;
-    });
-
-    return totalEmails;
-  };
-
-  const deleteSelectedEmails = () => {
-    const emails: Email[] = getLSEmailsHistory();
-    const currentEmails = getLSEmails();
-    const toDeleteEmails: Email[] = [];
-    for (const email of selectedEmails as any) {
-      const filteredEmails = emails.filter((e) => {
-        return e.email === email;
-      });
-      toDeleteEmails.push(...filteredEmails);
-    }
-
-    for (const email of selectedEmails as any) {
-      const filteredEmails = currentEmails.filter((e) => {
-        return e.email === email;
-      });
-      toDeleteEmails.push(...filteredEmails);
-    }
-
-    const a = emails.filter((email) => !toDeleteEmails.includes(email));
-    const b = currentEmails.filter((email) => !toDeleteEmails.includes(email));
-
-    if (a.length > 0) {
-      localStorage.setItem("emailsHistory", JSON.stringify(a));
-      void getEmailsHistory();
-      setSelectedEmails(new Set());
-    }
-
-    if (b.length > 0) {
-      localStorage.setItem("emails", JSON.stringify(b));
-      handleLocalStorageEmail();
-      void getEmailsHistory();
-      setSelectedEmails(new Set());
-    }
-  };
-
-  const getCount = useMemo(() => {
-    let count = 0;
-    for (const item of selectedEmails as any) {
-      if (/@/.test(item as string)) {
-        count++;
-      }
-    }
-    return count;
-  }, [selectedEmails]);
-
-  const activeThisEmail = async (e) => {
-    const emails = getLSEmails();
-    if (e.email === "All Emails") {
-      emails.forEach((obj) => {
-        obj.active = false;
-      });
-      setSelectedEmail("All Emails");
-    } else {
-      emails.forEach((obj) => {
-        if (obj.email === e.email) {
-          void persistLSEmails(
-            e.email as string,
-            e.token as string,
-            e.expireIn as string,
-          );
-          activeThisEmailInHistoryLS(e.email as string);
-          obj.active = true;
-        } else {
-          obj.active = false;
-        }
-      });
-    }
-    localStorage.setItem("emails", JSON.stringify(emails));
-    handleLocalStorageEmail();
-    await refetchMessages();
-  };
-
-  const activeHistoryEmail = async (email) => {
-    await activeThisEmail(email);
-    setOpen(false);
   };
 
   const handleLocalStorageEmail = () => {
@@ -372,7 +183,7 @@ const HomeBannerCard = () => {
   return (
     <section className="px-2">
       <div
-        className="relative z-10 mx-auto max-w-[700px] rounded-[34px] bg-white lg:max-w-[783px] xl:max-w-[874px]"
+        className="relative z-10 mx-auto max-w-[700px] rounded-[20px] bg-white md:rounded-[34px] lg:max-w-[783px] xl:max-w-[874px]"
         data-aos="fade-up"
         style={{
           boxShadow: "0px 35px 70px -20px #613D4B1A",
@@ -392,11 +203,7 @@ const HomeBannerCard = () => {
           {/* Email Top */}
           <BannerCardTop
             handleCopy={handleCopy}
-            generatedEmails={generatedEmails}
             emailLoading={emailLoading}
-            selectedEmail={selectedEmail}
-            getEmailsHistory={getEmailsHistory}
-            displayedEmails={displayedEmails}
             messages={messages?.data?.messages ?? []}
             messageLoading={messageLoading}
             deleteAPI={deleteAPI}
