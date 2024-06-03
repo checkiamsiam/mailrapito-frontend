@@ -1,5 +1,6 @@
 "use client";
 import { Link } from "@i18n";
+import CustomDomainModal from "@marketing/home/modals/CustomDomainModal";
 import ForwardingModal from "@marketing/home/modals/ForwardingModal";
 import { useUser } from "@saas/auth/hooks/use-user";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
@@ -39,6 +40,7 @@ export function NavBar() {
   const [isTop, setIsTop] = useState(true);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openForwardModal, setOpenForwardModal] = useState(false);
+  const [openCustomDomainModal, setOpenCustomDomainModal] = useState(false);
 
   const createOrderMutation = apiClient.payments.createOrder.useMutation();
 
@@ -272,9 +274,9 @@ export function NavBar() {
           </div>
         </div>
       </div>
-      <ProfileModal open={openProfileModal} setOpen={setOpenProfileModal} handleOpenForwardModal={setOpenForwardModal} />
-
+      <ProfileModal open={openProfileModal} setOpen={setOpenProfileModal} handleOpenForwardModal={setOpenForwardModal} handleOpenCustomModal={setOpenCustomDomainModal} />
       <ForwardingModal open={openForwardModal} setOpen={setOpenForwardModal} />
+      <CustomDomainModal open={openCustomDomainModal} setOpen={setOpenCustomDomainModal} handleProfileModal={setOpenProfileModal} />
     </nav>
   );
 }
