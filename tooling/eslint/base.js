@@ -14,6 +14,8 @@ const config = {
   parserOptions: { project: true },
   plugins: ["@typescript-eslint", "import"],
   rules: {
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
     "no-irregular-whitespace": "off",
     "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
