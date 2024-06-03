@@ -60,6 +60,7 @@ const BannerCardTop = ({
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const selectMenuRef = React.useRef<any>(null);
   const [dropDownWidth, setDropDownWidth] = React.useState(594);
+  
 
   const actions = [
     {

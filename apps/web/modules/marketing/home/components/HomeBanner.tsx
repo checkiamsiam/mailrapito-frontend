@@ -1,12 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useWindowWidth } from "@react-hook/window-size";
 import SMSIcon from "@shared/icons/SMSIcon";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import HomeBannerCard from "./HomeBannerCard";
 
 export default function HomeBanner() {
   const t = useTranslations();
+  const windowWidth = useWindowWidth();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(windowWidth < 768);
+  }, [windowWidth]);
 
   return (
     <div>
@@ -41,11 +49,11 @@ export default function HomeBanner() {
           </p>
         </div>
         {/* Bg Element:: Left SMS */}
-        <div className="absolute left-5 top-[220px] hidden md:block">
+        <div className="m:top-[220px] absolute -left-4 top-[34px] md:left-5">
           <img
             src="/images/banner/sms_1.svg"
-            width={183}
-            height={157}
+            width={isMobile ? 70 : 183}
+            height={isMobile ? 60 : 157}
             alt="sms"
           />
         </div>
@@ -61,21 +69,21 @@ export default function HomeBanner() {
         </div>
 
         {/* Bg Element:: Top Right Line */}
-        <div className="absolute right-0 top-0 hidden md:block">
+        <div className="absolute right-0 top-0">
           <img
             src="/images/banner/banner_line_top.svg"
-            width={314}
-            height={189}
+            width={isMobile ? 130 : 314}
+            height={isMobile ? 80 : 189}
             alt="line"
           />
         </div>
 
         {/* Bg Element:: Bottom Right SMS */}
-        <div className="absolute bottom-[-80px] right-32 hidden md:block">
+        <div className="absolute bottom-[-30px] right-[-20px] md:bottom-[-80px] md:right-32">
           <img
             src="/images/banner/sms_2.svg"
-            width={181}
-            height={165}
+            width={isMobile ? 53 : 181}
+            height={isMobile ? 45 : 165}
             alt="sms"
           />
         </div>
