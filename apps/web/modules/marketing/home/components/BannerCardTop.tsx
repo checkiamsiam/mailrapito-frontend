@@ -1,3 +1,5 @@
+"use client";
+
 import CheckBoxButton from "@shared/components/Button/CheckBoxButton";
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import ArrowDownIcon from "@shared/icons/ArrowDownIcon";
@@ -6,6 +8,7 @@ import CopyIcon from "@shared/icons/CopyIcon";
 import DeleteIcon2 from "@shared/icons/DeleteIcon2";
 import ForwardIcon from "@shared/icons/ForwardIcon";
 import HistoryIcon from "@shared/icons/HistoryIcon";
+import LoadingIcon from "@shared/icons/LoadingIcon";
 import PlusIcon from "@shared/icons/PlusIcon";
 import QRCodeIcon from "@shared/icons/QRCodeIcon";
 import RandomIcon from "@shared/icons/RandomIcon";
@@ -16,7 +19,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import React from "react";
+import clsx from "clsx";
+import React, { useEffect } from "react";
 
 const emails = [
   { email: "ihigaed356@mailrapido.com", value: 1000 },
@@ -26,14 +30,43 @@ const emails = [
   { email: "ihigaed356@mailrapido.com", value: 45 },
 ];
 
-const BannerCardTop = () => {
+type IProps = {
+  handleCopy: () => void;
+  generatedEmails: any;
+  emailLoading: boolean;
+  selectedEmail: any;
+  getEmailsHistory: () => void;
+  displayedEmails: any[];
+  messages: any;
+  messageLoading: boolean;
+  deleteAPI: () => void;
+  deleteLoading: boolean;
+  refetchMessages: () => void;
+};
+
+const BannerCardTop = ({
+  handleCopy,
+  generatedEmails,
+  emailLoading,
+  selectedEmail,
+  getEmailsHistory,
+  displayedEmails,
+  messages,
+  messageLoading,
+  deleteAPI,
+  deleteLoading,
+  refetchMessages,
+}: IProps) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const selectMenuRef = React.useRef<any>(null);
+  const [dropDownWidth, setDropDownWidth] = React.useState(594);
 
   const actions = [
     {
       text: "Refresh",
-      icon: RefreshIcon2,
+      icon: messageLoading ? LoadingIcon : RefreshIcon2,
       highlighted: true,
+      action: refetchMessages,
     },
     {
       text: "Random",
@@ -49,13 +82,33 @@ const BannerCardTop = () => {
     },
     {
       text: "Delete",
-      icon: DeleteIcon2,
+      icon: messageLoading || deleteLoading ? LoadingIcon : DeleteIcon2,
+      action: deleteAPI,
     },
   ];
+
+  // Adjust the Dropdown Width on Resize
+  useEffect(() => {
+    const resizeSelectMenuList = () => {
+      if (selectMenuRef?.current) {
+        const selectMenuWidth = selectMenuRef.current.offsetWidth;
+        setDropDownWidth(selectMenuWidth);
+      }
+    };
+    window.addEventListener("resize", resizeSelectMenuList);
+    return () => {
+      window.removeEventListener("resize", resizeSelectMenuList);
+    };
+  }, [setDropdownOpen]);
   return (
     <div className="p-2 lg:p-5">
       {/* Notification Icon */}
-      <div className="flex justify-end">
+      <div className="mt-2 flex justify-between md:mt-0 md:justify-end">
+        <ActionIconButton
+          icon={HistoryIcon}
+          highlighted
+          className="block h-auto !p-2 md:hidden"
+        />
         <div className="relative rounded-lg bg-[#F8F9FA] p-2">
           <BellIcon />
           <div className="bg-primary absolute right-[1px] top-[1px] grid h-5 w-5 place-items-center rounded-full border-2 border-white text-xs text-white">
@@ -72,21 +125,38 @@ const BannerCardTop = () => {
         <div className="mb-5 mt-4 flex items-center gap-2">
           {/* Select Email Menu */}
           <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-            <div className="relative h-[68px] w-full rounded-[14px] bg-[#F8F9FA] px-[14px] py-3">
+            <div
+              className="relative h-[50px] w-full rounded-[14px] border border-[#E9ECEF] bg-[#F8F9FA] px-2 py-3 md:h-[68px] md:px-[14px]"
+              ref={selectMenuRef}
+            >
               <DropdownMenuTrigger className="absolute left-0 top-0 z-0 h-full w-full">
                 <button
-                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  onClick={() => {
+                    // void getEmailsHistory();
+                    setDropdownOpen((prev) => !prev);
+                  }}
                 ></button>
               </DropdownMenuTrigger>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="bg-primary-dark grid h-7 w-7 place-items-center rounded-full font-medium text-white">
-                    5
+              <div className="flex h-full items-center justify-between">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="bg-primary-dark grid h-5 w-5 place-items-center rounded-full text-xs font-medium text-white md:h-7 md:w-7 md:text-base">
+                    {generatedEmails &&
+                      generatedEmails.length > 0 &&
+                      generatedEmails.length - 1}
                   </div>
-                  <p className="text-lg text-black">
-                    ihigaed356@mailrapido.com
-                  </p>
+                  {emailLoading ? (
+                    <div className="flex h-[40px] items-center justify-center space-x-2 bg-transparent">
+                      <span className="sr-only">Loading...</span>
+                      <div className="bg-primary-dark h-3 w-3 animate-bounce rounded-full [animation-delay:-0.3s]"></div>
+                      <div className="bg-primary-dark h-3 w-3 animate-bounce rounded-full [animation-delay:-0.15s]"></div>
+                      <div className="bg-primary-dark h-3 w-3 animate-bounce rounded-full"></div>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-black md:text-lg">
+                      {selectedEmail}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -97,17 +167,25 @@ const BannerCardTop = () => {
                   </button>
 
                   {/* Ignore this button to open or close the dropdown */}
-                  <button className="relative grid place-items-center rounded-[10px] bg-white p-[10px]">
+                  <button
+                    className="relative grid place-items-center rounded-[10px] bg-white p-0 md:p-[10px]"
+                    onClick={handleCopy}
+                  >
                     <CopyIcon />
                   </button>
+                  <ActionIconButton
+                    icon={QRCodeIcon}
+                    className="relative block h-auto !p-0 md:hidden"
+                  />
                 </div>
               </div>
             </div>
 
             <DropdownMenuContent
-              className="mt-1 w-[594px] rounded-[14px] border border-none border-[#F8F9FA] bg-white p-0"
+              className="mt-1 rounded-[14px] border border-none border-[#F8F9FA] bg-white p-0"
               style={{
                 boxShadow: "0px 4px 4px 0px #00000040",
+                width: dropDownWidth + "px",
               }}
             >
               <div className="flex items-center justify-between border-b border-b-[#E9ECEF] bg-[#F8F9FA] px-4 py-3 ">
@@ -145,8 +223,12 @@ const BannerCardTop = () => {
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-          <ActionIconButton icon={QRCodeIcon} />
-          <ActionIconButton icon={HistoryIcon} highlighted />
+          <ActionIconButton icon={QRCodeIcon} className="hidden md:block" />
+          <ActionIconButton
+            icon={HistoryIcon}
+            highlighted
+            className="hidden md:block"
+          />
         </div>
 
         {/* Action Buttons */}
@@ -157,6 +239,7 @@ const BannerCardTop = () => {
               text={action.text}
               icon={action.icon}
               highlighted={action.highlighted}
+              action={action.action}
             />
           ))}
         </div>
@@ -165,7 +248,7 @@ const BannerCardTop = () => {
         <div className="flex justify-center">
           <div className="bg-primary/10 text-primary inline-flex items-center gap-3 rounded-[6px] px-3 py-2 text-sm font-medium">
             <SMSIcon />
-            <span>You have 0 new messages</span>
+            <span>You have {messages?.length} new messages</span>
           </div>
         </div>
       </div>
@@ -173,25 +256,29 @@ const BannerCardTop = () => {
   );
 };
 
-const ActionButton = ({ text, icon, highlighted = false }) => {
+const ActionButton = ({ text, icon, highlighted = false, action }) => {
   return (
     <button
-      className={`flex w-full items-center gap-3 rounded-[14px] border border-[#23265042] px-[20px] py-[18px] font-semibold transition-all duration-300 ease-in-out hover:text-white ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-white text-black"}`}
+      className={`flex w-full items-center gap-3 rounded-[14px] border border-[#23265042] px-2 py-2 font-semibold transition-all duration-300 ease-in-out hover:text-white max-md:justify-center md:px-[20px] md:py-[18px] ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-white text-black"}`}
+      onClick={action}
     >
       {React.createElement(icon, {
         width: 24,
         height: 24,
         className: "fill-current",
       })}
-      <span className="">{text}</span>
+      <span className="hidden md:block">{text}</span>
     </button>
   );
 };
 
-const ActionIconButton = ({ icon, highlighted = false }) => {
+const ActionIconButton = ({ icon, highlighted = false, className = "" }) => {
   return (
     <button
-      className={`h-[68px] rounded-[14px] p-5 transition-all duration-300 hover:text-white ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-[#F8F9FA] text-black"}`}
+      className={clsx(
+        `h-[68px] rounded-[14px] p-5 transition-all duration-300 hover:text-white ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-[#F8F9FA] text-black"}`,
+        className,
+      )}
     >
       {React.createElement(icon, {
         width: 24,

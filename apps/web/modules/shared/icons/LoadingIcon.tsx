@@ -4,7 +4,7 @@ export default function LoadingIcon({
   width,
   height,
   size = 16,
-  color = "#323FD4",
+  color,
   className,
   ...rest
 }: IconProps) {
