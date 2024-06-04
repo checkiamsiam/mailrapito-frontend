@@ -152,8 +152,8 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] ">Custom Domains</p>
-                    <p className="text-[14px] text-[#56565B]">
+                    <p className="text-[24px] text-left">Custom Domains</p>
+                    <p className="text-[14px] text-[#56565B] text-left">
                       Add your domains and generate emails with them
                     </p>
                   </div>
@@ -180,8 +180,8 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] ">Forwarding</p>
-                    <p className="text-[14px] text-[#56565B]">
+                    <p className="text-[24px] text-left">Forwarding</p>
+                    <p className="text-[14px] text-[#56565B] text-left">
                       Drive all messages between different emails
                     </p>
                   </div>
@@ -200,8 +200,8 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] ">Manage Team</p>
-                    <p className="text-[14px] text-[#56565B]">
+                    <p className="text-[24px] text-left">Manage Team</p>
+                    <p className="text-[14px] text-[#56565B] text-left">
                       Manage members to streamline your team&apos;s workflow.
                     </p>
                   </div>

@@ -3,8 +3,8 @@ export const appConfig = {
     locales: ["en", "fr"] as const,
     defaultLocale: "en" as const,
     localeLabels: {
-      en: "English",
-      fr: "France",
+      en: "EN",
+      fr: "FR",
       // es: "Español",
       // de: "Deutsch",
     },

@@ -30,19 +30,19 @@ export function LocaleSwitch() {
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           aria-label="Language"
-          className="text-grayText items-center gap-3 border-2 py-6"
+          className="text-grayText items-center gap-2 py-6"
         >
           {/* <Icon.language className="h-4 w-4" /> */}
           <Image
             src={localeFlags[value] as string}
             alt="Flag Image"
-            width={32}
-            height={22}
+            width={24}
+            height={16.5}
           />
           <p className="text-lg font-medium">{localeLabels[value]}</p>
-          <Icon.chevronDown className="h-4 w-4" />
+          <Icon.chevronDown className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
 
@@ -64,8 +64,8 @@ export function LocaleSwitch() {
                 <Image
                   src={localeFlags[locale]}
                   alt="Flag Image"
-                  width={32}
-                  height={22}
+                  width={24}
+                  height={16.5}
                 />
                 <p>{locale in localeLabels ? localeLabels[locale] : locale}</p>
               </DropdownMenuRadioItem>

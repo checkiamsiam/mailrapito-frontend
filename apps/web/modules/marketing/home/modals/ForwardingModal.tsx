@@ -164,7 +164,7 @@ const ForwardingModal = ({
               <div className="mb-2 flex justify-between">
                 <p className="text-[#7C7D81]">Email From</p>
                 <div className="flex gap-2">
-                  <button className="bg-primary rounded-sm px-2 py-1 text-[12px] text-white">
+                  <button className="bg-primary-dark rounded-sm px-2 py-1 text-[12px] text-white">
                     Random
                   </button>
                   <button className="rounded-sm bg-[#F1F3F5] px-2 py-1 text-[12px] text-[#868E96]">
@@ -329,7 +329,7 @@ const ForwardingModal = ({
             </div>
 
             <div className="flex gap-3 max-md:mt-5">
-              <button className="bg-primary rounded-md px-[32px] py-[18px] text-white">
+              <button className="bg-primary-dark rounded-md px-[32px] py-[18px] text-white">
                 FORWARD
               </button>
               <button

@@ -18,13 +18,12 @@ const Modal = dynamic(() => import("react-responsive-modal"), {
 const CustomDomainModal = ({
   open,
   setOpen,
-  handleProfileModal
+  handleProfileModal,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   handleProfileModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-
   const handleBack = () => {
     setOpen(false);
     handleProfileModal(true);
@@ -113,68 +112,72 @@ const CustomDomainModal = ({
           </div>
 
           <div className="mt-3 overflow-hidden rounded-md border">
-            <div className="grid grid-cols-12 ">
+            <div className="grid grid-cols-7 md:grid-cols-12 ">
               {/* header part */}
-              <div className="col-span-2">
-                <p className="bg-[#F8F9FA] px-7 py-2 text-[#7C7D81] md:text-[20px]">
+              <div className="col-span-1 md:col-span-2">
+                <p className="bg-[#F8F9FA] px-7 py-2 text-[8px] text-[#7C7D81] md:text-[20px]">
                   Status
                 </p>
               </div>
-              <div className="col-span-2">
-                <p className="bg-[#F8F9FA] px-7 py-2  text-[#7C7D81] md:text-[20px]">
+              <div className="col-span-1 md:col-span-2">
+                <p className="bg-[#F8F9FA] px-7 py-2  text-[8px] text-[#7C7D81] md:text-[20px]">
                   Type
                 </p>
               </div>
-              <div className="col-span-2">
-                <p className="bg-[#F8F9FA] px-7 py-2 text-[#7C7D81] md:text-[20px] ">
+              <div className="col-span-1 md:col-span-2">
+                <p className="bg-[#F8F9FA] px-7 py-2 text-[8px] text-[#7C7D81] md:text-[20px] ">
                   Name
                 </p>
               </div>
-              <div className="col-span-2">
-                <p className="bg-[#F8F9FA] px-7 py-2 text-[#7C7D81] md:text-[20px] ">
+              <div className="col-span-1 md:col-span-2">
+                <p className="bg-[#F8F9FA] px-7 py-2 text-[8px] text-[#7C7D81] md:text-[20px] ">
                   Priority
                 </p>
               </div>
-              <div className="col-span-4">
-                <p className="bg-[#F8F9FA] px-7 py-2 text-[#7C7D81] md:text-[20px] ">
+              <div className="col-span-3 md:col-span-4">
+                <p className="bg-[#F8F9FA] px-7 py-2 text-[8px] text-[#7C7D81] md:text-[20px]">
                   Value
                 </p>
               </div>
               {/* items loop  */}
               {[1, 2].map((item) => (
                 <>
-                  <div className="col-span-2  px-7 py-4">
+                  <div className="col-span-1 flex  items-center  justify-center py-4 md:col-span-2 md:px-7">
                     {item === 1 ? (
-                      <div>
+                      <div className="relative h-[22px] w-[25px] md:h-[33px] md:w-[41px]">
                         <Image
                           src="/images/icons/ErrorRadio.svg"
-                          width={41}
-                          height={33}
+                          layout="fill"
                           alt=""
                         />
                       </div>
                     ) : (
-                      <div>
+                      <div className="relative h-[22px] w-[25px] md:h-[33px] md:w-[41px]">
                         <Image
                           src="/images/icons/SuccessRadio.svg"
-                          width={41}
-                          height={33}
+                          layout="fill"
                           alt=""
                         />
                       </div>
                     )}
                   </div>
-                  <div className="col-span-2 ">
-                    <p className=" px-7 py-4 md:text-[20px] ">MX</p>
+                  <div className="col-span-1 md:col-span-2">
+                    <p className=" px-8 py-4 text-[12px] md:px-7 md:text-[20px]">
+                      MX
+                    </p>
                   </div>
-                  <div className="col-span-2 ">
-                    <p className=" px-7 py-4 md:text-[20px] ">@</p>
+                  <div className="col-span-1 md:col-span-2">
+                    <p className=" px-8 py-4 text-[12px] md:px-7 md:text-[20px]">
+                      @
+                    </p>
                   </div>
-                  <div className="col-span-2 ">
-                    <p className=" px-7 py-4 md:text-[20px] ">10</p>
+                  <div className="col-span-1 md:col-span-2">
+                    <p className=" px-8 py-4 text-[12px] md:px-7 md:text-[20px]">
+                      10
+                    </p>
                   </div>
-                  <div className="col-span-4 ">
-                    <p className=" px-7 py-4 md:text-[20px] ">
+                  <div className="col-span-3 md:col-span-4 ">
+                    <p className=" px-8 py-4 text-[12px] md:px-7 md:text-[20px]">
                       mx.mailrapido.com.
                     </p>
                   </div>
@@ -196,15 +199,15 @@ const CustomDomainModal = ({
               </div>
             </div>
           </div>
-          <div className="mt-5 overflow-hidden rounded-md border">
-            <div className="grid grid-cols-12 ">
+          <div className="md:mt-5 overflow-hidden rounded-md md:border">
+            <div className="grid grid-cols-12 max-md:hidden">
               {/* header part */}
-              <div className="col-span-5 md:col-span-6">
+              <div className="col-span-5 md:col-span-5">
                 <p className="bg-[#F8F9FA] px-7 py-2 text-[20px] text-[#7C7D81]">
                   Domain
                 </p>
               </div>
-              <div className="col-span-4 md:col-span-3">
+              <div className="col-span-4 md:col-span-4">
                 <p className="bg-[#F8F9FA] px-7 py-2  text-[20px] text-[#7C7D81]">
                   Status
                 </p>
@@ -218,21 +221,21 @@ const CustomDomainModal = ({
               {/* items loop  */}
               {[1, 2].map((item) => (
                 <>
-                  <div className="col-span-5 md:col-span-6">
+                  <div className="col-span-5 md:col-span-5">
                     <p className=" dm:text-[20px] px-7 py-4 ">
                       {item === 1 ? "domain.com" : "mylongdomain2024abc.com"}
                     </p>
                   </div>
-                  <div className="col-span-4 md:col-span-3">
+                  <div className="col-span-4 md:col-span-4">
                     <div className=" px-7 py-4 ">
                       {item === 1 ? (
-                        <p className="rounded-md bg-[#FFF5F5] px-3 py-2 text-[#E03131]">
+                        <span className="rounded-md bg-[#FFF5F5] px-3 py-2 text-[#E03131]">
                           Not configured
-                        </p>
+                        </span>
                       ) : (
-                        <p className="rounded-md bg-[#EBFBEE] px-3 py-2 text-[#2F9E44]">
+                        <span className="rounded-md bg-[#EBFBEE] px-3 py-2 text-[#2F9E44]">
                           configured
-                        </p>
+                        </span>
                       )}
                     </div>
                   </div>
@@ -263,6 +266,54 @@ const CustomDomainModal = ({
                     </div>
                   )}
                 </>
+              ))}
+            </div>
+            <div className="md:hidden">
+              {[1, 2].map((item) => (
+                <div className="rounded-md bg-[#F8F9FA] p-4 mt-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      {item === 1 ? (
+                        <p className="rounded-md bg-[#FFF5F5] px-3 py-2 text-[#E03131]">
+                          Not configured
+                        </p>
+                      ) : (
+                        <p className="rounded-md bg-[#EBFBEE] px-3 py-2 text-[#2F9E44]">
+                          configured
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <button className="flex items-center justify-center">
+                        <QuestionCircleIcon
+                          width={24}
+                          height={24}
+                          color="#7C7D81"
+                        />
+                      </button>
+                      <button className="flex items-center justify-center">
+                        <RefreshIcon width={24} height={24} color="#7C7D81" />
+                      </button>
+                      <button className="flex items-center justify-center">
+                        <DeleteIcon width={20} height={20} color="#7C7D81" />
+                      </button>
+                    </div>
+                  </div>
+                  <p className=" text-[20px] py-4 ">
+                    {item === 1 ? "domain.com" : "mylongdomain2024abc.com"}
+                  </p>
+                  {item === 1 && (
+                    <div className="col-span-12 ">
+                      <p className="bg-[#FFF5F5] px-7 py-4 text-[18px] text-[#E03131]">
+                        Domain1.com isn&apos;t configured correctly. Please{" "}
+                        <span className="cursor-pointer font-bold underline">
+                          complete instruction.
+                        </span>{" "}
+                        And click to the &apos;Recheck Domain&apos; button.
+                      </p>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
