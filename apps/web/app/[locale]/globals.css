@@ -135,7 +135,7 @@ body {
   z-index: -1;
   inset: 0;
   border: 3px solid transparent;
-  border-radius: 1.5rem;
+  border-radius: 0.75rem;
   background: inherit;
   background-origin: border-box;
   background-clip: border-box;
