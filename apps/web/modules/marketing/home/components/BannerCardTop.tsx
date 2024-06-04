@@ -253,68 +253,30 @@ const BannerCardTop = ({
                   width: dropDownWidth + "px",
                 }}
               >
-                <div className="flex items-center justify-between border-b border-b-[#E9ECEF] bg-[#F8F9FA] px-4 py-3 ">
-                  <CheckBoxButton
-                    checked
-                    label={
-                      <strong className="text-xs md:text-lg">
-                        All Emails At Once
-                      </strong>
-                    }
-                  />
-                  <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] font-medium">
-                    1200
-                  </div>
-                </div>
-
-                {/* {emails?.map((item, i) => (
-                  <div
-                    className="hover:bg-primary/10 flex items-center justify-between bg-transparent px-4 py-4 transition-all duration-200"
-                    key={i}
-                  >
-                    <CheckBoxButton
-                      checked={false}
-                      label={
-                        <span className="text-xs md:text-lg">
-                          {item?.email}
-                        </span>
-                      }
-                    />
-                    <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] text-xs font-medium md:text-base">
-                      {item?.value}
-                    </div>
-                  </div>
-                ))} */}
-
+                {/* remove the first element using slice */}
                 {generatedEmails &&
                   generatedEmails.length > 0 &&
-                  generatedEmails.map((email) => {
+                  generatedEmails.map((email, i) => {
                     return (
                       <button
                         key={email.email}
-                        className={`hover:bg-primary/10 flex w-full items-center justify-between bg-transparent px-4 py-4 transition-all`}
+                        className={`hover:bg-primary/10 flex w-full items-center justify-between px-4 py-4 transition-all ${i === 0 ? "border-b border-b-[#E9ECEF] bg-[#F8F9FA] font-bold" : " bg-transparent"}`}
                         onClick={async () => {
+                          setDropdownOpen(false);
                           await activeThisEmail(email);
                         }}
                         onMouseEnter={() => setCopyEmail(email.email)}
                         onMouseLeave={() => setCopyEmail("")}
                       >
                         <div className="">
-                          <input
-                            type="radio"
-                            id={email.email}
-                            name="email"
-                            value="30"
+                          <CheckBoxButton
                             checked={selectedEmail === email.email}
-                            disabled
-                            className="rounded-full border-0 bg-[rgb(0,0,0,.5)] checked:rounded-full checked:bg-[rgb(0,0,0,.5)] checked:shadow-inner checked:ring-black checked:ring-offset-black checked:hover:bg-[rgb(0,0,0,.5)]"
+                            label={
+                              <span className="text-xs md:text-lg">
+                                {email.email}
+                              </span>
+                            }
                           />
-                          <label
-                            className="text-md cursor-pointer pl-2"
-                            htmlFor={email.email}
-                          >
-                            {email.email}
-                          </label>
                         </div>
                         <div className="flex items-center justify-center">
                           {copyEmail === email.email &&
