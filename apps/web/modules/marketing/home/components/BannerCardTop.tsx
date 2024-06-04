@@ -18,21 +18,26 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
+import { Icon } from "@ui/components/icon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@ui/components/tooltip";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import useEmailHistoryStore from "../../../../hooks/stores/useEmailHistory";
 import useSubscriptionModalStore from "../../../../hooks/stores/useSubscriptionModal";
+import {
+  activeThisEmailInHistoryLS,
+  getLSEmails,
+  persistLSEmails,
+} from "../../../../utils/localStorage-config";
+import CreateEmailModal from "../modals/CreateEmailModal";
 import CustomDomainModal from "../modals/CustomDomainModal";
 import ForwardingModal from "../modals/ForwardingModal";
 import BannerEmailHistory from "./BannerEmailHistory";
-
-const emails = [
-  { email: "ihigaed356@mailrapido.com", value: 1000 },
-  { email: "ihigaed356@mailrapido.com", value: 55 },
-  { email: "ihigaed356@mailrapido.com", value: 60 },
-  { email: "ihigaed356@mailrapido.com", value: 40 },
-  { email: "ihigaed356@mailrapido.com", value: 45 },
-];
 
 type IProps = {
   handleCopy: () => void;
@@ -58,9 +63,66 @@ const BannerCardTop = ({
   const [dropDownWidth, setDropDownWidth] = React.useState(594);
   const [forwardOpen, setForwardOpen] = React.useState(false);
   const [customModalOpen, setCustomModalOpen] = React.useState(false);
-  const { selectedEmail, generatedEmails } = useEmailHistoryStore();
+  const {
+    selectedEmail,
+    setSelectedEmail,
+    generatedEmails,
+    setGeneratedEmails,
+  } = useEmailHistoryStore();
   const subScriptionModal = useSubscriptionModalStore();
+  const [copyEmail, setCopyEmail] = React.useState("");
 
+  // ---- handel local storage emails
+  const handleLocalStorageEmail = () => {
+    const emails = getLSEmails();
+    const isActive = emails?.find((email) => email.active);
+    const newObj = {
+      email: "All Emails",
+      token: "0",
+      date: Date.now(),
+      active: false,
+      expireIn: "",
+    };
+    if (isActive) {
+      newObj.active = false;
+      setSelectedEmail(isActive.email);
+    } else {
+      newObj.active = true;
+      setSelectedEmail(newObj.email);
+    }
+    const allEmails = [newObj, ...emails];
+    setGeneratedEmails(allEmails);
+  };
+
+  // ---- active email
+  const activeThisEmail = async (e) => {
+    const emails = getLSEmails();
+    if (e.email === "All Emails") {
+      emails.forEach((obj) => {
+        obj.active = false;
+      });
+      setSelectedEmail("All Emails");
+    } else {
+      emails.forEach((obj) => {
+        if (obj.email === e.email) {
+          void persistLSEmails(
+            e.email as string,
+            e.token as string,
+            e.expireIn as string,
+          );
+          activeThisEmailInHistoryLS(e.email as string);
+          obj.active = true;
+        } else {
+          obj.active = false;
+        }
+      });
+    }
+    localStorage.setItem("emails", JSON.stringify(emails));
+    handleLocalStorageEmail();
+    await refetchMessages();
+  };
+
+  // ---- action buttons
   const actions = [
     {
       text: "Refresh",
@@ -71,11 +133,23 @@ const BannerCardTop = ({
     {
       text: "Random",
       icon: RandomIcon,
+      action: deleteAPI,
     },
     {
-      text: "Custom",
-      icon: PlusIcon,
-      action: () => setCustomModalOpen(true),
+      modal: (
+        <CreateEmailModal refetchMessages={refetchMessages}>
+          <button
+            className={`hover:bg-primary-dark flex items-center gap-3 rounded-[10px] border border-[#23265042] bg-white px-2 py-2 font-semibold text-black transition-all duration-300 ease-in-out hover:text-white max-md:justify-center md:rounded-[14px] md:px-[20px] md:py-[18px]`}
+          >
+            {React.createElement(PlusIcon, {
+              width: 24,
+              height: 24,
+              className: "fill-current",
+            })}
+            <span className="hidden lg:block">Custom</span>
+          </button>
+        </CreateEmailModal>
+      ),
     },
     {
       text: "Forward",
@@ -109,7 +183,8 @@ const BannerCardTop = ({
         <div className="mt-1 flex justify-between md:mt-0 md:justify-end">
           <div className="block md:hidden">
             <BannerEmailHistory
-              refetchMessages={refetchMessages}
+              activeThisEmail={activeThisEmail}
+              handleLocalStorageEmail={handleLocalStorageEmail}
             ></BannerEmailHistory>
           </div>
           <div className="relative rounded-lg bg-[#F8F9FA] p-2">
@@ -191,38 +266,61 @@ const BannerCardTop = ({
                   width: dropDownWidth + "px",
                 }}
               >
-                <div className="flex items-center justify-between border-b border-b-[#E9ECEF] bg-[#F8F9FA] px-4 py-3 ">
-                  <CheckBoxButton
-                    checked
-                    label={
-                      <strong className="text-xs md:text-lg">
-                        All Emails At Once
-                      </strong>
-                    }
-                  />
-                  <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] font-medium">
-                    1200
-                  </div>
-                </div>
-
-                {emails?.map((item, i) => (
-                  <div
-                    className="hover:bg-primary/10 flex items-center justify-between bg-transparent px-4 py-4 transition-all duration-200"
-                    key={i}
-                  >
-                    <CheckBoxButton
-                      checked={false}
-                      label={
-                        <span className="text-xs md:text-lg">
-                          {item?.email}
-                        </span>
-                      }
-                    />
-                    <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] text-xs font-medium md:text-base">
-                      {item?.value}
-                    </div>
-                  </div>
-                ))}
+                {/* remove the first element using slice */}
+                {generatedEmails &&
+                  generatedEmails.length > 0 &&
+                  generatedEmails.map((email, i) => {
+                    return (
+                      <button
+                        key={email.email}
+                        className={`hover:bg-primary/10 flex w-full items-center justify-between px-4 py-4 transition-all ${i === 0 ? "border-b border-b-[#E9ECEF] bg-[#F8F9FA] font-bold" : " bg-transparent"}`}
+                        onClick={async () => {
+                          setDropdownOpen(false);
+                          await activeThisEmail(email);
+                        }}
+                        onMouseEnter={() => setCopyEmail(email.email)}
+                        onMouseLeave={() => setCopyEmail("")}
+                      >
+                        <div className="">
+                          <CheckBoxButton
+                            checked={selectedEmail === email.email}
+                            label={
+                              <span className="text-xs md:text-lg">
+                                {email.email}
+                              </span>
+                            }
+                          />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          {copyEmail === email.email &&
+                            copyEmail !== "All Emails" && (
+                              <div className="px-3 hover:block">
+                                <TooltipProvider>
+                                  <Tooltip data-side="right">
+                                    <TooltipTrigger>
+                                      <button
+                                        title={email.email}
+                                        onClick={() =>
+                                          navigator.clipboard.writeText(
+                                            email.email,
+                                          )
+                                        }
+                                      >
+                                        <Icon.copy size={14} />
+                                      </button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>Copy Email</TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              </div>
+                            )}
+                          <div className="border-primary/10 text-primary-dark grid place-items-center rounded-full border px-3 py-[5px] text-xs font-medium md:text-base">
+                            {0}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
 
                 <div className="flex items-center justify-center gap-[28px] bg-[#F8F9FA] p-4">
                   <p className="text-xs text-[#868E96] md:text-base">
@@ -240,22 +338,27 @@ const BannerCardTop = ({
             <ActionIconButton icon={QRCodeIcon} className="hidden md:block" />
             <div className="hidden md:block">
               <BannerEmailHistory
-                refetchMessages={refetchMessages}
+                activeThisEmail={activeThisEmail}
+                handleLocalStorageEmail={handleLocalStorageEmail}
               ></BannerEmailHistory>
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="mb-6 flex items-center justify-center gap-2 lg:justify-between">
-            {actions.map((action) => (
-              <ActionButton
-                key={action.text}
-                text={action.text}
-                icon={action.icon}
-                highlighted={action.highlighted}
-                action={action.action}
-              />
-            ))}
+            {actions.map((action) => {
+              return action.modal ? (
+                action.modal
+              ) : (
+                <ActionButton
+                  key={action.text}
+                  text={action.text}
+                  icon={action.icon}
+                  highlighted={action.highlighted}
+                  action={action.action}
+                />
+              );
+            })}
           </div>
 
           {/* action bottom  */}
@@ -281,7 +384,7 @@ const BannerCardTop = ({
 export const ActionButton = ({ text, icon, highlighted = false, action }) => {
   return (
     <button
-      className={`flex items-center gap-3 rounded-[10px] md:rounded-[14px] border border-[#23265042] px-2 py-2 font-semibold transition-all duration-300 ease-in-out hover:text-white max-md:justify-center md:px-[20px] md:py-[18px] ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-white text-black"}`}
+      className={`flex items-center gap-3 rounded-[10px] border border-[#23265042] px-2 py-2 font-semibold transition-all duration-300 ease-in-out hover:text-white max-md:justify-center md:rounded-[14px] md:px-[20px] md:py-[18px] ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-white text-black"}`}
       onClick={action}
     >
       {React.createElement(icon, {
@@ -302,7 +405,7 @@ export const ActionIconButton = ({
   return (
     <button
       className={clsx(
-        `h-[68px] rounded-[10px] md:rounded-[14px] p-5 transition-all duration-300 hover:text-white ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-[#F8F9FA] text-black"}`,
+        `h-[68px] rounded-[10px] p-5 transition-all duration-300 hover:text-white md:rounded-[14px] ${highlighted ? "bg-primary-dark text-white hover:bg-black" : "hover:bg-primary-dark bg-[#F8F9FA] text-black"}`,
         className,
       )}
     >
