@@ -34,6 +34,7 @@ import {
   getLSEmails,
   persistLSEmails,
 } from "../../../../utils/localStorage-config";
+import CreateEmailModal from "../modals/CreateEmailModal";
 import CustomDomainModal from "../modals/CustomDomainModal";
 import ForwardingModal from "../modals/ForwardingModal";
 import BannerEmailHistory from "./BannerEmailHistory";
@@ -132,11 +133,23 @@ const BannerCardTop = ({
     {
       text: "Random",
       icon: RandomIcon,
+      action: deleteAPI,
     },
     {
-      text: "Custom",
-      icon: PlusIcon,
-      action: () => setCustomModalOpen(true),
+      modal: (
+        <CreateEmailModal refetchMessages={refetchMessages}>
+          <button
+            className={`hover:bg-primary-dark flex items-center gap-3 rounded-[10px] border border-[#23265042] bg-white px-2 py-2 font-semibold text-black transition-all duration-300 ease-in-out hover:text-white max-md:justify-center md:rounded-[14px] md:px-[20px] md:py-[18px]`}
+          >
+            {React.createElement(PlusIcon, {
+              width: 24,
+              height: 24,
+              className: "fill-current",
+            })}
+            <span className="hidden lg:block">Custom</span>
+          </button>
+        </CreateEmailModal>
+      ),
     },
     {
       text: "Forward",
@@ -333,15 +346,19 @@ const BannerCardTop = ({
 
           {/* Action Buttons */}
           <div className="mb-6 flex items-center justify-center gap-2 lg:justify-between">
-            {actions.map((action) => (
-              <ActionButton
-                key={action.text}
-                text={action.text}
-                icon={action.icon}
-                highlighted={action.highlighted}
-                action={action.action}
-              />
-            ))}
+            {actions.map((action) => {
+              return action.modal ? (
+                action.modal
+              ) : (
+                <ActionButton
+                  key={action.text}
+                  text={action.text}
+                  icon={action.icon}
+                  highlighted={action.highlighted}
+                  action={action.action}
+                />
+              );
+            })}
           </div>
 
           {/* action bottom  */}
