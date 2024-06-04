@@ -271,23 +271,30 @@ export function NavBar() {
             <>
               <button
                 onClick={() => setOpenProfileModal(true)}
-                className="flex items-center gap-2 rounded-md bg-[#F4F5FB] p-2 max-md:hidden"
+                className="flex items-center gap-2 rounded-[12px] bg-[#F4F5FB] px-2 py-[5px] max-md:hidden"
               >
-                <div className="relative h-12 w-12 ">
-                  <Image
-                    src="/images/avatar/avatar3.png"
-                    alt="close"
-                    layout="fill"
-                  />
-                </div>
-                <div>
-                  <p className="text-primary-gradient  text-[20px]">Premium</p>
-                  <p className="ml-2 text-[12px] text-[#7C7D81]">
-                    Remain 100days
+                {/* <div className="relative h-12 w-12 "> */}
+                <Image
+                  src="/images/avatar/avatar3.png"
+                  alt="close"
+                  // layout="fill"
+                  width={52}
+                  height={52}
+                />
+                {/* </div> */}
+                <div className="text-left">
+                  <p className="text-primary-gradient text-[20px] font-bold">
+                    Premium
                   </p>
+                  <p className="text-[12px] text-[#7C7D81]">Remain 100days</p>
                 </div>
                 <div>
-                  <div className="shadow-[0px 4px 4px 0px #00000040] ml-1 flex h-12 w-12 items-center justify-center rounded-md bg-white">
+                  <div
+                    className="ml-1 flex h-[52px] w-[52px] items-center justify-center rounded-[15px] bg-white"
+                    style={{
+                      boxShadow: "0px 4px 4px 0px #00000040",
+                    }}
+                  >
                     <LogoutIcon />
                   </div>
                 </div>
