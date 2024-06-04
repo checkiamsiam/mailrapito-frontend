@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/await-thenable */
 import HistoryIcon from "@shared/icons/HistoryIcon";
 import { Button } from "@ui/components/button";
 import {
@@ -17,24 +18,25 @@ import {
 import moment from "moment";
 import { useMemo, useState } from "react";
 import { getRecords } from "../../../../db";
-import useEmailHistoryStore from "../../../../hooks/stores/useEmailHistory";
 import type {
   IEmail,
   IEmailGroup,
 } from "../../../../interface/commonInterface";
 import {
-  activeThisEmailInHistoryLS,
   getLSEmails,
-  getLSEmailsHistory,
-  persistLSEmails,
+  getLSEmailsHistory
 } from "../../../../utils/localStorage-config";
 import { ActionIconButton } from "./BannerCardTop";
 
 interface IProps {
-  refetchMessages: any;
+  activeThisEmail: (e) => void;
+  handleLocalStorageEmail: () => void;
 }
 
-const BannerEmailHistory = ({ refetchMessages }: IProps) => {
+const BannerEmailHistory = ({
+  activeThisEmail,
+  handleLocalStorageEmail,
+}: IProps) => {
   // ----- states -----
   const [open, setOpen] = useState(false);
   const [searchText, setSearchText] = useState<string>("");
@@ -42,9 +44,7 @@ const BannerEmailHistory = ({ refetchMessages }: IProps) => {
   const [selectedEmails, setSelectedEmails] = useState(new Set());
   const [numbersOfEmailsInHistory, setNumbersOfEmailsInHistory] = useState(0);
   const [showUseEmailBtn, setShowUseEmailBtn] = useState("");
-  const { setSelectedEmail, setGeneratedEmails } = useEmailHistoryStore(
-    (state) => state,
-  );
+ 
 
   // ----- functions -----
   // ---- handle email checkbox change
@@ -80,56 +80,6 @@ const BannerEmailHistory = ({ refetchMessages }: IProps) => {
       }
     }
     setSelectedEmails(newSelectedEmails);
-  };
-
-  // ---- handel local storage emails
-  const handleLocalStorageEmail = () => {
-    const emails = getLSEmails();
-    const isActive = emails?.find((email) => email.active);
-    const newObj = {
-      email: "All Emails",
-      token: "0",
-      date: Date.now(),
-      active: false,
-      expireIn: "",
-    };
-    if (isActive) {
-      newObj.active = false;
-      setSelectedEmail(isActive.email);
-    } else {
-      newObj.active = true;
-      setSelectedEmail(newObj.email);
-    }
-    const allEmails = [newObj, ...emails];
-    setGeneratedEmails(allEmails);
-  };
-
-  // ---- active email
-  const activeThisEmail = async (e) => {
-    const emails = getLSEmails();
-    if (e.email === "All Emails") {
-      emails.forEach((obj) => {
-        obj.active = false;
-      });
-      setSelectedEmail("All Emails");
-    } else {
-      emails.forEach((obj) => {
-        if (obj.email === e.email) {
-          void persistLSEmails(
-            e.email as string,
-            e.token as string,
-            e.expireIn as string,
-          );
-          activeThisEmailInHistoryLS(e.email as string);
-          obj.active = true;
-        } else {
-          obj.active = false;
-        }
-      });
-    }
-    localStorage.setItem("emails", JSON.stringify(emails));
-    handleLocalStorageEmail();
-    await refetchMessages();
   };
 
   // ---- active history email
@@ -286,7 +236,7 @@ const BannerEmailHistory = ({ refetchMessages }: IProps) => {
               <ActionIconButton
                 icon={HistoryIcon}
                 highlighted
-                className="max-md:!p-2 max-md:h-auto"
+                className="max-md:h-auto max-md:!p-2"
               />
             </TooltipTrigger>
             <TooltipContent>Open Emails history</TooltipContent>
