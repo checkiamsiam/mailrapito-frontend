@@ -146,6 +146,8 @@ body {
   mask-composite: exclude;
   -webkit-mask-repeat: no-repeat;
 }
+
+
 .gradient-border-with-text {
   background: linear-gradient(90deg, #4e6aff 0%, #f55b7a 100%);
   -webkit-background-clip: text;

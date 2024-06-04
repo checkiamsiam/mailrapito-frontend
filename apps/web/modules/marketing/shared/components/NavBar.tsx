@@ -225,7 +225,7 @@ export function NavBar() {
                 {menuItem.label}
               </Link>
             ))}
-            <div>
+            {/* <div>
               <Button
                 className="rounded-lg bg-red-500 px-8 py-6 text-base"
                 variant="default"
@@ -233,7 +233,7 @@ export function NavBar() {
               >
                 Test Payment
               </Button>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex items-center justify-end gap-3">

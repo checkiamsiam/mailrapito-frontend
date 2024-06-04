@@ -5,7 +5,7 @@ import EditIcon from "@shared/icons/EditIcon";
 import { cn } from "@ui/lib";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
@@ -23,6 +23,10 @@ const ProfileModal = ({
   handleOpenForwardModal: Dispatch<SetStateAction<boolean>>;
   handleOpenCustomModal: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const [hovered1, setHovered1] = useState(false);
+  const [hovered2, setHovered2] = useState(false);
+  const [hovered3, setHovered3] = useState(false);
+  const [hovered4, setHovered4] = useState(false);
   const handleOpenFroward = () => {
     setOpen(false);
     handleOpenForwardModal(true);
@@ -200,7 +204,9 @@ const ProfileModal = ({
             <div className="order-3 col-span-12 md:col-span-6 lg:col-span-3">
               <button
                 onClick={handleOpenCustom}
-                className="relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6"
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered1 && "gradient-border"} `}
+                onMouseEnter={() => setHovered1(true)}
+                onMouseLeave={() => setHovered1(false)}
               >
                 <div>
                   <div className="mb-4">
@@ -228,7 +234,9 @@ const ProfileModal = ({
             <div className="order-4 col-span-12 md:col-span-6 lg:col-span-3">
               <button
                 onClick={handleOpenFroward}
-                className="h-full w-full cursor-pointer rounded-3xl border bg-[#F8F9FA] p-6"
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered2 && "gradient-border"} `}
+                onMouseEnter={() => setHovered2(true)}
+                onMouseLeave={() => setHovered2(false)}
               >
                 <div>
                   <div className="mb-4">
@@ -249,7 +257,11 @@ const ProfileModal = ({
               </button>
             </div>
             <div className="order-5 col-span-12 md:col-span-6 lg:col-span-3">
-              <button className="h-full w-full rounded-3xl border bg-[#F8F9FA] p-6">
+              <button
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered3 && "gradient-border"} `}
+                onMouseEnter={() => setHovered3(true)}
+                onMouseLeave={() => setHovered3(false)}
+              >
                 <div>
                   <div className="mb-4">
                     <Image
@@ -269,7 +281,11 @@ const ProfileModal = ({
               </button>
             </div>
             <div className="order-6 col-span-12 md:col-span-6 lg:col-span-3">
-              <button className=" relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6">
+              <button
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered4 && "gradient-border"} `}
+                onMouseEnter={() => setHovered4(true)}
+                onMouseLeave={() => setHovered4(false)}
+              >
                 <div>
                   <div className="mb-4">
                     <Image
