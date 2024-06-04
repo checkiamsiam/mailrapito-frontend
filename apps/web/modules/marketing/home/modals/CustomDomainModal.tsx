@@ -60,7 +60,7 @@ const CustomDomainModal = ({
           </div>
           <div className="my-5 flex items-center justify-between">
             <h5 className="text-[28px] font-semibold">Custom Domains</h5>
-            <button className="bg-primary flex items-center justify-center gap-2 rounded-md px-[32px] py-[18px] text-white">
+            <button className="bg-primary-dark flex items-center justify-center gap-2 rounded-md px-[32px] py-[18px] text-white">
               <PlusIconWithoutCircle width={24} height={24} />
               <span>ADD</span>
               <span className="max-md:hidden">DOMAIN</span>
@@ -78,7 +78,7 @@ const CustomDomainModal = ({
             </div>
             <div className="col-span-12 md:col-span-4">
               <div className="flex justify-center gap-3 max-md:mt-5">
-                <button className="bg-primary flex items-center justify-center gap-2 rounded-md px-[24px] py-[18px] text-white">
+                <button className="bg-primary-dark flex items-center justify-center gap-2 rounded-md px-[24px] py-[18px] text-white">
                   <PlusIconWithoutCircle width={24} height={24} />
                   <span>ADD</span>
                   <span className="md:hidden">DOMAIN</span>
@@ -221,7 +221,7 @@ const CustomDomainModal = ({
               {/* items loop  */}
               {[1, 2].map((item) => (
                 <>
-                  <div className="col-span-5 md:col-span-5">
+                  <div  className="col-span-5 md:col-span-5">
                     <p className=" dm:text-[20px] px-7 py-4 ">
                       {item === 1 ? "domain.com" : "mylongdomain2024abc.com"}
                     </p>
@@ -269,8 +269,8 @@ const CustomDomainModal = ({
               ))}
             </div>
             <div className="md:hidden">
-              {[1, 2].map((item) => (
-                <div className="rounded-md bg-[#F8F9FA] p-4 mt-5">
+              {[1, 2].map((item , i) => (
+                <div key={i} className="rounded-md bg-[#F8F9FA] p-4 mt-5">
                   <div className="flex items-center justify-between">
                     <div>
                       {item === 1 ? (

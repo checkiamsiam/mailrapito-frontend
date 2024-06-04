@@ -15,7 +15,7 @@ const ProfileModal = ({
   open,
   setOpen,
   handleOpenForwardModal,
-  handleOpenCustomModal
+  handleOpenCustomModal,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -95,8 +95,8 @@ const ProfileModal = ({
           </div>
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-12 ">
-              <div className="bg-primary-light-gradient rounded-3xl p-6">
-                <p className="text-[24px] font-semibold">Subscription</p>
+              <div className="bg-[#F8F9FA] rounded-3xl p-6">
+                <p className="text-[24px] font-semibold">Plan</p>
                 <div className="mt-4 grid grid-cols-12  max-md:mb-2">
                   <div className="col-span-3">
                     <Image
@@ -140,8 +140,11 @@ const ProfileModal = ({
                 </div>
               </div>
             </div>
-            <div className="col-span-12 lg:col-span-4">
-              <button onClick={handleOpenCustom} className="gradient-border relative rounded-3xl border p-6 w-full">
+            <div className="col-span-12 md:col-span-6 lg:col-span-3">
+              <button
+                onClick={handleOpenCustom}
+                className=" relative w-full rounded-3xl border p-6 h-full bg-[#F8F9FA]"
+              >
                 <div>
                   <div className="mb-4">
                     <Image
@@ -152,23 +155,23 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] text-left">Custom Domains</p>
-                    <p className="text-[14px] text-[#56565B] text-left">
+                    <p className="text-left text-[24px]">Custom Domains</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
                       Add your domains and generate emails with them
                     </p>
                   </div>
                 </div>
                 <div>
-                  <PrimaryButton className="absolute right-5 top-5 text-[16px]">
+                  <PrimaryButton className="absolute right-2 top-2 text-[12px] py-2 px-3 ">
                     New
                   </PrimaryButton>
                 </div>
               </button>
             </div>
-            <div className="col-span-12 lg:col-span-4">
+            <div className="col-span-12 md:col-span-6 lg:col-span-3">
               <button
                 onClick={handleOpenFroward}
-                className="rounded-3xl border bg-[#FCFEFF] p-6 cursor-pointer w-full"
+                className="w-full cursor-pointer rounded-3xl border bg-[#F8F9FA] p-6 h-full"
               >
                 <div>
                   <div className="mb-4">
@@ -180,16 +183,16 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] text-left">Forwarding</p>
-                    <p className="text-[14px] text-[#56565B] text-left">
+                    <p className="text-left text-[24px]">Forwarding</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
                       Drive all messages between different emails
                     </p>
                   </div>
                 </div>
               </button>
             </div>
-            <div className="col-span-12 lg:col-span-4">
-              <button className="rounded-3xl border bg-[#FCFEFF] p-6 w-full">
+            <div className="col-span-12 md:col-span-6 lg:col-span-3">
+              <button className="w-full rounded-3xl border bg-[#F8F9FA] p-6 h-full">
                 <div>
                   <div className="mb-4">
                     <Image
@@ -200,11 +203,37 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] text-left">Manage Team</p>
-                    <p className="text-[14px] text-[#56565B] text-left">
+                    <p className="text-left text-[24px]">Manage Team</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
                       Manage members to streamline your team&apos;s workflow.
                     </p>
                   </div>
+                </div>
+              </button>
+            </div>
+            <div className="col-span-12 md:col-span-6 lg:col-span-3">
+              <button className=" relative w-full rounded-3xl border bg-[#F8F9FA] p-6 h-full">
+                <div>
+                  <div className="mb-4">
+                    <Image
+                      src="/images/icons/api-keys.svg"
+                      alt="close"
+                      width={90}
+                      height={90}
+                    />
+                  </div>
+                  <div>
+                    <p className="text-left text-[24px]">API Keys</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
+                      Generate API keys to use on your project, you can also
+                      check the <span className="font-semibold underline">API Documentation</span>.
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <PrimaryButton className="absolute right-2 top-2 text-[12px] py-2 px-3 ">
+                    New
+                  </PrimaryButton>
                 </div>
               </button>
             </div>
