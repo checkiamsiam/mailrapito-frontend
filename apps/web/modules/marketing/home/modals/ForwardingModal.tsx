@@ -14,7 +14,6 @@ import {
 import { cn } from "@ui/lib";
 import { ChevronDown } from "lucide-react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
@@ -51,7 +50,7 @@ const ForwardingModal = ({
         onOverlayClick={() => setOpen(false)}
         classNames={{
           modal:
-            "z-[100]  m-0  my-auto  p-10 xl:min-w-[1107px] md:min-w-[90vw] mx-auto rounded-3xl",
+            "z-[100]  m-0  my-auto  p-10 xl:min-w-[1107px] md:min-w-[90vw] w-full mx-auto rounded-3xl",
         }}
       >
         <div>
@@ -110,7 +109,7 @@ const ForwardingModal = ({
             </div>
           </div>
           <div className="bg-primary-light-gradient mt-6 rounded-md p-3 lg:hidden">
-            <p className="rounded-md bg-white px-[10px] py-[10px] text-center text-[18px]">
+            <p className="rounded-md bg-white px-[10px] py-[10px] text-center text-[14px]">
               randomjack123@domain1.com
             </p>
             <div className="my-3 flex items-center justify-center">
@@ -140,19 +139,19 @@ const ForwardingModal = ({
                 </defs>
               </svg>
             </div>
-            <p className="rounded-md bg-white px-[10px] py-[10px] text-center text-[18px]">
+            <p className="rounded-md bg-white px-[10px] py-[10px] text-center text-[14px]">
               randomjack123@domain1.com
             </p>
-            <div className="pt-5 px-3">
-              <div className="flex justify-between items-center">
+            <div className="px-3 pt-5">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <p className="text-[18px]">
                     Left <span className="font-bold">3 month</span>
                   </p>
-                  <TimerIcon/>
+                  <TimerIcon />
                 </div>
                 <div className="flex  items-center">
-                  <button className="bg-primary h-[37px] w-[37px] rounded-full flex items-center justify-center">
+                  <button className="bg-primary flex h-[37px] w-[37px] items-center justify-center rounded-full">
                     <DeleteIcon width={20} height={20} color="white" />
                   </button>
                 </div>
@@ -176,7 +175,7 @@ const ForwardingModal = ({
                 <Input
                   type="text"
                   placeholder="Email"
-                  className="focus-visible::border-transparent col-span-6 border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0"
+                  className="focus-visible::border-transparent col-span-3 border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0 md:col-span-6"
                 />
                 <div className="col-span-1 flex items-center justify-center">
                   <svg
@@ -190,10 +189,10 @@ const ForwardingModal = ({
                   </svg>
                 </div>
 
-                <div className="col-span-5">
+                <div className="col-span-8 md:col-span-5">
                   <Select defaultValue="pirolsnet.com">
                     <SelectTrigger
-                      className="focus-visible::border-transparent w-[180px] border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0"
+                      className="focus-visible::border-transparent w-[160px] border-none text-[16px] outline-none focus:outline-none focus:ring-0 md:w-[180px] "
                       icon={<ChevronDown className="h-4 w-4 opacity-50" />}
                     >
                       <SelectValue placeholder="Select Domain" />
@@ -210,7 +209,7 @@ const ForwardingModal = ({
               </div>
             </div>
             <div className="flex w-full items-center justify-center lg:w-[8%] ">
-              <SendIcon className="mt-10" />
+              <SendIcon className="max-md:my-5 md:mt-10" />
             </div>
             <div className="w-full lg:w-[46%]">
               <div className="mb-2 flex justify-between">
@@ -220,7 +219,7 @@ const ForwardingModal = ({
                 <Input
                   type="text"
                   placeholder="Email"
-                  className="focus-visible::border-transparent col-span-6 border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0"
+                  className="focus-visible::border-transparent col-span-3 border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0 md:col-span-6"
                 />
                 <div className="col-span-1 flex items-center justify-center">
                   <svg
@@ -234,10 +233,10 @@ const ForwardingModal = ({
                   </svg>
                 </div>
 
-                <div className="col-span-5">
+                <div className="col-span-8 md:col-span-5">
                   <Select defaultValue="pirolsnet.com">
                     <SelectTrigger
-                      className="focus-visible::border-transparent w-[180px] border-none text-[16px] outline-none focus:outline-none focus-visible:ring-0"
+                      className="focus-visible::border-transparent w-[160px] border-none text-[16px] outline-none focus:outline-none focus:ring-0 sm:w-[180px]"
                       icon={<ChevronDown className="h-4 w-4 opacity-50" />}
                     >
                       <SelectValue placeholder="Select Domain" />
@@ -264,7 +263,7 @@ const ForwardingModal = ({
               </div>
             </div>
             <div className="grid grid-cols-12 place-content-center rounded-lg bg-[#F8F9FA] px-4 py-2">
-              <div className="flex items-center justify-center lg:col-span-6 xl:col-span-7 col-span-12 lg:order-1 order-2 max-md:pt-3 max-md:pb-2">
+              <div className="order-2 col-span-12 flex items-center justify-center max-md:pb-2 max-md:pt-3 lg:order-1 lg:col-span-6 xl:col-span-7">
                 <Input
                   type="number"
                   placeholder="Enter Duration"
@@ -273,12 +272,12 @@ const ForwardingModal = ({
                 />
               </div>
 
-              <div className="lg:col-span-6 xl:col-span-5 col-span-12 lg:order-2 order-1">
+              <div className="order-1 col-span-12 lg:order-2 lg:col-span-6 xl:col-span-5">
                 <div className="flex gap-[2px]  overflow-hidden rounded-md">
                   <button
                     onClick={() => setDuration(9)}
                     className={cn(
-                      `md:w-[112px] w-full bg-white p-4 text-center text-[#495057]`,
+                      `w-full bg-white p-2  text-center text-[#495057] max-sm:text-[10px] md:p-4 lg:w-[112px]`,
                       duration === 9 && "border-primary border-b-[3px]",
                     )}
                   >
@@ -287,7 +286,7 @@ const ForwardingModal = ({
                   <button
                     onClick={() => setDuration(45)}
                     className={cn(
-                      `md:w-[112px] w-full bg-white p-4 text-center text-[#495057]`,
+                      `w-full bg-white p-2 text-center text-[#495057] max-sm:text-[10px] md:p-4 lg:w-[112px]`,
                       duration === 45 && "border-primary border-b-[3px]",
                     )}
                   >
@@ -296,7 +295,7 @@ const ForwardingModal = ({
                   <button
                     onClick={() => setDuration(90)}
                     className={cn(
-                      `md:w-[112px] w-full bg-white p-4 text-center text-[#495057]`,
+                      `w-full bg-white p-2 text-center text-[#495057] max-sm:text-[10px] md:p-4 lg:w-[112px]`,
                       duration === 90 && "border-primary border-b-[3px]",
                     )}
                   >
@@ -305,7 +304,7 @@ const ForwardingModal = ({
                   <button
                     onClick={() => setDuration(0)}
                     className={cn(
-                      `md:w-[112px] w-full bg-white p-4 text-center text-[#495057]`,
+                      `w-full bg-white p-2 text-center text-[#495057] max-sm:text-[10px] md:p-4 lg:w-[112px]`,
                       duration === 0 && "border-primary border-b-[3px]",
                     )}
                   >
@@ -320,21 +319,18 @@ const ForwardingModal = ({
             would be sent to the selected email will be also sent to your real
             email.
           </p>
-          <div className="mt-6 md:flex justify-between">
-            <div className="relative ">
-              <ReCAPTCHA
-                sitekey="6LdUz-4pAAAAADLtRLmlVIRjxUml7TQye2laJaJb"
-                className="md:absolute left-0 top-0"
-              />
+          <div className="mt-6 justify-between md:flex">
+            <div className="max-sm:scale-75 max-sm:-ml-10">
+              <ReCAPTCHA sitekey="6LdUz-4pAAAAADLtRLmlVIRjxUml7TQye2laJaJb" />
             </div>
 
             <div className="flex gap-3 max-md:mt-5">
-              <button className="bg-primary-dark rounded-md px-[32px] py-[18px] text-white">
+              <button className="bg-primary-dark rounded-md px-[32px] py-[18px] text-white transition-all duration-300 hover:bg-black">
                 FORWARD
               </button>
               <button
                 onClick={() => setOpen(false)}
-                className="rounded-md border  border-[#495057] px-[32px] py-[18px] text-[#495057]"
+                className="hover:bg-primary-dark rounded-md border border-[#495057]  px-[32px] py-[18px] text-[#495057] transition-all duration-300 hover:text-white"
               >
                 Cancel
               </button>

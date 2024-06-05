@@ -104,7 +104,7 @@ const ProfileModal = ({
                 <div className="flex justify-between ">
                   <p className="text-[24px] font-semibold">Plan</p>
                   <div className="flex">
-                    <button className="bg-primary-dark  w-20 rounded-s-md px-3 py-2 text-center text-white md:w-24">
+                    <button className="bg-primary-dark  w-20 rounded-s-md px-3 py-2 text-center text-white md:w-24 hover:bg-black transition-all duration-300">
                       Premium
                     </button>
                     <button className=" w-20 rounded-e-md border-b-2  border-e-2 border-t-2 border-[#C4C5CA] px-3 py-2 text-center text-[#C4C5CA] md:w-24">

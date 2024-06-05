@@ -34,7 +34,7 @@ const email = "ksher1995@gmail.com";
 
 export function NavBar() {
   const t = useTranslations();
-  const { user, loaded: userLoaded } = useUser();
+  const { user, loaded: userLoaded, logout } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isClient = useIsClient();
@@ -54,6 +54,11 @@ export function NavBar() {
       maxWait: 150,
     },
   );
+
+  const handleLogout = async (e: any) => {
+    e.stopPropagation();
+    await logout();
+  };
 
   const handleOrder = async () => {
     try {
@@ -267,38 +272,40 @@ export function NavBar() {
                 )}
               </>
             )}
-
             <>
-              <button
-                onClick={() => setOpenProfileModal(true)}
-                className="flex items-center gap-2 rounded-[12px] bg-[#F4F5FB] px-2 py-[5px] max-md:hidden"
-              >
-                {/* <div className="relative h-12 w-12 "> */}
-                <Image
-                  src="/images/avatar/avatar3.png"
-                  alt="close"
-                  // layout="fill"
-                  width={52}
-                  height={52}
-                />
-                {/* </div> */}
-                <div className="text-left">
-                  <p className="text-primary-gradient text-[20px] font-bold">
-                    Premium
-                  </p>
-                  <p className="text-[12px] text-[#7C7D81]">Remain 100days</p>
-                </div>
-                <div>
-                  <div
-                    className="ml-1 flex h-[52px] w-[52px] items-center justify-center rounded-[15px] bg-white"
-                    style={{
-                      boxShadow: "0px 4px 4px 0px #00000040",
-                    }}
-                  >
-                    <LogoutIcon />
+              {isClient && (
+                <button
+                  onClick={() => setOpenProfileModal(true)}
+                  className="flex items-center gap-2 rounded-[12px] bg-[#F4F5FB] px-2 py-[5px] max-md:hidden"
+                >
+                  {/* <div className="relative h-12 w-12 "> */}
+                  <Image
+                    src="/images/avatar/avatar3.png"
+                    alt="close"
+                    // layout="fill"
+                    width={52}
+                    height={52}
+                  />
+                  {/* </div> */}
+                  <div className="text-left">
+                    <p className="text-primary-gradient text-[20px] font-bold">
+                      Premium
+                    </p>
+                    <p className="text-[12px] text-[#7C7D81]">Remain 100days</p>
                   </div>
-                </div>
-              </button>
+                  <div>
+                    <button
+                      onClick={handleLogout}
+                      className="ml-1 flex h-[52px] w-[52px] items-center justify-center rounded-[15px] bg-white"
+                      style={{
+                        boxShadow: "0px 4px 4px 0px #00000040",
+                      }}
+                    >
+                      <LogoutIcon />
+                    </button>
+                  </div>
+                </button>
+              )}
             </>
           </div>
         </div>
