@@ -2,9 +2,10 @@
 import PrimaryButton from "@shared/components/Button/PrimaryButton";
 import CloseIcon from "@shared/icons/CloseIcon";
 import EditIcon from "@shared/icons/EditIcon";
+import { cn } from "@ui/lib";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 const Modal = dynamic(() => import("react-responsive-modal"), {
@@ -15,13 +16,17 @@ const ProfileModal = ({
   open,
   setOpen,
   handleOpenForwardModal,
-  handleOpenCustomModal
+  handleOpenCustomModal,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   handleOpenForwardModal: Dispatch<SetStateAction<boolean>>;
   handleOpenCustomModal: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const [hovered1, setHovered1] = useState(false);
+  const [hovered2, setHovered2] = useState(false);
+  const [hovered3, setHovered3] = useState(false);
+  const [hovered4, setHovered4] = useState(false);
   const handleOpenFroward = () => {
     setOpen(false);
     handleOpenForwardModal(true);
@@ -58,7 +63,7 @@ const ProfileModal = ({
         onOverlayClick={() => setOpen(false)}
         classNames={{
           modal:
-            "z-[100]  m-0  my-auto  p-10 lg:min-w-[900px] mx-auto rounded-3xl",
+            "z-[100]  m-0  my-auto  p-10 lg:min-w-[1002px] mx-auto rounded-3xl",
         }}
       >
         <div>
@@ -94,10 +99,20 @@ const ProfileModal = ({
             </div>
           </div>
           <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-12 ">
-              <div className="bg-primary-light-gradient rounded-3xl p-6">
-                <p className="text-[24px] font-semibold">Subscription</p>
-                <div className="mt-4 grid grid-cols-12  max-md:mb-2">
+            <div className="order-2 col-span-12 md:order-1">
+              <div className="rounded-3xl bg-[#F8F9FA] p-6">
+                <div className="flex justify-between ">
+                  <p className="text-[24px] font-semibold">Plan</p>
+                  <div className="flex">
+                    <button className="bg-primary-dark  w-20 rounded-s-md px-3 py-2 text-center text-white md:w-24 hover:bg-black transition-all duration-300">
+                      Premium
+                    </button>
+                    <button className=" w-20 rounded-e-md border-b-2  border-e-2 border-t-2 border-[#C4C5CA] px-3 py-2 text-center text-[#C4C5CA] md:w-24">
+                      Privet
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-4 grid grid-cols-12   max-md:mb-2">
                   <div className="col-span-3">
                     <Image
                       src="/images/icons/paid-envolop.svg"
@@ -140,8 +155,59 @@ const ProfileModal = ({
                 </div>
               </div>
             </div>
-            <div className="col-span-12 lg:col-span-4">
-              <button onClick={handleOpenCustom} className="gradient-border relative rounded-3xl border p-6 w-full">
+            <div className="order-1 col-span-12 md:order-2 ">
+              <div className="rounded-3xl bg-[#F8F9FA] p-6">
+                <div className="flex justify-between ">
+                  <p className="text-[24px] font-semibold">Plan</p>
+                  <p className="text-[24px] font-bold">Free</p>
+                </div>
+                <div className="mt-4 grid grid-cols-12  max-md:mb-2">
+                  <div className="col-span-12 md:col-span-4">
+                    <Image
+                      src="/images/icons/free-plan.svg"
+                      alt="close"
+                      width={224.14}
+                      height={141}
+                    />
+                  </div>
+                  <div className="col-span-12 md:col-span-8">
+                    <div>
+                      <div>
+                        <p className=" text-[18px] font-semibold max-md:mt-5 md:text-[24px]">
+                          Upgrade your plan to unlock powerfull features
+                        </p>
+                        <p className="text-[14px] text-[#56565B] sm:text-[18px]">
+                          We applied 20% discount to your account on yearly
+                          subscription
+                        </p>
+                      </div>
+                      <div className="mt-4 flex gap-6">
+                        <button className="hover:bg-primary-dark rounded-lg border border-black px-6 py-4 text-2xl font-semibold transition-all duration-300 hover:text-white">
+                          Premium
+                        </button>
+                        <div className="flex">
+                          <button
+                            className={cn(
+                              "hover:bg-primary-dark  text-primary-gradient gradient-border  rounded-md  px-6 py-4 text-2xl font-semibold  transition-all duration-300",
+                              "rounded-md",
+                            )}
+                          >
+                            Private
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="order-3 col-span-12 md:col-span-6 lg:col-span-3">
+              <button
+                onClick={handleOpenCustom}
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered1 && "gradient-border"} `}
+                onMouseEnter={() => setHovered1(true)}
+                onMouseLeave={() => setHovered1(false)}
+              >
                 <div>
                   <div className="mb-4">
                     <Image
@@ -152,23 +218,25 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] ">Custom Domains</p>
-                    <p className="text-[14px] text-[#56565B]">
+                    <p className="text-left text-[24px]">Custom Domains</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
                       Add your domains and generate emails with them
                     </p>
                   </div>
                 </div>
                 <div>
-                  <PrimaryButton className="absolute right-5 top-5 text-[16px]">
+                  <PrimaryButton className="absolute right-2 top-2 px-3 py-2 text-[12px] ">
                     New
                   </PrimaryButton>
                 </div>
               </button>
             </div>
-            <div className="col-span-12 lg:col-span-4">
+            <div className="order-4 col-span-12 md:col-span-6 lg:col-span-3">
               <button
                 onClick={handleOpenFroward}
-                className="rounded-3xl border bg-[#FCFEFF] p-6 cursor-pointer w-full"
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered2 && "gradient-border"} `}
+                onMouseEnter={() => setHovered2(true)}
+                onMouseLeave={() => setHovered2(false)}
               >
                 <div>
                   <div className="mb-4">
@@ -180,16 +248,20 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] ">Forwarding</p>
-                    <p className="text-[14px] text-[#56565B]">
+                    <p className="text-left text-[24px]">Forwarding</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
                       Drive all messages between different emails
                     </p>
                   </div>
                 </div>
               </button>
             </div>
-            <div className="col-span-12 lg:col-span-4">
-              <button className="rounded-3xl border bg-[#FCFEFF] p-6 w-full">
+            <div className="order-5 col-span-12 md:col-span-6 lg:col-span-3">
+              <button
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered3 && "gradient-border"} `}
+                onMouseEnter={() => setHovered3(true)}
+                onMouseLeave={() => setHovered3(false)}
+              >
                 <div>
                   <div className="mb-4">
                     <Image
@@ -200,11 +272,45 @@ const ProfileModal = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[24px] ">Manage Team</p>
-                    <p className="text-[14px] text-[#56565B]">
+                    <p className="text-left text-[24px]">Manage Team</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
                       Manage members to streamline your team&apos;s workflow.
                     </p>
                   </div>
+                </div>
+              </button>
+            </div>
+            <div className="order-6 col-span-12 md:col-span-6 lg:col-span-3">
+              <button
+                className={`relative h-full w-full rounded-3xl border bg-[#F8F9FA] p-6 ${hovered4 && "gradient-border"} `}
+                onMouseEnter={() => setHovered4(true)}
+                onMouseLeave={() => setHovered4(false)}
+              >
+                <div>
+                  <div className="mb-4">
+                    <Image
+                      src="/images/icons/api-keys.svg"
+                      alt="close"
+                      width={90}
+                      height={90}
+                    />
+                  </div>
+                  <div>
+                    <p className="text-left text-[24px]">API Keys</p>
+                    <p className="text-left text-[14px] text-[#56565B]">
+                      Generate API keys to use on your project, you can also
+                      check the{" "}
+                      <span className="font-semibold underline">
+                        API Documentation
+                      </span>
+                      .
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <PrimaryButton className="absolute right-2 top-2 px-3 py-2 text-[12px] ">
+                    New
+                  </PrimaryButton>
                 </div>
               </button>
             </div>

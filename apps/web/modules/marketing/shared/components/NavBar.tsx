@@ -11,6 +11,7 @@ import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
+import { User2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -33,7 +34,7 @@ const email = "ksher1995@gmail.com";
 
 export function NavBar() {
   const t = useTranslations();
-  const { user, loaded: userLoaded } = useUser();
+  const { user, loaded: userLoaded, logout } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isClient = useIsClient();
@@ -53,6 +54,11 @@ export function NavBar() {
       maxWait: 150,
     },
   );
+
+  const handleLogout = async (e: any) => {
+    e.stopPropagation();
+    await logout();
+  };
 
   const handleOrder = async () => {
     try {
@@ -139,8 +145,16 @@ export function NavBar() {
       href: `/#work-process`,
     },
     {
+      label: t("common.menu.features"),
+      href: `/#features`,
+    },
+    {
       label: t("common.menu.pricing"),
       href: `/#pricing`,
+    },
+    {
+      label: t("common.menu.blog"),
+      href: `/#blog`,
     },
   ];
 
@@ -155,43 +169,7 @@ export function NavBar() {
         <div
           className={`flex items-center justify-between gap-6 ${isTop ? "py-[18px]" : "py-3"} transition-[padding] duration-200`}
         >
-          <div className="flex justify-start">
-            <Link
-              href="/"
-              className="block hover:no-underline active:no-underline"
-            >
-              <Logo />
-            </Link>
-          </div>
-
-          <div className="hidden items-center justify-center gap-6 lg:flex">
-            {menuItems.map((menuItem) => (
-              <Link
-                key={menuItem.href}
-                href={menuItem.href}
-                className="text-text-grayText hover:text-primary block px-3 py-2 text-lg font-medium"
-              >
-                {menuItem.label}
-              </Link>
-            ))}
-            <div></div>
-            <div>
-              <Button
-                className="rounded-lg bg-red-500 px-8 py-6 text-base"
-                variant="default"
-                onClick={handleOrder}
-              >
-                Test Payment
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end gap-3">
-            {/* <ColorModeToggle /> */}
-            <div className="hidden md:block">
-              <LocaleSwitch />
-            </div>
-
+          <div className="flex items-center justify-start gap-1">
             <Sheet
               open={mobileMenuOpen}
               onOpenChange={(open) => setMobileMenuOpen(open)}
@@ -203,7 +181,7 @@ export function NavBar() {
                   variant="ghost"
                   aria-label="Menu"
                 >
-                  <Icon.menu />
+                  <Icon.menu color="black" />
                 </Button>
               </SheetTrigger>
               <SheetContent className="w-[250px] bg-white" side="right">
@@ -234,49 +212,116 @@ export function NavBar() {
                 </div>
               </SheetContent>
             </Sheet>
+            <Link
+              href="/"
+              className="block hover:no-underline active:no-underline"
+            >
+              <Logo />
+            </Link>
+          </div>
+
+          <div className="hidden items-center justify-center gap-6 lg:flex">
+            {menuItems.map((menuItem) => (
+              <Link
+                key={menuItem.href}
+                href={menuItem.href}
+                className="text-text-grayText hover:text-primary block px-3 py-2 text-[14px] font-medium"
+              >
+                {menuItem.label}
+              </Link>
+            ))}
+            {/* <div>
+              <Button
+                className="rounded-lg bg-red-500 px-8 py-6 text-base"
+                variant="default"
+                onClick={handleOrder}
+              >
+                Test Payment
+              </Button>
+            </div> */}
+          </div>
+
+          <div className="flex items-center justify-end gap-3">
+            {/* <ColorModeToggle /> */}
+            <div>
+              <LocaleSwitch />
+            </div>
 
             {isClient && userLoaded && (
               <>
-                <PrimaryButton className="hidden rounded-lg px-8 py-6 text-base md:flex">
-                  {user ? (
-                    <Link href="/app">{t("common.menu.dashboard")}</Link>
-                  ) : (
-                    <Link href="/auth/login">{t("common.menu.login")}</Link>
-                  )}
-                </PrimaryButton>
+                {user ? (
+                  <Link
+                    href="/app"
+                    className="bg-primary-dark flex  items-center justify-center gap-2 rounded-[10px] px-5  py-4 text-white transition-all duration-300 hover:bg-black hover:text-white md:rounded-[14px]"
+                  >
+                    <User2Icon />
+                    <span className="font-semibold uppercase max-md:hidden">
+                      {t("common.menu.dashboard")}
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/auth/login"
+                    className="bg-primary-dark flex  items-center justify-center gap-2 rounded-[10px] px-5  py-4 text-white transition-all duration-300 hover:bg-black hover:text-white md:rounded-[14px] "
+                  >
+                    <User2Icon />
+                    <span className="font-semibold uppercase max-md:hidden">
+                      {t("common.menu.login")}
+                    </span>
+                  </Link>
+                )}
               </>
             )}
             <>
-              <button
-                onClick={() => setOpenProfileModal(true)}
-                className="flex items-center gap-2 rounded-md bg-[#F4F5FB] p-2"
-              >
-                <div className="relative h-12 w-12 ">
+              {isClient && (
+                <button
+                  onClick={() => setOpenProfileModal(true)}
+                  className="flex items-center gap-2 rounded-[12px] bg-[#F4F5FB] px-2 py-[5px] max-md:hidden"
+                >
+                  {/* <div className="relative h-12 w-12 "> */}
                   <Image
                     src="/images/avatar/avatar3.png"
                     alt="close"
-                    layout="fill"
+                    // layout="fill"
+                    width={52}
+                    height={52}
                   />
-                </div>
-                <div>
-                  <p className="text-primary-gradient  text-[20px]">Premium</p>
-                  <p className="ml-2 text-[12px] text-[#7C7D81]">
-                    Remain 100days
-                  </p>
-                </div>
-                <div>
-                  <div className="shadow-[0px 4px 4px 0px #00000040] ml-1 flex h-12 w-12 items-center justify-center rounded-md bg-white">
-                    <LogoutIcon />
+                  {/* </div> */}
+                  <div className="text-left">
+                    <p className="text-primary-gradient text-[20px] font-bold">
+                      Premium
+                    </p>
+                    <p className="text-[12px] text-[#7C7D81]">Remain 100days</p>
                   </div>
-                </div>
-              </button>
+                  <div>
+                    <button
+                      onClick={handleLogout}
+                      className="ml-1 flex h-[52px] w-[52px] items-center justify-center rounded-[15px] bg-white"
+                      style={{
+                        boxShadow: "0px 4px 4px 0px #00000040",
+                      }}
+                    >
+                      <LogoutIcon />
+                    </button>
+                  </div>
+                </button>
+              )}
             </>
           </div>
         </div>
       </div>
-      <ProfileModal open={openProfileModal} setOpen={setOpenProfileModal} handleOpenForwardModal={setOpenForwardModal} handleOpenCustomModal={setOpenCustomDomainModal} />
+      <ProfileModal
+        open={openProfileModal}
+        setOpen={setOpenProfileModal}
+        handleOpenForwardModal={setOpenForwardModal}
+        handleOpenCustomModal={setOpenCustomDomainModal}
+      />
       <ForwardingModal open={openForwardModal} setOpen={setOpenForwardModal} />
-      <CustomDomainModal open={openCustomDomainModal} setOpen={setOpenCustomDomainModal} handleProfileModal={setOpenProfileModal} />
+      <CustomDomainModal
+        open={openCustomDomainModal}
+        setOpen={setOpenCustomDomainModal}
+        handleProfileModal={setOpenProfileModal}
+      />
     </nav>
   );
 }

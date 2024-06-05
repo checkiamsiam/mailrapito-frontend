@@ -59,3 +59,17 @@ export interface Status {
   value: string;
   label: string;
 }
+
+export interface IEmail {
+  email: string;
+  date: number;
+  active: boolean;
+  token: string;
+  inHistory?: boolean;
+  expireIn: string;
+}
+
+export interface IEmailGroup {
+  date: string;
+  emails: IEmail[];
+}
